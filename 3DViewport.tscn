@@ -1,0 +1,50 @@
+[gd_scene load_steps=7 format=3 uid="uid://bqpc7vc0h2w81"]
+
+[ext_resource type="Script" path="res://CameraTrackball.gd" id="1_fnd6n"]
+[ext_resource type="ArrayMesh" uid="uid://dcq7mkh5kfv0q" path="res://ShaderballGodot.tres" id="2_j3nev"]
+
+[sub_resource type="Environment" id="Environment_p1ymn"]
+background_color = Color(0.215686, 0.215686, 0.215686, 1)
+background_energy_multiplier = 0.5
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0eyaj"]
+albedo_color = Color(0.917647, 0, 0.141176, 1)
+roughness = 0.3
+ao_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g7fc7"]
+albedo_color = Color(0.45098, 0.45098, 0.45098, 1)
+metallic = 1.0
+roughness = 0.45
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xyn8j"]
+metallic_specular = 0.0
+roughness = 0.0
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 16.0
+
+[node name="Node3D" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.5, -0.75, 0.433013, 2.78059e-08, 0.5, 0.866026, -0.866025, -0.433013, 0.25, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_p1ymn")
+
+[node name="Marker3D" type="Marker3D" parent="."]
+script = ExtResource("1_fnd6n")
+farMaxCamDistance = null
+closeMinCamDistance = null
+
+[node name="Camera3D" type="Camera3D" parent="Marker3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = ExtResource("2_j3nev")
+surface_material_override/0 = SubResource("StandardMaterial3D_0eyaj")
+surface_material_override/1 = SubResource("StandardMaterial3D_g7fc7")
+surface_material_override/2 = SubResource("StandardMaterial3D_xyn8j")
