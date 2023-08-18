@@ -1,8 +1,8 @@
 @tool
 extends Marker3D
 
-@export var farMaxCamDistance : float = 15
-@export var closeMinCamDistance : float = 2
+var farMaxCamDistance : float
+var closeMinCamDistance : float
 
 const trackballSpeed : float = 0.01
 var trackModelMode : bool = false
@@ -13,6 +13,8 @@ var cameraDistance : float = 2
 @onready var mesh : MeshInstance3D = $"../MeshInstance3D"
 
 @onready var light : DirectionalLight3D = $"../DirectionalLight3D"
+
+
 
 func _ready():
 	recenterCamera()
@@ -51,3 +53,7 @@ func _input(event):
 
 func recenterCamera():
 	position = mesh.get_aabb().get_center()
+	closeMinCamDistance = mesh.get_aabb().get_longest_axis_size() * mesh.scale.x
+	farMaxCamDistance = mesh.get_aabb().get_longest_axis_size() * 4 * mesh.scale.x
+	cameraDistance = closeMinCamDistance
+	Camera.position = Vector3(0,0,cameraDistance)
