@@ -1,0 +1,77 @@
+[gd_scene load_steps=14 format=3 uid="uid://bqpc7vc0h2w81"]
+
+[ext_resource type="Script" path="res://Scripts/3DViewport.gd" id="1_kunki"]
+[ext_resource type="Texture2D" uid="uid://b4wwpfijfexfa" path="res://HDRIs/empty_workshop_4k.exr" id="2_p8jye"]
+[ext_resource type="Script" path="res://Scripts/CameraTrackball.gd" id="3_v43rt"]
+[ext_resource type="ArrayMesh" uid="uid://dcq7mkh5kfv0q" path="res://exampleMeshes/ShaderballGodot.tres" id="4_d8sc2"]
+[ext_resource type="ArrayMesh" uid="uid://c8o6uoqgnusnx" path="res://exampleMeshes/axe.tres" id="5_s1qbp"]
+[ext_resource type="ArrayMesh" uid="uid://dlul2mehbknin" path="res://exampleMeshes/godot-head.tres" id="6_aj3dh"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_ysreh"]
+panorama = ExtResource("2_p8jye")
+
+[sub_resource type="Sky" id="Sky_13irs"]
+sky_material = SubResource("PanoramaSkyMaterial_ysreh")
+process_mode = 1
+
+[sub_resource type="Environment" id="Environment_p1ymn"]
+background_mode = 1
+background_color = Color(0.243137, 0.243137, 0.243137, 1)
+background_energy_multiplier = 0.5
+sky = SubResource("Sky_13irs")
+ambient_light_source = 3
+reflected_light_source = 2
+tonemap_mode = 2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_d2vd2"]
+metallic = 1.0
+metallic_specular = 1.0
+roughness = 0.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xsc3u"]
+albedo_color = Color(0.254902, 0.254902, 0.254902, 1)
+metallic = 1.0
+metallic_specular = 1.0
+roughness = 0.3
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uant3"]
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 3.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pgjil"]
+metallic_specular = 1.0
+roughness = 0.0
+
+[node name="Node3D" type="Node3D"]
+script = ExtResource("1_kunki")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.5, -0.75, 0.433013, 2.78059e-08, 0.5, 0.866026, -0.866025, -0.433013, 0.25, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_p1ymn")
+
+[node name="Marker3D" type="Marker3D" parent="."]
+script = ExtResource("3_v43rt")
+
+[node name="Camera3D" type="Camera3D" parent="Marker3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.38295)
+
+[node name="MeshInstance3D_" type="MeshInstance3D" parent="."]
+visible = false
+mesh = ExtResource("4_d8sc2")
+surface_material_override/0 = SubResource("StandardMaterial3D_d2vd2")
+surface_material_override/1 = SubResource("StandardMaterial3D_xsc3u")
+surface_material_override/2 = SubResource("StandardMaterial3D_uant3")
+
+[node name="MeshInstance3D_axe" type="MeshInstance3D" parent="."]
+mesh = ExtResource("5_s1qbp")
+surface_material_override/0 = SubResource("StandardMaterial3D_pgjil")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = ExtResource("6_aj3dh")
+surface_material_override/0 = SubResource("StandardMaterial3D_pgjil")
+
+[connection signal="ready" from="." to="Marker3D" method="recenterCamera"]
