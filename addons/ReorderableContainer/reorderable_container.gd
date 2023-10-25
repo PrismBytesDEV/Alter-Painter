@@ -269,7 +269,6 @@ func _adjust_child_rect(delta: float = -1.0):
 		else:
 			child.position = _expect_child_rect[i].position
 			child.size = _expect_child_rect[i].size
-			
 	
 	var last_child := children[-1]
 	if is_vertical:

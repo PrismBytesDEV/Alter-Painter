@@ -15,10 +15,6 @@ run/main_scene="res://Scenes/AppInterface.tscn"
 config/features=PackedStringArray("4.1", "Forward Plus")
 config/icon="res://icon.svg"
 
-[display]
-
-window/size/mode=2
-
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/ReorderableContainer/plugin.cfg", "res://addons/dockable_container/plugin.cfg", "res://addons/zylann.editor_debugger/plugin.cfg")

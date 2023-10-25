@@ -44,7 +44,7 @@ current_tab = 0
 resource_name = "Split"
 script = ExtResource("3_wcunx")
 direction = 1
-percent = 0.882813
+percent = 0.53125
 first = SubResource("Resource_appvx")
 second = SubResource("Resource_8cs8o")
 
@@ -54,9 +54,8 @@ script = ExtResource("3_jkhko")
 root = SubResource("Resource_k3g0j")
 hidden_tabs = {}
 
-[sub_resource type="StyleBoxLine" id="StyleBoxLine_drb8g"]
-color = Color(0.129412, 0.52549, 0.898039, 1)
-thickness = 8
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0v5t4"]
+bg_color = Color(0.0666667, 0.623529, 1, 1)
 
 [node name="AppInterface" type="Control"]
 layout_mode = 3
@@ -252,7 +251,6 @@ theme_override_constants/margin_bottom = 5
 layout_mode = 2
 size_flags_vertical = 4
 theme = ExtResource("1_50egg")
-theme_override_constants/separation = 20
 
 [node name="Label" type="Label" parent="VBoxContainer/DockableContainer/Brush settings/VBoxContainer/size_setting/HBoxContainer"]
 layout_mode = 2
@@ -265,8 +263,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
 theme = ExtResource("1_50egg")
-theme_override_styles/grabber_area = SubResource("StyleBoxLine_drb8g")
-value = 34.0
+theme_override_styles/slider = SubResource("StyleBoxFlat_0v5t4")
 scrollable = false
 
 [node name="opacity_setting" type="MarginContainer" parent="VBoxContainer/DockableContainer/Brush settings/VBoxContainer"]
@@ -281,7 +278,6 @@ theme_override_constants/margin_bottom = 5
 layout_mode = 2
 size_flags_vertical = 4
 theme = ExtResource("1_50egg")
-theme_override_constants/separation = 20
 
 [node name="Label" type="Label" parent="VBoxContainer/DockableContainer/Brush settings/VBoxContainer/opacity_setting/HBoxContainer"]
 layout_mode = 2
@@ -294,8 +290,6 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
 theme = ExtResource("1_50egg")
-theme_override_styles/grabber_area = SubResource("StyleBoxLine_drb8g")
-value = 34.0
 scrollable = false
 
 [node name="Layer settings" type="ScrollContainer" parent="VBoxContainer/DockableContainer"]
