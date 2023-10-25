@@ -1,17 +1,26 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 [gd_scene load_steps=12 format=3 uid="uid://bqpc7vc0h2w81"]
 =======
 [gd_scene load_steps=11 format=3 uid="uid://bqpc7vc0h2w81"]
 >>>>>>> parent of 9596f1a (Update6)
+=======
+[gd_scene load_steps=14 format=3 uid="uid://bqpc7vc0h2w81"]
+>>>>>>> parent of c80fb82 (update5)
 
 [ext_resource type="Script" path="res://Scripts/3DViewport.gd" id="1_kunki"]
 [ext_resource type="Texture2D" uid="uid://b4wwpfijfexfa" path="res://HDRIs/empty_workshop_4k.exr" id="2_p8jye"]
 [ext_resource type="Script" path="res://Scripts/CameraTrackball.gd" id="3_v43rt"]
 [ext_resource type="ArrayMesh" uid="uid://dcq7mkh5kfv0q" path="res://exampleMeshes/ShaderballGodot.tres" id="4_d8sc2"]
 <<<<<<< HEAD
+<<<<<<< HEAD
 [ext_resource type="Script" path="res://Scripts/MeshToUV_Slice_script.gd" id="5_xwdxd"]
 =======
 >>>>>>> parent of 9596f1a (Update6)
+=======
+[ext_resource type="ArrayMesh" uid="uid://c8o6uoqgnusnx" path="res://exampleMeshes/axe.tres" id="5_s1qbp"]
+[ext_resource type="ArrayMesh" uid="uid://dlul2mehbknin" path="res://exampleMeshes/godot-head.tres" id="6_aj3dh"]
+>>>>>>> parent of c80fb82 (update5)
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_ysreh"]
 panorama = ExtResource("2_p8jye")
@@ -30,11 +39,15 @@ reflected_light_source = 2
 tonemap_mode = 2
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_d2vd2"]
+metallic = 1.0
 metallic_specular = 1.0
 roughness = 0.0
+<<<<<<< HEAD
 rim = 0.0
 clearcoat_roughness = 0.0
 grow_amount = 0.01
+=======
+>>>>>>> parent of c80fb82 (update5)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xsc3u"]
 albedo_color = Color(0.254902, 0.254902, 0.254902, 1)
@@ -47,6 +60,10 @@ emission_enabled = true
 emission = Color(1, 1, 1, 1)
 emission_energy_multiplier = 3.0
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pgjil"]
+metallic_specular = 1.0
+roughness = 0.0
+
 [node name="Node3D" type="Node3D"]
 script = ExtResource("1_kunki")
 
@@ -58,14 +75,13 @@ shadow_enabled = true
 environment = SubResource("Environment_p1ymn")
 
 [node name="Marker3D" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.01328e-06, 0.147525, 0.01797)
 script = ExtResource("3_v43rt")
 
 [node name="Camera3D" type="Camera3D" parent="Marker3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.78269)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.38295)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.143827, 0.0348463, -0.0481447)
+[node name="MeshInstance3D_" type="MeshInstance3D" parent="."]
+visible = false
 mesh = ExtResource("4_d8sc2")
 surface_material_override/0 = SubResource("StandardMaterial3D_d2vd2")
 surface_material_override/1 = SubResource("StandardMaterial3D_xsc3u")
@@ -75,41 +91,12 @@ script = ExtResource("5_xwdxd")
 =======
 >>>>>>> parent of 9596f1a (Update6)
 
-[node name="Control" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-metadata/_edit_use_anchors_ = true
+[node name="MeshInstance3D_axe" type="MeshInstance3D" parent="."]
+mesh = ExtResource("5_s1qbp")
+surface_material_override/0 = SubResource("StandardMaterial3D_pgjil")
 
-[node name="OptionButton" type="OptionButton" parent="Control"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.829861
-anchor_top = 0.0200617
-anchor_right = 0.988715
-anchor_bottom = 0.0679012
-offset_left = 21.0001
-offset_bottom = -0.999992
-grow_horizontal = 0
-item_count = 7
-selected = 0
-popup/item_0/text = "default"
-popup/item_0/id = 0
-popup/item_1/text = "albedo"
-popup/item_1/id = 1
-popup/item_2/text = "normal (local)"
-popup/item_2/id = 2
-popup/item_3/text = "normal (3D space)"
-popup/item_3/id = 3
-popup/item_4/text = "height"
-popup/item_4/id = 3
-popup/item_5/text = "metal"
-popup/item_5/id = 4
-popup/item_6/text = "roughness"
-popup/item_6/id = 5
-metadata/_edit_use_anchors_ = true
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = ExtResource("6_aj3dh")
+surface_material_override/0 = SubResource("StandardMaterial3D_pgjil")
 
 [connection signal="ready" from="." to="Marker3D" method="recenterCamera"]
