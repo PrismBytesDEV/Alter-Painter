@@ -1,10 +1,11 @@
-[gd_scene load_steps=13 format=3 uid="uid://bqpc7vc0h2w81"]
+[gd_scene load_steps=14 format=3 uid="uid://bqpc7vc0h2w81"]
 
 [ext_resource type="Script" path="res://Scripts/3DViewport.gd" id="1_kunki"]
 [ext_resource type="Texture2D" uid="uid://b4wwpfijfexfa" path="res://HDRIs/empty_workshop_4k.exr" id="2_p8jye"]
 [ext_resource type="Script" path="res://Scripts/CameraTrackball.gd" id="3_v43rt"]
 [ext_resource type="ArrayMesh" uid="uid://dcq7mkh5kfv0q" path="res://exampleMeshes/ShaderballGodot.tres" id="4_d8sc2"]
 [ext_resource type="Shader" path="res://Scenes/3DViewport.gdshader" id="5_mrnhx"]
+[ext_resource type="Script" path="res://Scripts/MeshToUV_Slice_script.gd" id="6_qbveq"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_ysreh"]
 panorama = ExtResource("2_p8jye")
@@ -74,6 +75,7 @@ mesh = ExtResource("4_d8sc2")
 surface_material_override/0 = SubResource("ShaderMaterial_e8mtp")
 surface_material_override/1 = SubResource("StandardMaterial3D_xsc3u")
 surface_material_override/2 = SubResource("StandardMaterial3D_uant3")
+script = ExtResource("6_qbveq")
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
