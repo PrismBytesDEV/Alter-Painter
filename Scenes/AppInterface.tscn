@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://2a2kb6vkospx"]
+[gd_scene load_steps=19 format=3 uid="uid://2a2kb6vkospx"]
 
 [ext_resource type="PackedScene" uid="uid://bqpc7vc0h2w81" path="res://Scenes/3DViewport.tscn" id="1_1xuwo"]
 [ext_resource type="Theme" uid="uid://cxi7ihqtqqtu6" path="res://Themes/darkTheme.tres" id="1_50egg"]
@@ -7,6 +7,9 @@
 [ext_resource type="Script" path="res://addons/dockable_container/layout.gd" id="3_jkhko"]
 [ext_resource type="Script" path="res://addons/dockable_container/layout_split.gd" id="3_wcunx"]
 [ext_resource type="Script" path="res://addons/ReorderableContainer/reorderable_container.gd" id="6_ymwgp"]
+[ext_resource type="Script" path="res://Scenes/LayerManager.gd" id="8_7c28x"]
+[ext_resource type="Texture2D" uid="uid://b4wwpfijfexfa" path="res://HDRIs/empty_workshop_4k.exr" id="8_7hkbj"]
+[ext_resource type="PackedScene" uid="uid://bk6xt62j3yiba" path="res://Scenes/layer_ui_fill.tscn" id="9_drtng"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fk4ew"]
 bg_color = Color(1, 1, 1, 1)
@@ -14,14 +17,14 @@ bg_color = Color(1, 1, 1, 1)
 [sub_resource type="Resource" id="Resource_wodr5"]
 resource_name = "Tabs"
 script = ExtResource("2_uu0la")
-names = PackedStringArray("3D preview")
+names = PackedStringArray("3D preview", "2D preview")
 current_tab = 0
 
 [sub_resource type="Resource" id="Resource_327vj"]
 resource_name = "Tabs"
 script = ExtResource("2_uu0la")
-names = PackedStringArray("Layers", "BrushSettings")
-current_tab = 0
+names = PackedStringArray("Layers", "Brush settings", "Layer settings")
+current_tab = 1
 
 [sub_resource type="Resource" id="Resource_appvx"]
 resource_name = "Split"
@@ -41,7 +44,7 @@ current_tab = 0
 resource_name = "Split"
 script = ExtResource("3_wcunx")
 direction = 1
-percent = 0.734375
+percent = 0.882813
 first = SubResource("Resource_appvx")
 second = SubResource("Resource_8cs8o")
 
@@ -51,6 +54,10 @@ script = ExtResource("3_jkhko")
 root = SubResource("Resource_k3g0j")
 hidden_tabs = {}
 
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_drb8g"]
+color = Color(0.129412, 0.52549, 0.898039, 1)
+thickness = 8
+
 [node name="AppInterface" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -58,6 +65,21 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="3D preview settings window" type="Window" parent="."]
+title = "3D preview settings"
+initial_position = 2
+size = Vector2i(515, 512)
+visible = false
+
+[node name="Control" type="Control" parent="3D preview settings window"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
 
 [node name="background" type="Panel" parent="."]
 modulate = Color(0.054902, 0.054902, 0.054902, 1)
@@ -80,12 +102,39 @@ grow_vertical = 2
 theme = ExtResource("1_50egg")
 theme_override_constants/separation = 0
 
-[node name="AppEditPanel" type="Panel" parent="VBoxContainer"]
-custom_minimum_size = Vector2(0, 32)
+[node name="AppEditPanel" type="MarginContainer" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 48)
 layout_mode = 2
 size_flags_vertical = 0
 theme = ExtResource("1_50egg")
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
 metadata/_edit_use_anchors_ = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/AppEditPanel"]
+layout_mode = 2
+theme = ExtResource("1_50egg")
+
+[node name="project settings button" type="MenuButton" parent="VBoxContainer/AppEditPanel/HBoxContainer"]
+custom_minimum_size = Vector2(48, 36)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+theme = ExtResource("1_50egg")
+text = "project settings"
+
+[node name="3D preview settings button" type="MenuButton" parent="VBoxContainer/AppEditPanel/HBoxContainer"]
+custom_minimum_size = Vector2(48, 36)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+theme = ExtResource("1_50egg")
+text = "3D preview settings"
+item_count = 1
+popup/item_0/text = ""
+popup/item_0/id = 0
 
 [node name="DockableContainer" type="Container" parent="VBoxContainer"]
 layout_mode = 2
@@ -111,347 +160,161 @@ render_target_update_mode = 4
 
 [node name="Node3D" parent="VBoxContainer/DockableContainer/3D preview/SubViewport" instance=ExtResource("1_1xuwo")]
 
-[node name="Layers" type="ScrollContainer" parent="VBoxContainer/DockableContainer"]
+[node name="2D preview" type="TextureRect" parent="VBoxContainer/DockableContainer"]
+visible = false
+custom_minimum_size = Vector2(512, 512)
+layout_mode = 2
+texture = ExtResource("8_7hkbj")
+expand_mode = 1
+
+[node name="Layers" type="VBoxContainer" parent="VBoxContainer/DockableContainer"]
+visible = false
 custom_minimum_size = Vector2(512, 128)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 3
 theme = ExtResource("1_50egg")
-horizontal_scroll_mode = 0
+script = ExtResource("8_7c28x")
 
-[node name="ReorderableContainer" type="Container" parent="VBoxContainer/DockableContainer/Layers" node_paths=PackedStringArray("scroll_container")]
+[node name="list scroll" type="ScrollContainer" parent="VBoxContainer/DockableContainer/Layers"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("1_50egg")
+
+[node name="List" type="Container" parent="VBoxContainer/DockableContainer/Layers/list scroll" node_paths=PackedStringArray("scroll_container")]
 process_mode = 1
-custom_minimum_size = Vector2(0, 890)
+custom_minimum_size = Vector2(0, 58)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource("1_50egg")
 script = ExtResource("6_ymwgp")
+hold_duration = 0.1
+separation = 5
 is_vertical = true
 scroll_container = NodePath("..")
 
-[node name="ColorRect" type="ColorRect" parent="VBoxContainer/DockableContainer/Layers/ReorderableContainer"]
-custom_minimum_size = Vector2(0, 50)
+[node name="Layer_ui_fill" parent="VBoxContainer/DockableContainer/Layers/list scroll/List" instance=ExtResource("9_drtng")]
+layout_mode = 2
+
+[node name="list edit" type="Panel" parent="VBoxContainer/DockableContainer/Layers"]
+custom_minimum_size = Vector2(0, 53)
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/DockableContainer/Layers/list edit"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_50egg")
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="buttons list" type="HBoxContainer" parent="VBoxContainer/DockableContainer/Layers/list edit/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+theme = ExtResource("1_50egg")
+theme_override_constants/separation = 5
+
+[node name="addNewLayer_button" type="Button" parent="VBoxContainer/DockableContainer/Layers/list edit/MarginContainer/buttons list"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+tooltip_text = "add new layer"
+theme = ExtResource("1_50egg")
+theme_override_colors/icon_normal_color = Color(1, 1, 1, 1)
+text = "add"
+icon_alignment = 1
+expand_icon = true
+
+[node name="Brush settings" type="ScrollContainer" parent="VBoxContainer/DockableContainer"]
+custom_minimum_size = Vector2(512, 128)
+layout_mode = 2
+theme = ExtResource("1_50egg")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/DockableContainer/Brush settings"]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 3
-mouse_filter = 1
-color = Color(0.894118, 0.0941176, 0.301961, 1)
+theme = ExtResource("1_50egg")
 
-[node name="Label" type="Label" parent="VBoxContainer/DockableContainer/Layers/ReorderableContainer/ColorRect"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 1
-text = "Layer 1"
-horizontal_alignment = 1
-vertical_alignment = 1
+[node name="size_setting" type="MarginContainer" parent="VBoxContainer/DockableContainer/Brush settings/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_50egg")
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 5
 
-[node name="ColorRect3" type="ColorRect" parent="VBoxContainer/DockableContainer/Layers/ReorderableContainer"]
-custom_minimum_size = Vector2(0, 50)
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/DockableContainer/Brush settings/VBoxContainer/size_setting"]
+layout_mode = 2
+size_flags_vertical = 4
+theme = ExtResource("1_50egg")
+theme_override_constants/separation = 20
+
+[node name="Label" type="Label" parent="VBoxContainer/DockableContainer/Brush settings/VBoxContainer/size_setting/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme = ExtResource("1_50egg")
+text = "size"
+
+[node name="HSlider" type="HSlider" parent="VBoxContainer/DockableContainer/Brush settings/VBoxContainer/size_setting/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 3
-mouse_filter = 1
-color = Color(0.827451, 0.627451, 0.0823529, 1)
+size_flags_vertical = 4
+theme = ExtResource("1_50egg")
+theme_override_styles/grabber_area = SubResource("StyleBoxLine_drb8g")
+value = 34.0
+scrollable = false
 
-[node name="Label2" type="Label" parent="VBoxContainer/DockableContainer/Layers/ReorderableContainer/ColorRect3"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 1
-text = "Layer 2"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="ColorRect2" type="ColorRect" parent="VBoxContainer/DockableContainer/Layers/ReorderableContainer"]
-custom_minimum_size = Vector2(0, 50)
+[node name="opacity_setting" type="MarginContainer" parent="VBoxContainer/DockableContainer/Brush settings/VBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 10
-size_flags_vertical = 3
-mouse_filter = 1
-color = Color(0, 0.45098, 0.662745, 1)
+theme = ExtResource("1_50egg")
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 5
 
-[node name="Label3" type="Label" parent="VBoxContainer/DockableContainer/Layers/ReorderableContainer/ColorRect2"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 1
-text = "Layer 3"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="ColorRect5" type="ColorRect" parent="VBoxContainer/DockableContainer/Layers/ReorderableContainer"]
-custom_minimum_size = Vector2(0, 50)
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/DockableContainer/Brush settings/VBoxContainer/opacity_setting"]
 layout_mode = 2
-size_flags_horizontal = 10
-size_flags_vertical = 3
-mouse_filter = 1
-color = Color(0.439216, 0, 0.572549, 1)
+size_flags_vertical = 4
+theme = ExtResource("1_50egg")
+theme_override_constants/separation = 20
 
-[node name="Label3" type="Label" parent="VBoxContainer/DockableContainer/Layers/ReorderableContainer/ColorRect5"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 1
-text = "Layer 4"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="ColorRect6" type="ColorRect" parent="VBoxContainer/DockableContainer/Layers/ReorderableContainer"]
-custom_minimum_size = Vector2(0, 50)
+[node name="Label" type="Label" parent="VBoxContainer/DockableContainer/Brush settings/VBoxContainer/opacity_setting/HBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 10
-size_flags_vertical = 3
-mouse_filter = 1
-color = Color(0.690196, 0, 0.67451, 1)
+size_flags_horizontal = 0
+theme = ExtResource("1_50egg")
+text = "opacity"
 
-[node name="Label3" type="Label" parent="VBoxContainer/DockableContainer/Layers/ReorderableContainer/ColorRect6"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 1
-text = "Layer 5"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="ColorRect7" type="ColorRect" parent="VBoxContainer/DockableContainer/Layers/ReorderableContainer"]
-custom_minimum_size = Vector2(0, 50)
+[node name="HSlider" type="HSlider" parent="VBoxContainer/DockableContainer/Brush settings/VBoxContainer/opacity_setting/HBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 10
-size_flags_vertical = 3
-mouse_filter = 1
-color = Color(0, 0.45098, 0.662745, 1)
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme = ExtResource("1_50egg")
+theme_override_styles/grabber_area = SubResource("StyleBoxLine_drb8g")
+value = 34.0
+scrollable = false
 
-[node name="Label3" type="Label" parent="VBoxContainer/DockableContainer/Layers/ReorderableContainer/ColorRect7"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 1
-text = "Layer 6"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="ColorRect8" type="ColorRect" parent="VBoxContainer/DockableContainer/Layers/ReorderableContainer"]
-custom_minimum_size = Vector2(0, 50)
-layout_mode = 2
-size_flags_horizontal = 10
-size_flags_vertical = 3
-mouse_filter = 1
-color = Color(0, 0.494118, 0.407843, 1)
-
-[node name="Label3" type="Label" parent="VBoxContainer/DockableContainer/Layers/ReorderableContainer/ColorRect8"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 1
-text = "Layer 7"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="ColorRect9" type="ColorRect" parent="VBoxContainer/DockableContainer/Layers/ReorderableContainer"]
-custom_minimum_size = Vector2(0, 50)
-layout_mode = 2
-size_flags_horizontal = 10
-size_flags_vertical = 3
-mouse_filter = 1
-color = Color(0.109804, 0.509804, 0, 1)
-
-[node name="Label3" type="Label" parent="VBoxContainer/DockableContainer/Layers/ReorderableContainer/ColorRect9"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 1
-text = "Layer 8"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="ColorRect10" type="ColorRect" parent="VBoxContainer/DockableContainer/Layers/ReorderableContainer"]
-custom_minimum_size = Vector2(0, 50)
-layout_mode = 2
-size_flags_horizontal = 10
-size_flags_vertical = 3
-mouse_filter = 1
-color = Color(0.584314, 0, 0.176471, 1)
-
-[node name="Label3" type="Label" parent="VBoxContainer/DockableContainer/Layers/ReorderableContainer/ColorRect10"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 1
-text = "Layer 9"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="ColorRect11" type="ColorRect" parent="VBoxContainer/DockableContainer/Layers/ReorderableContainer"]
-custom_minimum_size = Vector2(0, 50)
-layout_mode = 2
-size_flags_horizontal = 10
-size_flags_vertical = 3
-mouse_filter = 1
-color = Color(0.227451, 0.392157, 1, 1)
-
-[node name="Label3" type="Label" parent="VBoxContainer/DockableContainer/Layers/ReorderableContainer/ColorRect11"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 1
-text = "Layer 10"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="ColorRect4" type="ColorRect" parent="VBoxContainer/DockableContainer/Layers/ReorderableContainer"]
-custom_minimum_size = Vector2(0, 50)
-layout_mode = 2
-size_flags_horizontal = 10
-size_flags_vertical = 3
-mouse_filter = 1
-color = Color(0, 0.0862745, 0.145098, 1)
-
-[node name="Label3" type="Label" parent="VBoxContainer/DockableContainer/Layers/ReorderableContainer/ColorRect4"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 1
-text = "Layer 11"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="ColorRect12" type="ColorRect" parent="VBoxContainer/DockableContainer/Layers/ReorderableContainer"]
-custom_minimum_size = Vector2(0, 50)
-layout_mode = 2
-size_flags_horizontal = 10
-size_flags_vertical = 3
-mouse_filter = 1
-color = Color(0.74902, 0.74902, 0.74902, 1)
-
-[node name="Label3" type="Label" parent="VBoxContainer/DockableContainer/Layers/ReorderableContainer/ColorRect12"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 1
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "Layer 12"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="ColorRect13" type="ColorRect" parent="VBoxContainer/DockableContainer/Layers/ReorderableContainer"]
-custom_minimum_size = Vector2(0, 50)
-layout_mode = 2
-size_flags_horizontal = 10
-size_flags_vertical = 3
-mouse_filter = 1
-color = Color(1, 0.407843, 0.709804, 1)
-
-[node name="Label3" type="Label" parent="VBoxContainer/DockableContainer/Layers/ReorderableContainer/ColorRect13"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 1
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "Layer 13"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="ColorRect14" type="ColorRect" parent="VBoxContainer/DockableContainer/Layers/ReorderableContainer"]
-custom_minimum_size = Vector2(0, 50)
-layout_mode = 2
-size_flags_horizontal = 10
-size_flags_vertical = 3
-mouse_filter = 1
-color = Color(0.960784, 0.52549, 0, 1)
-
-[node name="Label3" type="Label" parent="VBoxContainer/DockableContainer/Layers/ReorderableContainer/ColorRect14"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 1
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "Layer 14"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="ColorRect15" type="ColorRect" parent="VBoxContainer/DockableContainer/Layers/ReorderableContainer"]
-custom_minimum_size = Vector2(0, 50)
-layout_mode = 2
-size_flags_horizontal = 10
-size_flags_vertical = 3
-mouse_filter = 1
-color = Color(0.717647, 0.27451, 0.0156863, 1)
-
-[node name="Label3" type="Label" parent="VBoxContainer/DockableContainer/Layers/ReorderableContainer/ColorRect15"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 1
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "Layer 15"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="BrushSettings" type="ScrollContainer" parent="VBoxContainer/DockableContainer"]
+[node name="Layer settings" type="ScrollContainer" parent="VBoxContainer/DockableContainer"]
 visible = false
 custom_minimum_size = Vector2(512, 128)
 layout_mode = 2
 theme = ExtResource("1_50egg")
 
-[node name="Panel" type="ColorPickerButton" parent="VBoxContainer/DockableContainer/BrushSettings"]
+[node name="Panel" type="Panel" parent="VBoxContainer/DockableContainer/Layer settings"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-flat = true
-color = Color(0.356863, 0.356863, 0.356863, 1)
 
 [node name="Assets" type="ItemList" parent="VBoxContainer/DockableContainer"]
-custom_minimum_size = Vector2(128, 64)
+custom_minimum_size = Vector2(128, 256)
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 10
+size_flags_vertical = 3
 theme = ExtResource("1_50egg")
 
-[connection signal="sort_children" from="VBoxContainer/DockableContainer/Layers/ReorderableContainer" to="VBoxContainer/DockableContainer/Layers/ReorderableContainer" method="_on_sort_children"]
+[connection signal="sort_children" from="VBoxContainer/DockableContainer/Layers/list scroll/List" to="VBoxContainer/DockableContainer/Layers/list scroll/List" method="_on_sort_children"]
+[connection signal="pressed" from="VBoxContainer/DockableContainer/Layers/list edit/MarginContainer/buttons list/addNewLayer_button" to="VBoxContainer/DockableContainer/Layers" method="add_new_fill_layer"]

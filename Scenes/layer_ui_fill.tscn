@@ -1,0 +1,83 @@
+[gd_scene load_steps=3 format=3 uid="uid://bk6xt62j3yiba"]
+
+[ext_resource type="Theme" uid="uid://cxi7ihqtqqtu6" path="res://Themes/darkTheme.tres" id="1_pdyud"]
+[ext_resource type="Texture2D" uid="uid://c1rxcwal2patu" path="res://addons/ReorderableContainer/Icon/reorderable_vbox_icon.svg" id="2_way0p"]
+
+[node name="Layer_ui_fill" type="Panel"]
+custom_minimum_size = Vector2(333, 58)
+anchors_preset = -1
+anchor_right = 0.444444
+anchor_bottom = 0.0895062
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 1
+mouse_filter = 1
+theme = ExtResource("1_pdyud")
+metadata/_edit_use_anchors_ = true
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+custom_minimum_size = Vector2(333, 58)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_pdyud")
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme = ExtResource("1_pdyud")
+theme_override_constants/separation = 5
+
+[node name="ColorPickPanel" type="ColorPickerButton" parent="MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_filter = 1
+theme = ExtResource("1_pdyud")
+color = Color(1, 1, 1, 1)
+
+[node name="MaskPickPanel" type="Button" parent="MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_filter = 1
+theme = ExtResource("1_pdyud")
+theme_override_font_sizes/font_size = 11
+text = "mask"
+
+[node name="LayerName" type="LineEdit" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_filter = 1
+theme = ExtResource("1_pdyud")
+placeholder_text = "base layer"
+
+[node name="LayerType" type="OptionButton" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+theme = ExtResource("1_pdyud")
+item_count = 3
+selected = 0
+popup/item_0/text = "add"
+popup/item_0/id = 0
+popup/item_1/text = "multiply"
+popup/item_1/id = 1
+popup/item_2/text = "subtract"
+popup/item_2/id = 2
+
+[node name="LayerType2" type="TextureRect" parent="MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(32, 48)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+theme = ExtResource("1_pdyud")
+texture = ExtResource("2_way0p")
+stretch_mode = 3
