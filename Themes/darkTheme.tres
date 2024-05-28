@@ -1,21 +1,109 @@
-[gd_resource type="Theme" load_steps=4 format=3 uid="uid://cxi7ihqtqqtu6"]
+[gd_resource type="Theme" load_steps=9 format=3 uid="uid://cxi7ihqtqqtu6"]
 
-[sub_resource type="StyleBoxLine" id="StyleBoxLine_3kkd7"]
-color = Color(0.128906, 0.523438, 0.894531, 1)
-thickness = 8
+[ext_resource type="Texture2D" uid="uid://taaardfk4og3" path="res://Themes/separationTexture.png" id="1_80xqo"]
+[ext_resource type="FontFile" uid="uid://0v7tiijxy53h" path="res://Themes/Inter-VariableFont_slnt,wght.ttf" id="2_37o5b"]
 
-[sub_resource type="StyleBoxLine" id="StyleBoxLine_6aiqe"]
-color = Color(0.0235294, 0.0235294, 0.0235294, 1)
-thickness = 8
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c57gu"]
+bg_color = Color(0.0923971, 0.0923971, 0.092397, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+expand_margin_left = 5.0
+expand_margin_top = 5.0
+expand_margin_right = 5.0
+expand_margin_bottom = 5.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0g724"]
+bg_color = Color(0, 0.588235, 0.988235, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bexe2"]
+bg_color = Color(0, 0.588235, 0.988235, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fqy40"]
+bg_color = Color(0.14902, 0.14902, 0.14902, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4gaad"]
-bg_color = Color(0.129412, 0.129412, 0.129412, 1)
+bg_color = Color(0.147672, 0.147672, 0.147672, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mq5iv"]
+bg_color = Color(0.190119, 0.672927, 0.719281, 1)
 corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
 [resource]
-HSlider/styles/grabber_area_highlight = SubResource("StyleBoxLine_3kkd7")
-HSlider/styles/slider = SubResource("StyleBoxLine_6aiqe")
+Button/colors/font_outline_color = Color(0, 0, 0, 0.0862745)
+Button/constants/outline_size = 10
+Button/font_sizes/font_size = 12
+Button/fonts/font = ExtResource("2_37o5b")
+Button/styles/normal = SubResource("StyleBoxFlat_c57gu")
+HSlider/styles/grabber_area = SubResource("StyleBoxFlat_0g724")
+HSlider/styles/grabber_area_highlight = SubResource("StyleBoxFlat_bexe2")
+HSplitContainer/constants/minimum_grab_thickness = 8
+HSplitContainer/constants/separation = 3
+HSplitContainer/icons/grabber = ExtResource("1_80xqo")
+ItemList/styles/panel = SubResource("StyleBoxFlat_fqy40")
+Label/colors/font_outline_color = Color(0, 0, 0, 0.0862745)
+Label/constants/outline_size = 10
+Label/font_sizes/font_size = 12
+Label/fonts/font = ExtResource("2_37o5b")
+LineEdit/colors/font_outline_color = Color(0, 0, 0, 0.0862745)
+LineEdit/constants/outline_size = 10
+LineEdit/font_sizes/font_size = 12
+LineEdit/fonts/font = ExtResource("2_37o5b")
+MenuButton/colors/font_outline_color = Color(0, 0, 0, 0.0862745)
+MenuButton/constants/outline_size = 10
+MenuButton/font_sizes/font_size = 12
+MenuButton/fonts/font = ExtResource("2_37o5b")
+OptionButton/colors/font_outline_color = Color(0, 0, 0, 0.0862745)
+OptionButton/constants/outline_size = 10
+OptionButton/fonts/font = ExtResource("2_37o5b")
 Panel/styles/panel = SubResource("StyleBoxFlat_4gaad")
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_mq5iv")
+PopupMenu/colors/font_outline_color = Color(0, 0, 0, 0.0862745)
+PopupMenu/constants/outline_size = 10
+PopupMenu/font_sizes/font_size = 12
+PopupMenu/fonts/font = ExtResource("2_37o5b")
+ProgressBar/colors/font_outline_color = Color(0, 0, 0, 0.0862745)
+ProgressBar/constants/outline_size = 10
+ProgressBar/font_sizes/font_size = 12
+ProgressBar/fonts/font = ExtResource("2_37o5b")
+TabBar/colors/font_outline_color = Color(0, 0, 0, 0.0862745)
+TabBar/constants/outline_size = 10
+TabBar/font_sizes/font_size = 5
+TabBar/fonts/font = ExtResource("2_37o5b")
+TabContainer/colors/font_outline_color = Color(0, 0, 0, 0.0862745)
+TabContainer/constants/outline_size = 10
+TabContainer/font_sizes/font_size = 12
+TabContainer/fonts/font = ExtResource("2_37o5b")
+TextEdit/colors/font_outline_color = Color(0, 0, 0, 0.0862745)
+TextEdit/constants/outline_size = 10
+TextEdit/font_sizes/font_size = 12
+TextEdit/fonts/font = ExtResource("2_37o5b")
+Tree/colors/font_outline_color = Color(0, 0, 0, 0.0862745)
+Tree/constants/outline_size = 10
+Tree/font_sizes/font_size = 12
+Tree/fonts/font = ExtResource("2_37o5b")
+VBoxContainer/constants/separation = 3
+VSeparator/constants/separation = 0
+VSplitContainer/constants/minimum_grab_thickness = 8
+VSplitContainer/constants/separation = 3
+VSplitContainer/icons/grabber = ExtResource("1_80xqo")

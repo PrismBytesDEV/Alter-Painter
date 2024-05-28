@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bqpc7vc0h2w81"]
+[gd_scene load_steps=15 format=3 uid="uid://bqpc7vc0h2w81"]
 
 [ext_resource type="Script" path="res://Scripts/3DViewport.gd" id="1_kunki"]
 [ext_resource type="Texture2D" uid="uid://b4wwpfijfexfa" path="res://HDRIs/empty_workshop_4k.exr" id="2_p8jye"]
@@ -6,6 +6,7 @@
 [ext_resource type="ArrayMesh" uid="uid://dcq7mkh5kfv0q" path="res://exampleMeshes/ShaderballGodot.tres" id="4_d8sc2"]
 [ext_resource type="Shader" path="res://Scenes/3DViewport.gdshader" id="5_mrnhx"]
 [ext_resource type="Script" path="res://Scripts/MeshToUV_Slice_script.gd" id="6_qbveq"]
+[ext_resource type="Theme" uid="uid://cxi7ihqtqqtu6" path="res://Themes/darkTheme.tres" id="7_pfdgg"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_ysreh"]
 panorama = ExtResource("2_p8jye")
@@ -84,6 +85,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("7_pfdgg")
 metadata/_edit_use_anchors_ = true
 
 [node name="OptionButton" type="OptionButton" parent="Control"]
@@ -96,6 +98,7 @@ anchor_bottom = 0.0679012
 offset_left = 21.0001
 offset_bottom = -0.999992
 grow_horizontal = 0
+theme = ExtResource("7_pfdgg")
 item_count = 7
 selected = 0
 popup/item_0/text = "default"

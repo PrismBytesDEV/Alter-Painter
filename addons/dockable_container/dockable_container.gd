@@ -29,7 +29,18 @@ const DragNDropPanel := preload("drag_n_drop_panel.gd")
 		_tabs_visible = value
 		for i in range(1, _panel_container.get_child_count()):
 			var panel := _panel_container.get_child(i) as DockablePanel
-			panel.tabs_visible = value
+			panel.show_tabs = _tabs_visible
+## If [code]true[/code] and a panel only has one tab, it keeps that tab hidden even if
+## [member tabs_visible] is [code]true[/code].
+## Only takes effect is [member tabs_visible] is [code]true[/code].
+@export var hide_single_tab := false:
+	get:
+		return _hide_single_tab
+	set(value):
+		_hide_single_tab = value
+		for i in range(1, _panel_container.get_child_count()):
+			var panel := _panel_container.get_child(i) as DockablePanel
+			panel.hide_single_tab = _hide_single_tab
 @export var rearrange_group := 0
 @export var layout := DockableLayout.new():
 	get:
@@ -49,6 +60,7 @@ var _drag_panel: DockablePanel
 var _tab_align := TabBar.ALIGNMENT_CENTER
 var _tabs_visible := true
 var _use_hidden_tabs_for_min_size := false
+var _hide_single_tab := false
 var _current_panel_index := 0
 var _current_split_index := 0
 var _children_names := {}
@@ -128,11 +140,13 @@ func _can_drop_data(_position: Vector2, data) -> bool:
 
 
 func _drop_data(_position: Vector2, data) -> void:
-	var from_node := get_node(data.from_path) as DockablePanel
+	var from_node := get_node(data.from_path)
+	if from_node is TabBar:
+		from_node = from_node.get_parent()
 	if from_node == _drag_panel and _drag_panel.get_child_count() == 1:
 		return
-
-	var moved_tab := from_node.get_tab_control(data.tabc_element)
+	var tab_index = data.tabc_element if data.has("tabc_element") else data.tab_index
+	var moved_tab = from_node.get_tab_control(tab_index)
 	if moved_tab is DockableReferenceControl:
 		moved_tab = moved_tab.reference_to
 	if not _is_managed_node(moved_tab):
@@ -185,17 +199,6 @@ func set_layout(value: DockableLayout) -> void:
 	queue_sort()
 
 
-func set_tab_alignment(value: TabBar.AlignmentMode) -> void:
-	_tab_align = value
-	for i in range(1, _panel_container.get_child_count()):
-		var panel = _panel_container.get_child(i)
-		panel.tab_alignment = value
-
-
-func get_tab_align() -> int:
-	return _tab_align
-
-
 func set_use_hidden_tabs_for_min_size(value: bool) -> void:
 	_use_hidden_tabs_for_min_size = value
 	for i in range(1, _panel_container.get_child_count()):
@@ -234,7 +237,7 @@ func get_tab_count() -> int:
 
 
 func _can_handle_drag_data(data) -> bool:
-	if data is Dictionary and data.get("type") == "tabc_element":
+	if data is Dictionary and data.get("type") in ["tab_container_tab", "tabc_element"]:
 		var tabc := get_node_or_null(data.get("from_path"))
 		return (
 			tabc
@@ -394,7 +397,8 @@ func _get_panel(idx: int) -> DockablePanel:
 		return _panel_container.get_child(idx)
 	var panel := DockablePanel.new()
 	panel.tab_alignment = _tab_align
-	panel.tabs_visible = _tabs_visible
+	panel.show_tabs = _tabs_visible
+	panel.hide_single_tab = _hide_single_tab
 	panel.use_hidden_tabs_for_min_size = _use_hidden_tabs_for_min_size
 	panel.set_tabs_rearrange_group(maxi(0, rearrange_group))
 	_panel_container.add_child(panel)

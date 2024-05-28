@@ -5,11 +5,12 @@
 [ext_resource type="Script" path="res://addons/dockable_container/dockable_container.gd" id="1_jbcfn"]
 [ext_resource type="Script" path="res://addons/dockable_container/layout_panel.gd" id="2_uu0la"]
 [ext_resource type="Script" path="res://addons/dockable_container/layout.gd" id="3_jkhko"]
-[ext_resource type="Script" path="res://addons/dockable_container/layout_split.gd" id="3_wcunx"]
+[ext_resource type="Script" path="res://addons/dockable_container/layout_split.gd" id="4_cmp6u"]
 [ext_resource type="Script" path="res://addons/ReorderableContainer/reorderable_container.gd" id="6_ymwgp"]
 [ext_resource type="Script" path="res://Scenes/LayerManager.gd" id="8_7c28x"]
 [ext_resource type="Texture2D" uid="uid://b4wwpfijfexfa" path="res://HDRIs/empty_workshop_4k.exr" id="8_7hkbj"]
 [ext_resource type="PackedScene" uid="uid://bk6xt62j3yiba" path="res://Scenes/layer_ui_fill.tscn" id="9_drtng"]
+[ext_resource type="Texture2D" uid="uid://bb8ag0uuxyydx" path="res://godotIcon.svg" id="11_q5ru4"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fk4ew"]
 bg_color = Color(1, 1, 1, 1)
@@ -17,46 +18,39 @@ bg_color = Color(1, 1, 1, 1)
 [sub_resource type="Resource" id="Resource_wodr5"]
 resource_name = "Tabs"
 script = ExtResource("2_uu0la")
-names = PackedStringArray("3D preview", "2D preview")
+names = PackedStringArray("2D preview")
 current_tab = 0
 
-[sub_resource type="Resource" id="Resource_327vj"]
+[sub_resource type="Resource" id="Resource_sp562"]
 resource_name = "Tabs"
 script = ExtResource("2_uu0la")
-names = PackedStringArray("Layers", "Brush settings", "Layer settings")
-current_tab = 1
+names = PackedStringArray("Layer settings", "Brush settings")
+current_tab = 0
 
-[sub_resource type="Resource" id="Resource_appvx"]
+[sub_resource type="Resource" id="Resource_ujdoo"]
 resource_name = "Split"
-script = ExtResource("3_wcunx")
+script = ExtResource("4_cmp6u")
 direction = 0
-percent = 0.738003
+percent = 0.780656
 first = SubResource("Resource_wodr5")
-second = SubResource("Resource_327vj")
-
-[sub_resource type="Resource" id="Resource_8cs8o"]
-resource_name = "Tabs"
-script = ExtResource("2_uu0la")
-names = PackedStringArray("Assets")
-current_tab = 0
-
-[sub_resource type="Resource" id="Resource_k3g0j"]
-resource_name = "Split"
-script = ExtResource("3_wcunx")
-direction = 1
-percent = 0.882813
-first = SubResource("Resource_appvx")
-second = SubResource("Resource_8cs8o")
+second = SubResource("Resource_sp562")
 
 [sub_resource type="Resource" id="Resource_oyvfb"]
 resource_name = "Layout"
 script = ExtResource("3_jkhko")
-root = SubResource("Resource_k3g0j")
+root = SubResource("Resource_ujdoo")
 hidden_tabs = {}
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_drb8g"]
 color = Color(0.129412, 0.52549, 0.898039, 1)
 thickness = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jsj4a"]
+bg_color = Color(0.715996, 0.579665, 0.28862, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
 
 [node name="AppInterface" type="Control"]
 layout_mode = 3
@@ -65,6 +59,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_50egg")
 
 [node name="3D preview settings window" type="Window" parent="."]
 title = "3D preview settings"
@@ -103,14 +98,11 @@ theme = ExtResource("1_50egg")
 theme_override_constants/separation = 0
 
 [node name="AppEditPanel" type="MarginContainer" parent="VBoxContainer"]
-custom_minimum_size = Vector2(0, 48)
+custom_minimum_size = Vector2(0, 25)
 layout_mode = 2
-size_flags_vertical = 0
 theme = ExtResource("1_50egg")
 theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 5
 metadata/_edit_use_anchors_ = true
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/AppEditPanel"]
@@ -118,7 +110,6 @@ layout_mode = 2
 theme = ExtResource("1_50egg")
 
 [node name="project settings button" type="MenuButton" parent="VBoxContainer/AppEditPanel/HBoxContainer"]
-custom_minimum_size = Vector2(48, 36)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
@@ -126,7 +117,6 @@ theme = ExtResource("1_50egg")
 text = "project settings"
 
 [node name="3D preview settings button" type="MenuButton" parent="VBoxContainer/AppEditPanel/HBoxContainer"]
-custom_minimum_size = Vector2(48, 36)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
@@ -137,6 +127,7 @@ popup/item_0/text = ""
 popup/item_0/id = 0
 
 [node name="DockableContainer" type="Container" parent="VBoxContainer"]
+visible = false
 layout_mode = 2
 size_flags_vertical = 3
 theme = ExtResource("1_50egg")
@@ -145,92 +136,14 @@ tab_alignment = 0
 use_hidden_tabs_for_min_size = true
 layout = SubResource("Resource_oyvfb")
 
-[node name="3D preview" type="SubViewportContainer" parent="VBoxContainer/DockableContainer"]
-custom_minimum_size = Vector2(512, 512)
-layout_mode = 2
-size_flags_vertical = 3
-theme = ExtResource("1_50egg")
-stretch = true
-
-[node name="SubViewport" type="SubViewport" parent="VBoxContainer/DockableContainer/3D preview"]
-handle_input_locally = false
-msaa_3d = 3
-size = Vector2i(628, 512)
-render_target_update_mode = 4
-
-[node name="Node3D" parent="VBoxContainer/DockableContainer/3D preview/SubViewport" instance=ExtResource("1_1xuwo")]
-
 [node name="2D preview" type="TextureRect" parent="VBoxContainer/DockableContainer"]
-visible = false
 custom_minimum_size = Vector2(512, 512)
 layout_mode = 2
 texture = ExtResource("8_7hkbj")
 expand_mode = 1
 
-[node name="Layers" type="VBoxContainer" parent="VBoxContainer/DockableContainer"]
-visible = false
-custom_minimum_size = Vector2(512, 128)
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 3
-theme = ExtResource("1_50egg")
-script = ExtResource("8_7c28x")
-
-[node name="list scroll" type="ScrollContainer" parent="VBoxContainer/DockableContainer/Layers"]
-layout_mode = 2
-size_flags_vertical = 3
-theme = ExtResource("1_50egg")
-
-[node name="List" type="Container" parent="VBoxContainer/DockableContainer/Layers/list scroll" node_paths=PackedStringArray("scroll_container")]
-process_mode = 1
-custom_minimum_size = Vector2(0, 58)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-theme = ExtResource("1_50egg")
-script = ExtResource("6_ymwgp")
-hold_duration = 0.1
-separation = 5
-is_vertical = true
-scroll_container = NodePath("..")
-
-[node name="Layer_ui_fill" parent="VBoxContainer/DockableContainer/Layers/list scroll/List" instance=ExtResource("9_drtng")]
-layout_mode = 2
-
-[node name="list edit" type="Panel" parent="VBoxContainer/DockableContainer/Layers"]
-custom_minimum_size = Vector2(0, 53)
-layout_mode = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/DockableContainer/Layers/list edit"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme = ExtResource("1_50egg")
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 5
-
-[node name="buttons list" type="HBoxContainer" parent="VBoxContainer/DockableContainer/Layers/list edit/MarginContainer"]
-layout_mode = 2
-size_flags_vertical = 8
-theme = ExtResource("1_50egg")
-theme_override_constants/separation = 5
-
-[node name="addNewLayer_button" type="Button" parent="VBoxContainer/DockableContainer/Layers/list edit/MarginContainer/buttons list"]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-tooltip_text = "add new layer"
-theme = ExtResource("1_50egg")
-theme_override_colors/icon_normal_color = Color(1, 1, 1, 1)
-text = "add"
-icon_alignment = 1
-expand_icon = true
-
 [node name="Brush settings" type="ScrollContainer" parent="VBoxContainer/DockableContainer"]
+visible = false
 custom_minimum_size = Vector2(512, 128)
 layout_mode = 2
 theme = ExtResource("1_50egg")
@@ -299,7 +212,6 @@ value = 34.0
 scrollable = false
 
 [node name="Layer settings" type="ScrollContainer" parent="VBoxContainer/DockableContainer"]
-visible = false
 custom_minimum_size = Vector2(512, 128)
 layout_mode = 2
 theme = ExtResource("1_50egg")
@@ -309,12 +221,170 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Assets" type="ItemList" parent="VBoxContainer/DockableContainer"]
-custom_minimum_size = Vector2(128, 256)
+[node name="VSplitContainer" type="VSplitContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("1_50egg")
+
+[node name="HSplitContainer" type="HSplitContainer" parent="VBoxContainer/VSplitContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("1_50egg")
+theme_override_constants/separation = 0
+theme_override_constants/minimum_grab_thickness = 20
+split_offset = 511
+
+[node name="3D preview" type="SubViewportContainer" parent="VBoxContainer/VSplitContainer/HSplitContainer"]
+custom_minimum_size = Vector2(27, 24)
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("1_50egg")
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="VBoxContainer/VSplitContainer/HSplitContainer/3D preview"]
+handle_input_locally = false
+msaa_3d = 3
+size = Vector2i(511, 310)
+render_target_update_mode = 4
+
+[node name="Node3D" parent="VBoxContainer/VSplitContainer/HSplitContainer/3D preview/SubViewport" instance=ExtResource("1_1xuwo")]
+
+[node name="Layers" type="VBoxContainer" parent="VBoxContainer/VSplitContainer/HSplitContainer"]
+custom_minimum_size = Vector2(27, 24)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource("1_50egg")
+script = ExtResource("8_7c28x")
 
-[connection signal="sort_children" from="VBoxContainer/DockableContainer/Layers/list scroll/List" to="VBoxContainer/DockableContainer/Layers/list scroll/List" method="_on_sort_children"]
-[connection signal="pressed" from="VBoxContainer/DockableContainer/Layers/list edit/MarginContainer/buttons list/addNewLayer_button" to="VBoxContainer/DockableContainer/Layers" method="add_new_fill_layer"]
+[node name="list scroll" type="ScrollContainer" parent="VBoxContainer/VSplitContainer/HSplitContainer/Layers"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("1_50egg")
+
+[node name="List" type="Container" parent="VBoxContainer/VSplitContainer/HSplitContainer/Layers/list scroll" node_paths=PackedStringArray("scroll_container")]
+process_mode = 1
+custom_minimum_size = Vector2(0, 58)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("1_50egg")
+script = ExtResource("6_ymwgp")
+hold_duration = 0.1
+separation = 5
+is_vertical = true
+scroll_container = NodePath("..")
+
+[node name="Layer_ui_fill" parent="VBoxContainer/VSplitContainer/HSplitContainer/Layers/list scroll/List" instance=ExtResource("9_drtng")]
+layout_mode = 2
+
+[node name="list edit" type="Panel" parent="VBoxContainer/VSplitContainer/HSplitContainer/Layers"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/VSplitContainer/HSplitContainer/Layers/list edit"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_50egg")
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="buttons list" type="HBoxContainer" parent="VBoxContainer/VSplitContainer/HSplitContainer/Layers/list edit/MarginContainer"]
+layout_mode = 2
+theme = ExtResource("1_50egg")
+theme_override_constants/separation = 5
+
+[node name="addNewLayer_button" type="Button" parent="VBoxContainer/VSplitContainer/HSplitContainer/Layers/list edit/MarginContainer/buttons list"]
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "add new layer"
+theme = ExtResource("1_50egg")
+theme_override_colors/icon_normal_color = Color(1, 1, 1, 1)
+text = "add"
+text_overrun_behavior = 2
+clip_text = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="Panel" type="Panel" parent="VBoxContainer/VSplitContainer/HSplitContainer"]
+visible = false
+self_modulate = Color(0.360153, 0.140785, 0.179429, 1)
+custom_minimum_size = Vector2(27, 24)
+layout_mode = 2
+
+[node name="Panel2" type="Panel" parent="VBoxContainer/VSplitContainer/HSplitContainer"]
+visible = false
+self_modulate = Color(0.188667, 0.370467, 0.386946, 1)
+custom_minimum_size = Vector2(27, 24)
+layout_mode = 2
+
+[node name="HSplitContainer2" type="HSplitContainer" parent="VBoxContainer/VSplitContainer"]
+custom_minimum_size = Vector2(27, 24)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Assets" type="ItemList" parent="VBoxContainer/VSplitContainer/HSplitContainer2"]
+custom_minimum_size = Vector2(27, 24)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("1_50egg")
+item_count = 20
+max_columns = 32
+icon_mode = 0
+icon_scale = 0.985
+fixed_icon_size = Vector2i(75, 75)
+item_0/text = ""
+item_0/icon = ExtResource("11_q5ru4")
+item_1/text = ""
+item_1/icon = ExtResource("11_q5ru4")
+item_2/text = ""
+item_2/icon = ExtResource("11_q5ru4")
+item_3/text = ""
+item_3/icon = ExtResource("11_q5ru4")
+item_4/text = ""
+item_4/icon = ExtResource("11_q5ru4")
+item_5/text = ""
+item_5/icon = ExtResource("11_q5ru4")
+item_6/text = ""
+item_6/icon = ExtResource("11_q5ru4")
+item_7/text = ""
+item_7/icon = ExtResource("11_q5ru4")
+item_8/text = ""
+item_8/icon = ExtResource("11_q5ru4")
+item_9/text = ""
+item_9/icon = ExtResource("11_q5ru4")
+item_10/text = ""
+item_10/icon = ExtResource("11_q5ru4")
+item_11/text = ""
+item_11/icon = ExtResource("11_q5ru4")
+item_12/text = ""
+item_12/icon = ExtResource("11_q5ru4")
+item_13/text = ""
+item_13/icon = ExtResource("11_q5ru4")
+item_14/text = ""
+item_14/icon = ExtResource("11_q5ru4")
+item_15/text = ""
+item_15/icon = ExtResource("11_q5ru4")
+item_16/text = ""
+item_16/icon = ExtResource("11_q5ru4")
+item_17/text = ""
+item_17/icon = ExtResource("11_q5ru4")
+item_18/text = ""
+item_18/icon = ExtResource("11_q5ru4")
+item_19/text = ""
+item_19/icon = ExtResource("11_q5ru4")
+
+[node name="Panel3" type="Panel" parent="VBoxContainer/VSplitContainer/HSplitContainer2"]
+custom_minimum_size = Vector2(27, 24)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_jsj4a")
+
+[connection signal="sort_children" from="VBoxContainer/VSplitContainer/HSplitContainer/Layers/list scroll/List" to="VBoxContainer/VSplitContainer/HSplitContainer/Layers/list scroll/List" method="_on_sort_children"]
+[connection signal="pressed" from="VBoxContainer/VSplitContainer/HSplitContainer/Layers/list edit/MarginContainer/buttons list/addNewLayer_button" to="VBoxContainer/VSplitContainer/HSplitContainer/Layers" method="add_new_fill_layer"]
