@@ -1,5 +1,6 @@
 @tool
 extends Marker3D
+class_name cameraController
 
 var farMaxCamDistance : float
 var closeMinCamDistance : float
@@ -10,14 +11,13 @@ var canRotateLight : bool = false
 var rotateLightMode : bool = false
 var cameraDistance : float = 2
 @onready var Camera : Camera3D = $Camera3D
-@onready var mesh : MeshInstance3D = $"../MeshInstance3D"
+static var mesh : MeshInstance3D
+static var currentCamera : cameraController
 
 @onready var light : DirectionalLight3D = $"../DirectionalLight3D"
 
-
-
 func _ready():
-	recenterCamera()
+	currentCamera = self
 
 func _input(event):
 	if event is InputEventKey:
