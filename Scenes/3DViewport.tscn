@@ -1,9 +1,8 @@
-[gd_scene load_steps=19 format=3 uid="uid://bqpc7vc0h2w81"]
+[gd_scene load_steps=18 format=3 uid="uid://bqpc7vc0h2w81"]
 
 [ext_resource type="Script" path="res://Scripts/3DViewport.gd" id="1_kunki"]
 [ext_resource type="Texture2D" uid="uid://b4wwpfijfexfa" path="res://HDRIs/empty_workshop_4k.exr" id="2_p8jye"]
 [ext_resource type="Script" path="res://Scripts/CameraTrackball.gd" id="3_v43rt"]
-[ext_resource type="Shader" path="res://Scenes/3DViewport.gdshader" id="5_mrnhx"]
 [ext_resource type="Theme" uid="uid://cxi7ihqtqqtu6" path="res://Themes/darkTheme.tres" id="7_pfdgg"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_ysreh"]
@@ -132,15 +131,13 @@ metallic = 1.0
 roughness = 0.13
 emission_energy_multiplier = 1.23
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_e8mtp"]
-render_priority = 0
-shader = ExtResource("5_mrnhx")
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u1d5b"]
+albedo_color = Color(0.121569, 0.211765, 0.392157, 1)
+roughness = 0.2
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xsc3u"]
-albedo_color = Color(0.254902, 0.254902, 0.254902, 1)
-metallic = 1.0
 metallic_specular = 1.0
-roughness = 0.3
+roughness = 0.2
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_h43wg"]
 _surfaces = [{
@@ -237,21 +234,21 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.53674e-07, 1.14955, -9.536
 script = ExtResource("3_v43rt")
 
 [node name="Camera3D" type="Camera3D" parent="Marker3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.38295)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3.38295)
 
 [node name="Shaderball" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0427471, 0.0110773)
 mesh = SubResource("ArrayMesh_dhes8")
 skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_uant3")
-surface_material_override/1 = SubResource("ShaderMaterial_e8mtp")
+surface_material_override/1 = SubResource("StandardMaterial3D_u1d5b")
 surface_material_override/2 = SubResource("StandardMaterial3D_xsc3u")
 
 [node name="Shaderball_001" type="MeshInstance3D" parent="Shaderball"]
 mesh = SubResource("ArrayMesh_iav7j")
 skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_uant3")
-surface_material_override/1 = SubResource("ShaderMaterial_e8mtp")
+surface_material_override/1 = SubResource("StandardMaterial3D_u1d5b")
 surface_material_override/2 = SubResource("StandardMaterial3D_xsc3u")
 
 [node name="Control" type="Control" parent="."]

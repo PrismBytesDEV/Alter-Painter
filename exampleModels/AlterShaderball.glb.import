@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://bh7otf4eim8yd"
-path="res://.godot/imported/AstralShaderball.glb-de38ce157ab4209f4a64e758c30b32fa.scn"
+path="res://.godot/imported/AlterShaderball.glb-097bcd7078b560ee446ca8e691111468.scn"
 
 [deps]
 
-source_file="res://exampleModels/AstralShaderball.glb"
-dest_files=["res://.godot/imported/AstralShaderball.glb-de38ce157ab4209f4a64e758c30b32fa.scn"]
+source_file="res://exampleModels/AlterShaderball.glb"
+dest_files=["res://.godot/imported/AlterShaderball.glb-097bcd7078b560ee446ca8e691111468.scn"]
 
 [params]
 

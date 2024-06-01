@@ -1,4 +1,3 @@
-@tool
 extends Marker3D
 class_name cameraController
 
@@ -55,5 +54,5 @@ func recenterCamera():
 	position = mesh.get_aabb().get_center()
 	closeMinCamDistance = mesh.get_aabb().get_longest_axis_size() * mesh.scale.x
 	farMaxCamDistance = mesh.get_aabb().get_longest_axis_size() * 4 * mesh.scale.x
-	cameraDistance = closeMinCamDistance
+	cameraDistance = (closeMinCamDistance + farMaxCamDistance) / 2.0
 	Camera.position = Vector3(0,0,cameraDistance)
