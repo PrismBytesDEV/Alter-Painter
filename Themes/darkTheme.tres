@@ -269,8 +269,8 @@ corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mq5iv"]
-bg_color = Color(0.190119, 0.672927, 0.719281, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rhot2"]
+bg_color = Color(0.147672, 0.147672, 0.147672, 1)
 corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10
@@ -354,8 +354,9 @@ OptionButton/styles/hover = SubResource("StyleBoxFlat_6uq8d")
 OptionButton/styles/normal = SubResource("StyleBoxFlat_ytccl")
 OptionButton/styles/pressed = SubResource("StyleBoxFlat_jl01v")
 Panel/styles/panel = SubResource("StyleBoxFlat_4gaad")
-PanelContainer/styles/panel = SubResource("StyleBoxFlat_mq5iv")
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_rhot2")
 PopupMenu/colors/font_outline_color = Color(0, 0, 0, 0.0862745)
+PopupMenu/constants/icon_max_width = 20
 PopupMenu/constants/outline_size = 10
 PopupMenu/font_sizes/font_separator_size = 12
 PopupMenu/font_sizes/font_size = 12

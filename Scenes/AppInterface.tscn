@@ -1,11 +1,11 @@
-[gd_scene load_steps=26 format=3 uid="uid://2a2kb6vkospx"]
+[gd_scene load_steps=28 format=3 uid="uid://2a2kb6vkospx"]
 
 [ext_resource type="PackedScene" uid="uid://bqpc7vc0h2w81" path="res://Scenes/3DViewport.tscn" id="1_1xuwo"]
 [ext_resource type="Theme" uid="uid://cxi7ihqtqqtu6" path="res://Themes/darkTheme.tres" id="1_50egg"]
 [ext_resource type="Script" path="res://addons/dockable_container/dockable_container.gd" id="1_jbcfn"]
 [ext_resource type="Script" path="res://Scripts/App.gd" id="2_3s3tk"]
 [ext_resource type="Script" path="res://addons/dockable_container/layout_panel.gd" id="2_uu0la"]
-[ext_resource type="Script" path="res://Scripts/SplitContainerRighClickDetection.gd" id="3_iy3mc"]
+[ext_resource type="Script" path="res://Scripts/AreaSplitContainer.gd" id="3_iy3mc"]
 [ext_resource type="Script" path="res://addons/dockable_container/layout.gd" id="3_jkhko"]
 [ext_resource type="Script" path="res://addons/dockable_container/layout_split.gd" id="4_cmp6u"]
 [ext_resource type="Script" path="res://addons/ReorderableContainer/reorderable_container.gd" id="6_ymwgp"]
@@ -14,6 +14,8 @@
 [ext_resource type="Texture2D" uid="uid://b4wwpfijfexfa" path="res://HDRIs/empty_workshop_4k.exr" id="8_7hkbj"]
 [ext_resource type="PackedScene" uid="uid://bk6xt62j3yiba" path="res://Scenes/layer_ui_fill.tscn" id="9_drtng"]
 [ext_resource type="Texture2D" uid="uid://bb8ag0uuxyydx" path="res://godotIcon.svg" id="11_q5ru4"]
+[ext_resource type="Texture2D" uid="uid://bjbxfl5efns4p" path="res://textures/icons/VerticalAreaSplitIcon.png" id="15_1vikl"]
+[ext_resource type="Texture2D" uid="uid://dtunlx2s2kyqk" path="res://textures/icons/HorizontalAreaSplitIcon.png" id="16_uorpf"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fk4ew"]
 bg_color = Color(0.054902, 0.054902, 0.054902, 1)
@@ -100,6 +102,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_fk4ew")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
@@ -157,7 +160,7 @@ popup/item_1/id = 1
 [node name="V_AreaSplit" type="SplitContainer" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-split_offset = -200
+split_offset = 235
 vertical = true
 script = ExtResource("3_iy3mc")
 
@@ -171,6 +174,7 @@ script = ExtResource("3_iy3mc")
 clip_children = 1
 custom_minimum_size = Vector2(27, 24)
 layout_mode = 2
+mouse_filter = 1
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="VBoxContainer/V_AreaSplit/H_AreaSplit/Preview3DArea"]
 layout_mode = 1
@@ -186,7 +190,7 @@ stretch = true
 handle_input_locally = false
 msaa_3d = 3
 scaling_3d_mode = 2
-size = Vector2i(1500, 829)
+size = Vector2i(1500, 750)
 render_target_update_mode = 4
 script = ExtResource("7_elaff")
 
@@ -195,13 +199,14 @@ script = ExtResource("7_elaff")
 [node name="RenderModePickButton" type="OptionButton" parent="VBoxContainer/V_AreaSplit/H_AreaSplit/Preview3DArea"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.929702
-anchor_top = 0.0232558
-anchor_right = 0.984167
-anchor_bottom = 0.0377907
+anchor_left = 0.927333
+anchor_top = 0.0145349
+anchor_right = 0.984667
+anchor_bottom = 0.0290698
 grow_horizontal = 0
 size_flags_horizontal = 8
 size_flags_vertical = 0
+mouse_filter = 1
 item_count = 6
 selected = 0
 popup/item_0/text = "default"
@@ -277,72 +282,38 @@ clip_text = true
 icon_alignment = 1
 expand_icon = true
 
-[node name="AssetBrowserArea" type="SplitContainer" parent="VBoxContainer/V_AreaSplit"]
-custom_minimum_size = Vector2(27, 24)
+[node name="Asset Browser" type="SplitContainer" parent="VBoxContainer/V_AreaSplit"]
 layout_mode = 2
+size_flags_vertical = 3
 split_offset = 200
 script = ExtResource("3_iy3mc")
 
-[node name="Tree" type="Tree" parent="VBoxContainer/V_AreaSplit/AssetBrowserArea"]
+[node name="Tree" type="Tree" parent="VBoxContainer/V_AreaSplit/Asset Browser"]
 layout_mode = 2
+mouse_filter = 1
 
-[node name="Files" type="ItemList" parent="VBoxContainer/V_AreaSplit/AssetBrowserArea"]
+[node name="ItemList" type="ItemList" parent="VBoxContainer/V_AreaSplit/Asset Browser"]
 layout_mode = 2
-size_flags_vertical = 3
-item_count = 20
-max_columns = 32
-icon_mode = 0
-icon_scale = 0.985
-fixed_icon_size = Vector2i(75, 75)
+mouse_filter = 1
+item_count = 2
+max_columns = 10
+same_column_width = true
+fixed_icon_size = Vector2i(80, 80)
 item_0/text = ""
 item_0/icon = ExtResource("11_q5ru4")
 item_1/text = ""
 item_1/icon = ExtResource("11_q5ru4")
-item_2/text = ""
-item_2/icon = ExtResource("11_q5ru4")
-item_3/text = ""
-item_3/icon = ExtResource("11_q5ru4")
-item_4/text = ""
-item_4/icon = ExtResource("11_q5ru4")
-item_5/text = ""
-item_5/icon = ExtResource("11_q5ru4")
-item_6/text = ""
-item_6/icon = ExtResource("11_q5ru4")
-item_7/text = ""
-item_7/icon = ExtResource("11_q5ru4")
-item_8/text = ""
-item_8/icon = ExtResource("11_q5ru4")
-item_9/text = ""
-item_9/icon = ExtResource("11_q5ru4")
-item_10/text = ""
-item_10/icon = ExtResource("11_q5ru4")
-item_11/text = ""
-item_11/icon = ExtResource("11_q5ru4")
-item_12/text = ""
-item_12/icon = ExtResource("11_q5ru4")
-item_13/text = ""
-item_13/icon = ExtResource("11_q5ru4")
-item_14/text = ""
-item_14/icon = ExtResource("11_q5ru4")
-item_15/text = ""
-item_15/icon = ExtResource("11_q5ru4")
-item_16/text = ""
-item_16/icon = ExtResource("11_q5ru4")
-item_17/text = ""
-item_17/icon = ExtResource("11_q5ru4")
-item_18/text = ""
-item_18/icon = ExtResource("11_q5ru4")
-item_19/text = ""
-item_19/icon = ExtResource("11_q5ru4")
 
 [node name="Separator" type="Panel" parent="VBoxContainer"]
 custom_minimum_size = Vector2(0, 3)
 layout_mode = 2
+mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_5f0p5")
 
 [node name="AppBottomInfo" type="PanelContainer" parent="VBoxContainer"]
 custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
+mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_s6qsb")
 
 [node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/AppBottomInfo"]
@@ -464,26 +435,35 @@ size_flags_vertical = 3
 
 [node name="DockOptionsPopup" type="PopupMenu" parent="."]
 unique_name_in_owner = true
-size = Vector2i(130, 111)
+size = Vector2i(173, 205)
 always_on_top = true
 item_count = 7
 item_0/text = "Area Options"
-item_0/id = 0
+item_0/id = 5
 item_0/separator = true
 item_1/text = ""
-item_1/id = 1
+item_1/id = 5
 item_1/separator = true
 item_2/text = "Vertical Split"
-item_2/id = 2
+item_2/icon = ExtResource("15_1vikl")
+item_2/id = 0
 item_3/text = "Horizontal Split"
-item_3/id = 3
+item_3/icon = ExtResource("16_uorpf")
+item_3/id = 1
 item_4/text = ""
-item_4/id = 4
+item_4/id = 5
 item_4/separator = true
 item_5/text = "Join Areas"
-item_5/id = 5
+item_5/id = 2
 item_6/text = "Swap Areas"
-item_6/id = 6
+item_6/id = 3
+
+[node name="SplitAreaDrawLayer" type="CanvasLayer" parent="."]
+
+[node name="SplitLine" type="Line2D" parent="SplitAreaDrawLayer"]
+unique_name_in_owner = true
+points = PackedVector2Array(0, 60, 200, 60)
+width = 1.0
 
 [connection signal="item_selected" from="VBoxContainer/V_AreaSplit/H_AreaSplit/Preview3DArea/RenderModePickButton" to="VBoxContainer/V_AreaSplit/H_AreaSplit/Preview3DArea/SubViewportContainer/SubViewport" method="selectRenderMode"]
 [connection signal="sort_children" from="VBoxContainer/V_AreaSplit/H_AreaSplit/LayersArea/list scroll/List" to="VBoxContainer/V_AreaSplit/H_AreaSplit/LayersArea/list scroll/List" method="_on_sort_children"]
