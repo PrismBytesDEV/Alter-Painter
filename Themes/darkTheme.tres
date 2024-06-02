@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=25 format=3 uid="uid://cxi7ihqtqqtu6"]
+[gd_resource type="Theme" load_steps=32 format=3 uid="uid://cxi7ihqtqqtu6"]
 
 [ext_resource type="Texture2D" uid="uid://taaardfk4og3" path="res://Themes/separationTexture.png" id="1_80xqo"]
 [ext_resource type="FontFile" uid="uid://0v7tiijxy53h" path="res://Themes/Inter-VariableFont_slnt,wght.ttf" id="2_37o5b"]
@@ -134,6 +134,8 @@ corner_radius_top_left = 5
 corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lpv1j"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fqy40"]
 bg_color = Color(0.14902, 0.14902, 0.14902, 1)
@@ -274,6 +276,39 @@ corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_w8g6e"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ggbk5"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ri7tt"]
+bg_color = Color(0.0941176, 0.0941176, 0.0941176, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.141176, 0.141176, 0.141176, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_2f76k"]
+color = Color(0.184314, 0.184314, 0.184314, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_02a5j"]
+bg_color = Color(0.0941176, 0.0941176, 0.0941176, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.141176, 0.141176, 0.141176, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ibftf"]
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jypwb"]
 bg_color = Color(0.14902, 0.14902, 0.14902, 1)
 corner_radius_top_left = 10
@@ -296,9 +331,7 @@ ColorPickerButton/styles/normal = SubResource("StyleBoxFlat_7e4vh")
 ColorPickerButton/styles/pressed = SubResource("StyleBoxFlat_i3o3k")
 HSlider/styles/grabber_area = SubResource("StyleBoxFlat_0g724")
 HSlider/styles/grabber_area_highlight = SubResource("StyleBoxFlat_bexe2")
-HSplitContainer/constants/minimum_grab_thickness = 8
-HSplitContainer/constants/separation = 3
-HSplitContainer/icons/grabber = ExtResource("1_80xqo")
+ItemList/styles/focus = SubResource("StyleBoxEmpty_lpv1j")
 ItemList/styles/panel = SubResource("StyleBoxFlat_fqy40")
 Label/colors/font_outline_color = Color(0, 0, 0, 0.0862745)
 Label/constants/outline_size = 10
@@ -324,12 +357,23 @@ Panel/styles/panel = SubResource("StyleBoxFlat_4gaad")
 PanelContainer/styles/panel = SubResource("StyleBoxFlat_mq5iv")
 PopupMenu/colors/font_outline_color = Color(0, 0, 0, 0.0862745)
 PopupMenu/constants/outline_size = 10
+PopupMenu/font_sizes/font_separator_size = 12
 PopupMenu/font_sizes/font_size = 12
 PopupMenu/fonts/font = ExtResource("2_37o5b")
+PopupMenu/fonts/font_separator = ExtResource("2_37o5b")
+PopupMenu/styles/labeled_separator_left = SubResource("StyleBoxEmpty_w8g6e")
+PopupMenu/styles/labeled_separator_right = SubResource("StyleBoxEmpty_ggbk5")
+PopupMenu/styles/panel = SubResource("StyleBoxFlat_ri7tt")
+PopupMenu/styles/separator = SubResource("StyleBoxLine_2f76k")
+PopupPanel/styles/panel = SubResource("StyleBoxFlat_02a5j")
 ProgressBar/colors/font_outline_color = Color(0, 0, 0, 0.0862745)
 ProgressBar/constants/outline_size = 10
 ProgressBar/font_sizes/font_size = 12
 ProgressBar/fonts/font = ExtResource("2_37o5b")
+SplitContainer/constants/minimum_grab_thickness = 8
+SplitContainer/constants/separation = 3
+SplitContainer/icons/h_grabber = ExtResource("1_80xqo")
+SplitContainer/icons/v_grabber = ExtResource("1_80xqo")
 TabBar/colors/font_outline_color = Color(0, 0, 0, 0.0862745)
 TabBar/constants/outline_size = 10
 TabBar/font_sizes/font_size = 5
@@ -346,9 +390,7 @@ Tree/colors/font_outline_color = Color(0, 0, 0, 0.0862745)
 Tree/constants/outline_size = 10
 Tree/font_sizes/font_size = 12
 Tree/fonts/font = ExtResource("2_37o5b")
+Tree/styles/focus = SubResource("StyleBoxEmpty_ibftf")
 Tree/styles/panel = SubResource("StyleBoxFlat_jypwb")
 VBoxContainer/constants/separation = 3
 VSeparator/constants/separation = 0
-VSplitContainer/constants/minimum_grab_thickness = 8
-VSplitContainer/constants/separation = 3
-VSplitContainer/icons/grabber = ExtResource("1_80xqo")

@@ -13,7 +13,7 @@ sky_material = SubResource("PanoramaSkyMaterial_ysreh")
 process_mode = 1
 
 [sub_resource type="Environment" id="Environment_p1ymn"]
-background_mode = 1
+background_mode = 2
 background_color = Color(0.243137, 0.243137, 0.243137, 1)
 background_energy_multiplier = 0.5
 sky = SubResource("Sky_13irs")
@@ -262,6 +262,7 @@ theme = ExtResource("7_pfdgg")
 metadata/_edit_use_anchors_ = true
 
 [node name="RenderModePickButton" type="OptionButton" parent="Control"]
+visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.854167

@@ -1,9 +1,11 @@
 extends SubViewport
 
 func _ready():
-	var node_3d : Node = $Node3D
-	var renderModePickButton : OptionButton = node_3d.find_child("Control").find_child("RenderModePickButton")
-	renderModePickButton.item_selected.connect(selectRenderMode)
+	pass
+	#var node_3d : Node = $Node3D
+	#var renderModePickButton : OptionButton = node_3d.find_child("Control").find_child("RenderModePickButton")
+	#renderModePickButton.item_selected.connect(selectRenderMode)
+
 
 func selectRenderMode(mode : int)-> void:
 	renderingMode = mode
