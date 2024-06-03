@@ -1,0 +1,19 @@
+[gd_resource type="Environment" load_steps=4 format=3 uid="uid://cgwugn0gdgmsl"]
+
+[ext_resource type="Texture2D" uid="uid://b4wwpfijfexfa" path="res://HDRIs/empty_workshop_4k.exr" id="1_s652f"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_ysreh"]
+panorama = ExtResource("1_s652f")
+
+[sub_resource type="Sky" id="Sky_13irs"]
+sky_material = SubResource("PanoramaSkyMaterial_ysreh")
+process_mode = 1
+
+[resource]
+background_mode = 2
+background_color = Color(0.243137, 0.243137, 0.243137, 1)
+background_energy_multiplier = 0.5
+sky = SubResource("Sky_13irs")
+ambient_light_source = 3
+reflected_light_source = 2
+tonemap_mode = 2

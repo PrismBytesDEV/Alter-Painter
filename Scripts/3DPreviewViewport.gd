@@ -1,6 +1,6 @@
 extends SubViewport
 
-func _ready():
+func _ready()->void:
 	pass
 	#var node_3d : Node = $Node3D
 	#var renderModePickButton : OptionButton = node_3d.find_child("Control").find_child("RenderModePickButton")
