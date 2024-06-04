@@ -2,8 +2,11 @@ extends SplitContainer
 class_name AreaSplitContainer
 
 var _mousePos : Vector2
+static var _dockOptionsPopup : PopupMenu
 
-@onready var _dockOptionsPopup : PopupMenu = %DockOptionsPopup
+func _ready()->void:
+	if _dockOptionsPopup == null:
+		_dockOptionsPopup = %"DockOptionsPopup"
 
 func _input(event : InputEvent)->void:
 	if event is InputEventMouseMotion:
