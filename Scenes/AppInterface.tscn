@@ -1,39 +1,26 @@
-[gd_scene load_steps=42 format=3 uid="uid://2a2kb6vkospx"]
+[gd_scene load_steps=36 format=3 uid="uid://2a2kb6vkospx"]
 
 [ext_resource type="Theme" uid="uid://cxi7ihqtqqtu6" path="res://Themes/darkTheme.tres" id="1_50egg"]
 [ext_resource type="Script" path="res://addons/dockable_container/dockable_container.gd" id="1_jbcfn"]
 [ext_resource type="Script" path="res://Scripts/App.gd" id="2_3s3tk"]
 [ext_resource type="Script" path="res://addons/dockable_container/layout_panel.gd" id="2_uu0la"]
-[ext_resource type="Script" path="res://Scripts/AreaSplitContainer.gd" id="3_iy3mc"]
+[ext_resource type="Script" path="res://Scripts/WorkspaceArea/AreaSplitContainer.gd" id="3_iy3mc"]
 [ext_resource type="Script" path="res://addons/dockable_container/layout.gd" id="3_jkhko"]
+[ext_resource type="PackedScene" uid="uid://bj8wub3fyrhw5" path="res://Scenes/WorkspaceAreas/Preview/Preview3DArea.tscn" id="4_1mgvo"]
 [ext_resource type="Script" path="res://addons/dockable_container/layout_split.gd" id="4_cmp6u"]
-[ext_resource type="Script" path="res://Scripts/WorkspaceArea.gd" id="4_k5ssa"]
+[ext_resource type="PackedScene" uid="uid://ddurw3r8x0l8r" path="res://Scenes/WorkspaceAreas/Layers/LayersArea.tscn" id="5_4kxwm"]
 [ext_resource type="Environment" uid="uid://cgwugn0gdgmsl" path="res://Environment.tres" id="5_p58yj"]
-[ext_resource type="Script" path="res://addons/ReorderableContainer/reorderable_container.gd" id="6_ymwgp"]
-[ext_resource type="Script" path="res://Scripts/3DPreviewViewport.gd" id="7_elaff"]
-[ext_resource type="Script" path="res://Scenes/LayerManager.gd" id="8_7c28x"]
+[ext_resource type="PackedScene" uid="uid://kaf52hnylxhg" path="res://Scenes/WorkspaceAreas/Other/AssetBrowserArea.tscn" id="6_lkjph"]
 [ext_resource type="Texture2D" uid="uid://b4wwpfijfexfa" path="res://HDRIs/empty_workshop_4k.exr" id="8_7hkbj"]
-[ext_resource type="PackedScene" uid="uid://bk6xt62j3yiba" path="res://Scenes/layer_ui_fill.tscn" id="9_drtng"]
-[ext_resource type="Texture2D" uid="uid://ih4vsvjnohjr" path="res://textures/icons/FolderIcons/FolderBigThumb.svg" id="10_h400e"]
 [ext_resource type="Texture2D" uid="uid://bjbxfl5efns4p" path="res://textures/icons/VerticalAreaSplitIcon.png" id="15_1vikl"]
 [ext_resource type="Texture2D" uid="uid://dtunlx2s2kyqk" path="res://textures/icons/HorizontalAreaSplitIcon.png" id="16_uorpf"]
-[ext_resource type="Script" path="res://Scripts/3DViewport.gd" id="17_3v5pm"]
-[ext_resource type="Script" path="res://Scripts/AreaSplitManager.gd" id="18_atbwg"]
-[ext_resource type="Script" path="res://Scripts/CameraTrackball.gd" id="18_tvjgk"]
+[ext_resource type="Script" path="res://Scripts/WorkspaceArea/CustomWorkspaceScripts/Preview3DArea/Alter3DScene.gd" id="17_3v5pm"]
+[ext_resource type="Script" path="res://Scripts/WorkspaceArea/AreaSplitManager.gd" id="18_atbwg"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fk4ew"]
 bg_color = Color(0.054902, 0.054902, 0.054902, 1)
 
 [sub_resource type="Theme" id="Theme_d6vfy"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_46t71"]
-bg_color = Color(0.099986, 0.099986, 0.099986, 1)
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_28k06"]
-bg_color = Color(0.141176, 0.141176, 0.141176, 1)
-corner_detail = 1
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5f0p5"]
 bg_color = Color(0.054902, 0.054902, 0.054902, 1)
@@ -377,165 +364,14 @@ split_offset = 385
 vertical = true
 script = ExtResource("3_iy3mc")
 
-[node name="Preview3DArea" type="Panel" parent="VBoxContainer/V_AreaSplit/H_AreaSplit/AreaSplitContainer"]
-clip_children = 1
-custom_minimum_size = Vector2(27, 24)
-layout_mode = 2
-mouse_filter = 1
-script = ExtResource("4_k5ssa")
-
-[node name="SubViewportContainer" type="SubViewportContainer" parent="VBoxContainer/V_AreaSplit/H_AreaSplit/AreaSplitContainer/Preview3DArea"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_vertical = 3
-stretch = true
-
-[node name="SubViewport" type="SubViewport" parent="VBoxContainer/V_AreaSplit/H_AreaSplit/AreaSplitContainer/Preview3DArea/SubViewportContainer"]
-handle_input_locally = false
-msaa_3d = 3
-mesh_lod_threshold = 0.0
-size = Vector2i(1500, 855)
-render_target_update_mode = 4
-script = ExtResource("7_elaff")
-
-[node name="CameraController" type="Marker3D" parent="VBoxContainer/V_AreaSplit/H_AreaSplit/AreaSplitContainer/Preview3DArea/SubViewportContainer/SubViewport"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.53674e-07, 1.14955, -9.53674e-07)
-script = ExtResource("18_tvjgk")
-
-[node name="RenderModePickButton" type="OptionButton" parent="VBoxContainer/V_AreaSplit/H_AreaSplit/AreaSplitContainer/Preview3DArea"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.927333
-anchor_top = 0.0145349
-anchor_right = 0.984667
-anchor_bottom = 0.0290698
-grow_horizontal = 0
-size_flags_horizontal = 8
-size_flags_vertical = 0
-mouse_filter = 1
-item_count = 6
-selected = 0
-popup/item_0/text = "default"
-popup/item_0/id = 0
-popup/item_1/text = "albedo"
-popup/item_1/id = 1
-popup/item_2/text = "normal_map"
-popup/item_2/id = 2
-popup/item_3/text = "roughness"
-popup/item_3/id = 3
-popup/item_4/text = "metalness"
-popup/item_4/id = 4
-popup/item_5/text = "heightmap"
-popup/item_5/id = 5
-metadata/_edit_use_anchors_ = true
-
-[node name="LayersArea" type="Panel" parent="VBoxContainer/V_AreaSplit/H_AreaSplit"]
-clip_children = 1
-custom_minimum_size = Vector2(27, 24)
-layout_mode = 2
-script = ExtResource("4_k5ssa")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/V_AreaSplit/H_AreaSplit/LayersArea"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/separation = 0
-script = ExtResource("8_7c28x")
-
-[node name="list scroll" type="ScrollContainer" parent="VBoxContainer/V_AreaSplit/H_AreaSplit/LayersArea/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_46t71")
-
-[node name="List" type="Container" parent="VBoxContainer/V_AreaSplit/H_AreaSplit/LayersArea/VBoxContainer/list scroll" node_paths=PackedStringArray("scroll_container")]
-process_mode = 1
-custom_minimum_size = Vector2(0, 46)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-script = ExtResource("6_ymwgp")
-hold_duration = 0.1
-speed = 30.0
-separation = 5
-is_vertical = true
-scroll_container = NodePath("..")
-
-[node name="Layer_ui_fill" parent="VBoxContainer/V_AreaSplit/H_AreaSplit/LayersArea/VBoxContainer/list scroll/List" instance=ExtResource("9_drtng")]
+[node name="Preview3DArea" parent="VBoxContainer/V_AreaSplit/H_AreaSplit/AreaSplitContainer" instance=ExtResource("4_1mgvo")]
 layout_mode = 2
 
-[node name="list edit" type="Panel" parent="VBoxContainer/V_AreaSplit/H_AreaSplit/LayersArea/VBoxContainer"]
-custom_minimum_size = Vector2(0, 24)
+[node name="LayersArea" parent="VBoxContainer/V_AreaSplit/H_AreaSplit" instance=ExtResource("5_4kxwm")]
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_28k06")
 
-[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/V_AreaSplit/H_AreaSplit/LayersArea/VBoxContainer/list edit"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 5
-
-[node name="buttons list" type="HBoxContainer" parent="VBoxContainer/V_AreaSplit/H_AreaSplit/LayersArea/VBoxContainer/list edit/MarginContainer"]
+[node name="AssetBrowser" parent="VBoxContainer/V_AreaSplit" instance=ExtResource("6_lkjph")]
 layout_mode = 2
-theme_override_constants/separation = 5
-
-[node name="addNewLayer_button" type="Button" parent="VBoxContainer/V_AreaSplit/H_AreaSplit/LayersArea/VBoxContainer/list edit/MarginContainer/buttons list"]
-layout_mode = 2
-size_flags_horizontal = 3
-tooltip_text = "add new layer"
-theme_override_colors/icon_normal_color = Color(1, 1, 1, 1)
-text = "add"
-text_overrun_behavior = 2
-clip_text = true
-icon_alignment = 1
-expand_icon = true
-
-[node name="AssetBrowser" type="Panel" parent="VBoxContainer/V_AreaSplit"]
-clip_children = 1
-custom_minimum_size = Vector2(27, 24)
-layout_mode = 2
-size_flags_vertical = 3
-script = ExtResource("4_k5ssa")
-
-[node name="H_Split" type="HSplitContainer" parent="VBoxContainer/V_AreaSplit/AssetBrowser"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_vertical = 3
-theme_override_constants/separation = 2
-theme_override_constants/minimum_grab_thickness = 5
-split_offset = 200
-
-[node name="Tree" type="Tree" parent="VBoxContainer/V_AreaSplit/AssetBrowser/H_Split"]
-layout_mode = 2
-mouse_filter = 1
-
-[node name="ItemList" type="ItemList" parent="VBoxContainer/V_AreaSplit/AssetBrowser/H_Split"]
-layout_mode = 2
-mouse_filter = 1
-item_count = 2
-max_columns = 10
-same_column_width = true
-fixed_icon_size = Vector2i(80, 80)
-item_0/text = ""
-item_0/icon = ExtResource("10_h400e")
-item_1/text = ""
-item_1/icon = ExtResource("10_h400e")
 
 [node name="Separator" type="Panel" parent="VBoxContainer"]
 custom_minimum_size = Vector2(0, 3)
@@ -723,8 +559,3 @@ skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_uant3")
 surface_material_override/1 = SubResource("StandardMaterial3D_u1d5b")
 surface_material_override/2 = SubResource("StandardMaterial3D_xsc3u")
-
-[connection signal="item_selected" from="VBoxContainer/V_AreaSplit/H_AreaSplit/AreaSplitContainer/Preview3DArea/RenderModePickButton" to="VBoxContainer/V_AreaSplit/H_AreaSplit/AreaSplitContainer/Preview3DArea/SubViewportContainer/SubViewport" method="selectRenderMode"]
-[connection signal="sort_children" from="VBoxContainer/V_AreaSplit/H_AreaSplit/LayersArea/VBoxContainer/list scroll/List" to="VBoxContainer/V_AreaSplit/H_AreaSplit/LayersArea/VBoxContainer/list scroll/List" method="_on_sort_children"]
-[connection signal="pressed" from="VBoxContainer/V_AreaSplit/H_AreaSplit/LayersArea/VBoxContainer/list edit/MarginContainer/buttons list/addNewLayer_button" to="VBoxContainer/V_AreaSplit/H_AreaSplit/LayersArea/VBoxContainer" method="add_new_fill_layer"]
-[connection signal="ready" from="Node3D" to="VBoxContainer/V_AreaSplit/H_AreaSplit/AreaSplitContainer/Preview3DArea/SubViewportContainer/SubViewport/CameraController" method="recenterCamera"]

@@ -6,10 +6,10 @@
 [ext_resource type="Texture2D" uid="uid://chsf2xd6e58qi" path="res://textures/icons/GuiVisibilityHidden.svg" id="3_tryqj"]
 
 [node name="Layer_ui_fill" type="Panel"]
-custom_minimum_size = Vector2(320, 46)
+custom_minimum_size = Vector2(320, 36)
 anchors_preset = -1
-anchor_right = 0.277778
-anchor_bottom = 0.0709877
+anchor_right = 0.277604
+anchor_bottom = 0.0333333
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 1
@@ -25,9 +25,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 10
+theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 10
+theme_override_constants/margin_bottom = 5
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
 layout_mode = 2

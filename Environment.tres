@@ -15,5 +15,6 @@ background_color = Color(0.243137, 0.243137, 0.243137, 1)
 background_energy_multiplier = 0.5
 sky = SubResource("Sky_13irs")
 ambient_light_source = 3
-reflected_light_source = 2
+ambient_light_color = Color(1, 1, 1, 1)
 tonemap_mode = 2
+adjustment_enabled = true

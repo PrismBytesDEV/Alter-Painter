@@ -12,4 +12,3 @@ func _ready()->void:
 		mesh.scale = Vector3.ONE * 100
 	
 	cameraController.mesh = mesh
-	cameraController.currentCamera.recenterCamera()

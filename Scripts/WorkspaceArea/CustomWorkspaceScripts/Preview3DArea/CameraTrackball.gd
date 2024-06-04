@@ -16,14 +16,25 @@ static var currentCamera : cameraController
 
 var light : DirectionalLight3D
 
+var onReadyCameraRecenter : bool = true
+
 func _ready()->void:
-	Camera = Camera3D.new()
-	add_child(Camera)
+	if get_child_count() > 0:
+		if get_child(0) is Camera3D:
+			Camera = get_child(0)
+	else:
+		Camera = Camera3D.new()
+		add_child(Camera)
+	Camera.position = Vector3(0,0,4.0)
 	currentCamera = self
 
 func _process(_delta : float)->void:
 	if Engine.is_editor_hint():
 		return
+	if mesh != null:
+		if onReadyCameraRecenter:
+			recenterCamera()
+			onReadyCameraRecenter = false
 	if Alter3DScene.light != null:
 		light = Alter3DScene.light
 
