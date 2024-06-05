@@ -11,6 +11,7 @@ bg_color = Color(0.151276, 0.151276, 0.151276, 1)
 
 [node name="Preview3DArea" type="Panel"]
 clip_children = 1
+custom_minimum_size = Vector2(27, 24)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -29,12 +30,12 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 0
 
-[node name="Panel" type="Panel" parent="VBoxContainer"]
+[node name="AreaControlPanel" type="Panel" parent="VBoxContainer"]
 custom_minimum_size = Vector2(27, 24)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_ld5qm")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Panel"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/AreaControlPanel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -42,25 +43,27 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Control" type="Control" parent="VBoxContainer/Panel/HBoxContainer"]
+[node name="Control" type="Control" parent="VBoxContainer/AreaControlPanel/HBoxContainer"]
 custom_minimum_size = Vector2(8, 0)
 layout_mode = 2
 size_flags_horizontal = 0
 
-[node name="AreaSwitchButton" type="Button" parent="VBoxContainer/Panel/HBoxContainer"]
+[node name="AreaSwitchButton" type="Button" parent="VBoxContainer/AreaControlPanel/HBoxContainer"]
+clip_contents = true
 layout_mode = 2
-text = "Area Button"
+text = "Preview 3D"
 icon = ExtResource("3_v3qqu")
+alignment = 0
 
-[node name="PopupPanel" type="PopupPanel" parent="VBoxContainer/Panel/HBoxContainer/AreaSwitchButton"]
+[node name="PopupPanel" type="PopupPanel" parent="VBoxContainer/AreaControlPanel/HBoxContainer/AreaSwitchButton"]
 title = "preview"
 size = Vector2i(200, 200)
 
-[node name="Control3" type="Control" parent="VBoxContainer/Panel/HBoxContainer"]
+[node name="Control3" type="Control" parent="VBoxContainer/AreaControlPanel/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="RenderModePickButton" type="OptionButton" parent="VBoxContainer/Panel/HBoxContainer"]
+[node name="RenderModePickButton" type="OptionButton" parent="VBoxContainer/AreaControlPanel/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -81,7 +84,7 @@ popup/item_5/text = "heightmap"
 popup/item_5/id = 5
 metadata/_edit_use_anchors_ = true
 
-[node name="Control2" type="Control" parent="VBoxContainer/Panel/HBoxContainer"]
+[node name="Control2" type="Control" parent="VBoxContainer/AreaControlPanel/HBoxContainer"]
 custom_minimum_size = Vector2(10, 0)
 layout_mode = 2
 size_flags_horizontal = 8
@@ -105,5 +108,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.53674e-07, 1.14955, -9.536
 script = ExtResource("3_0w77e")
 
 [node name="Camera" type="Camera3D" parent="VBoxContainer/SubViewportContainer/SubViewport/CameraController"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4)
 
-[connection signal="item_selected" from="VBoxContainer/Panel/HBoxContainer/RenderModePickButton" to="VBoxContainer/SubViewportContainer/SubViewport" method="selectRenderMode"]
+[connection signal="item_selected" from="VBoxContainer/AreaControlPanel/HBoxContainer/RenderModePickButton" to="VBoxContainer/SubViewportContainer/SubViewport" method="selectRenderMode"]

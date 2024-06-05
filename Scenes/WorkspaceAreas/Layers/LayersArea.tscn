@@ -1,22 +1,22 @@
-[gd_scene load_steps=8 format=3 uid="uid://ddurw3r8x0l8r"]
+[gd_scene load_steps=9 format=3 uid="uid://ddurw3r8x0l8r"]
 
 [ext_resource type="Theme" uid="uid://cxi7ihqtqqtu6" path="res://Themes/darkTheme.tres" id="1_4baco"]
 [ext_resource type="Script" path="res://Scripts/WorkspaceArea/WorkspaceArea.gd" id="1_ry10v"]
 [ext_resource type="Script" path="res://Scenes/LayerManager.gd" id="2_q1fyp"]
 [ext_resource type="Script" path="res://addons/ReorderableContainer/reorderable_container.gd" id="3_fonhh"]
 [ext_resource type="PackedScene" uid="uid://bk6xt62j3yiba" path="res://Scenes/layer_ui_fill.tscn" id="4_pblpd"]
+[ext_resource type="Texture2D" uid="uid://bjbxfl5efns4p" path="res://textures/icons/VerticalAreaSplitIcon.png" id="4_w6bac"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_46t71"]
-bg_color = Color(0.113725, 0.113725, 0.113725, 1)
-corner_radius_top_left = 10
-corner_radius_top_right = 10
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5yhvv"]
+bg_color = Color(0.151276, 0.151276, 0.151276, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_28k06"]
 bg_color = Color(0.141176, 0.141176, 0.141176, 1)
 corner_detail = 1
 
 [node name="LayersArea" type="Panel"]
-clip_children = 1
+self_modulate = Color(0.691357, 0.691357, 0.691357, 1)
+clip_children = 2
 custom_minimum_size = Vector2(27, 24)
 anchors_preset = -1
 anchor_right = 0.217187
@@ -37,10 +37,72 @@ grow_vertical = 2
 theme_override_constants/separation = 0
 script = ExtResource("2_q1fyp")
 
+[node name="AreaControlPanel" type="Panel" parent="VBoxContainer"]
+custom_minimum_size = Vector2(27, 24)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_5yhvv")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/AreaControlPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Control" type="Control" parent="VBoxContainer/AreaControlPanel/HBoxContainer"]
+custom_minimum_size = Vector2(8, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="AreaSwitchButton" type="Button" parent="VBoxContainer/AreaControlPanel/HBoxContainer"]
+layout_mode = 2
+text = "Layers"
+icon = ExtResource("4_w6bac")
+
+[node name="PopupPanel" type="PopupPanel" parent="VBoxContainer/AreaControlPanel/HBoxContainer/AreaSwitchButton"]
+title = "preview"
+size = Vector2i(200, 200)
+
+[node name="Control3" type="Control" parent="VBoxContainer/AreaControlPanel/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RenderModePickButton" type="OptionButton" parent="VBoxContainer/AreaControlPanel/HBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 1
+item_count = 6
+selected = 0
+popup/item_0/text = "default"
+popup/item_0/id = 0
+popup/item_1/text = "albedo"
+popup/item_1/id = 1
+popup/item_2/text = "normal_map"
+popup/item_2/id = 2
+popup/item_3/text = "roughness"
+popup/item_3/id = 3
+popup/item_4/text = "metalness"
+popup/item_4/id = 4
+popup/item_5/text = "heightmap"
+popup/item_5/id = 5
+metadata/_edit_use_anchors_ = true
+
+[node name="Control2" type="Control" parent="VBoxContainer/AreaControlPanel/HBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+
+[node name="Control" type="Control" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 4)
+layout_mode = 2
+
 [node name="list scroll" type="ScrollContainer" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_46t71")
 
 [node name="List" type="Container" parent="VBoxContainer/list scroll" node_paths=PackedStringArray("scroll_container")]
 process_mode = 1
