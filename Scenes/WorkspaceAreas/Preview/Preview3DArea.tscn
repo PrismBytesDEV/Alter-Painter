@@ -1,10 +1,12 @@
-[gd_scene load_steps=7 format=3 uid="uid://bj8wub3fyrhw5"]
+[gd_scene load_steps=9 format=3 uid="uid://bj8wub3fyrhw5"]
 
 [ext_resource type="Theme" uid="uid://cxi7ihqtqqtu6" path="res://Themes/darkTheme.tres" id="1_5idw1"]
 [ext_resource type="Script" path="res://Scripts/WorkspaceArea/CustomWorkspaceScripts/Preview3DArea/Preview3DWorkspaceArea.gd" id="1_xfym4"]
 [ext_resource type="Script" path="res://Scripts/WorkspaceArea/CustomWorkspaceScripts/Preview3DArea/Preview3DViewport.gd" id="2_dx4lb"]
 [ext_resource type="Script" path="res://Scripts/WorkspaceArea/CustomWorkspaceScripts/Preview3DArea/CameraTrackball.gd" id="3_0w77e"]
 [ext_resource type="Texture2D" uid="uid://bjbxfl5efns4p" path="res://textures/icons/VerticalAreaSplitIcon.png" id="3_v3qqu"]
+[ext_resource type="Script" path="res://Scripts/WorkspaceArea/WorkspaceChangeButton.gd" id="4_3xyj2"]
+[ext_resource type="PackedScene" uid="uid://cweb4elgguvow" path="res://Scenes/workspaceAreaSelectorPanel.tscn" id="7_d45lb"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ld5qm"]
 bg_color = Color(0.151276, 0.151276, 0.151276, 1)
@@ -54,10 +56,7 @@ layout_mode = 2
 text = "Preview 3D"
 icon = ExtResource("3_v3qqu")
 alignment = 0
-
-[node name="PopupPanel" type="PopupPanel" parent="VBoxContainer/AreaControlPanel/HBoxContainer/AreaSwitchButton"]
-title = "preview"
-size = Vector2i(200, 200)
+script = ExtResource("4_3xyj2")
 
 [node name="Control3" type="Control" parent="VBoxContainer/AreaControlPanel/HBoxContainer"]
 layout_mode = 2
@@ -110,4 +109,12 @@ script = ExtResource("3_0w77e")
 [node name="Camera" type="Camera3D" parent="VBoxContainer/SubViewportContainer/SubViewport/CameraController"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4)
 
+[node name="workspaceAreaSelectorPanel" parent="." instance=ExtResource("7_d45lb")]
+unique_name_in_owner = true
+layout_mode = 1
+anchor_bottom = 0.354
+offset_bottom = -0.320007
+grow_vertical = 2
+
 [connection signal="item_selected" from="VBoxContainer/AreaControlPanel/HBoxContainer/RenderModePickButton" to="VBoxContainer/SubViewportContainer/SubViewport" method="selectRenderMode"]
+[connection signal="ready" from="workspaceAreaSelectorPanel" to="VBoxContainer/AreaControlPanel/HBoxContainer/AreaSwitchButton" method="_READY"]

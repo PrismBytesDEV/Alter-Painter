@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://ddurw3r8x0l8r"]
+[gd_scene load_steps=11 format=3 uid="uid://ddurw3r8x0l8r"]
 
 [ext_resource type="Theme" uid="uid://cxi7ihqtqqtu6" path="res://Themes/darkTheme.tres" id="1_4baco"]
 [ext_resource type="Script" path="res://Scripts/WorkspaceArea/WorkspaceArea.gd" id="1_ry10v"]
@@ -6,6 +6,8 @@
 [ext_resource type="Script" path="res://addons/ReorderableContainer/reorderable_container.gd" id="3_fonhh"]
 [ext_resource type="PackedScene" uid="uid://bk6xt62j3yiba" path="res://Scenes/layer_ui_fill.tscn" id="4_pblpd"]
 [ext_resource type="Texture2D" uid="uid://bjbxfl5efns4p" path="res://textures/icons/VerticalAreaSplitIcon.png" id="4_w6bac"]
+[ext_resource type="Script" path="res://Scripts/WorkspaceArea/WorkspaceChangeButton.gd" id="5_yd2h0"]
+[ext_resource type="PackedScene" uid="uid://cweb4elgguvow" path="res://Scenes/workspaceAreaSelectorPanel.tscn" id="8_xnteu"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5yhvv"]
 bg_color = Color(0.151276, 0.151276, 0.151276, 1)
@@ -59,10 +61,7 @@ size_flags_horizontal = 0
 layout_mode = 2
 text = "Layers"
 icon = ExtResource("4_w6bac")
-
-[node name="PopupPanel" type="PopupPanel" parent="VBoxContainer/AreaControlPanel/HBoxContainer/AreaSwitchButton"]
-title = "preview"
-size = Vector2i(200, 200)
+script = ExtResource("5_yd2h0")
 
 [node name="Control3" type="Control" parent="VBoxContainer/AreaControlPanel/HBoxContainer"]
 layout_mode = 2
@@ -152,5 +151,15 @@ clip_text = true
 icon_alignment = 1
 expand_icon = true
 
+[node name="workspaceAreaSelectorPanel" parent="." instance=ExtResource("8_xnteu")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchor_bottom = 0.447
+offset_right = 0.000946045
+offset_bottom = -0.185181
+grow_vertical = 2
+
 [connection signal="sort_children" from="VBoxContainer/list scroll/List" to="VBoxContainer/list scroll/List" method="_on_sort_children"]
 [connection signal="pressed" from="VBoxContainer/list edit/MarginContainer/buttons list/addNewLayer_button" to="VBoxContainer" method="add_new_fill_layer"]
+[connection signal="ready" from="workspaceAreaSelectorPanel" to="VBoxContainer/AreaControlPanel/HBoxContainer/AreaSwitchButton" method="_READY"]
