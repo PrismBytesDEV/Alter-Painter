@@ -53,7 +53,6 @@ size_flags_horizontal = 0
 [node name="AreaSwitchButton" type="Button" parent="VBoxContainer/AreaControlPanel/HBoxContainer"]
 clip_contents = true
 layout_mode = 2
-text = "Preview 3D"
 icon = ExtResource("3_v3qqu")
 alignment = 0
 script = ExtResource("4_3xyj2")
