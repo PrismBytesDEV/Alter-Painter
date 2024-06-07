@@ -111,6 +111,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4)
 
 [node name="workspaceAreaSelectorPanel" parent="." instance=ExtResource("7_d45lb")]
 unique_name_in_owner = true
+visible = false
 layout_mode = 1
 anchor_bottom = 0.354
 offset_bottom = -0.320007
