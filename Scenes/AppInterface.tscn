@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://2a2kb6vkospx"]
+[gd_scene load_steps=37 format=3 uid="uid://2a2kb6vkospx"]
 
 [ext_resource type="Theme" uid="uid://cxi7ihqtqqtu6" path="res://Themes/darkTheme.tres" id="1_50egg"]
 [ext_resource type="Script" path="res://addons/dockable_container/dockable_container.gd" id="1_jbcfn"]
@@ -6,10 +6,11 @@
 [ext_resource type="Script" path="res://addons/dockable_container/layout_panel.gd" id="2_uu0la"]
 [ext_resource type="Script" path="res://Scripts/WorkspaceArea/AreaSplitContainer.gd" id="3_iy3mc"]
 [ext_resource type="Script" path="res://addons/dockable_container/layout.gd" id="3_jkhko"]
-[ext_resource type="PackedScene" uid="uid://bj8wub3fyrhw5" path="res://Scenes/WorkspaceAreas/Preview/Preview3DArea.tscn" id="4_1mgvo"]
+[ext_resource type="PackedScene" uid="uid://bj8wub3fyrhw5" path="res://Scenes/WorkspaceAreas/Preview/Preview3dArea.tscn" id="4_1mgvo"]
 [ext_resource type="Script" path="res://addons/dockable_container/layout_split.gd" id="4_cmp6u"]
 [ext_resource type="PackedScene" uid="uid://ddurw3r8x0l8r" path="res://Scenes/WorkspaceAreas/Layers/LayersArea.tscn" id="5_4kxwm"]
 [ext_resource type="Environment" uid="uid://cgwugn0gdgmsl" path="res://Environment.tres" id="5_p58yj"]
+[ext_resource type="PackedScene" uid="uid://es2dkh6ab5np" path="res://Scenes/WorkspaceAreas/Other/DebugWorkspaceArea.tscn" id="6_5r8ne"]
 [ext_resource type="PackedScene" uid="uid://kaf52hnylxhg" path="res://Scenes/WorkspaceAreas/Other/AssetBrowserArea.tscn" id="6_lkjph"]
 [ext_resource type="Texture2D" uid="uid://b4wwpfijfexfa" path="res://HDRIs/empty_workshop_4k.exr" id="8_7hkbj"]
 [ext_resource type="Texture2D" uid="uid://bjbxfl5efns4p" path="res://textures/icons/VerticalAreaSplitIcon.png" id="15_1vikl"]
@@ -355,7 +356,7 @@ script = ExtResource("3_iy3mc")
 [node name="H_AreaSplit" type="SplitContainer" parent="VBoxContainer/V_AreaSplit"]
 layout_mode = 2
 size_flags_vertical = 3
-split_offset = 1500
+split_offset = 1145
 script = ExtResource("3_iy3mc")
 
 [node name="AreaSplitContainer" type="SplitContainer" parent="VBoxContainer/V_AreaSplit/H_AreaSplit"]
@@ -367,7 +368,15 @@ script = ExtResource("3_iy3mc")
 [node name="Preview3DArea" parent="VBoxContainer/V_AreaSplit/H_AreaSplit/AreaSplitContainer" instance=ExtResource("4_1mgvo")]
 layout_mode = 2
 
-[node name="LayersArea" parent="VBoxContainer/V_AreaSplit/H_AreaSplit" instance=ExtResource("5_4kxwm")]
+[node name="AreaSplitContainer2" type="SplitContainer" parent="VBoxContainer/V_AreaSplit/H_AreaSplit"]
+layout_mode = 2
+split_offset = 435
+script = ExtResource("3_iy3mc")
+
+[node name="DebugWorkspaceArea" parent="VBoxContainer/V_AreaSplit/H_AreaSplit/AreaSplitContainer2" instance=ExtResource("6_5r8ne")]
+layout_mode = 2
+
+[node name="LayersArea" parent="VBoxContainer/V_AreaSplit/H_AreaSplit/AreaSplitContainer2" instance=ExtResource("5_4kxwm")]
 layout_mode = 2
 
 [node name="AssetBrowser" parent="VBoxContainer/V_AreaSplit" instance=ExtResource("6_lkjph")]

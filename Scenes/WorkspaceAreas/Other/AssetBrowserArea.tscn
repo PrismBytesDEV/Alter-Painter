@@ -62,7 +62,6 @@ size_flags_horizontal = 0
 
 [node name="AreaSwitchButton" type="Button" parent="VBoxContainer/AreaControlPanel/HBoxContainer"]
 layout_mode = 2
-text = "Asset Browser"
 icon = ExtResource("3_pm428")
 script = ExtResource("4_o8fri")
 

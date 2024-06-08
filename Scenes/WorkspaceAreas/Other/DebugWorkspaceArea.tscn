@@ -1,0 +1,47 @@
+[gd_scene load_steps=7 format=3 uid="uid://es2dkh6ab5np"]
+
+[ext_resource type="Theme" uid="uid://cxi7ihqtqqtu6" path="res://Themes/darkTheme.tres" id="1_7of37"]
+[ext_resource type="Script" path="res://Scripts/WorkspaceArea/CustomWorkspaceScripts/DebugArea/DebugWorkspaceArea.gd" id="1_wan1w"]
+[ext_resource type="Texture2D" uid="uid://fepfnfguoexp" path="res://icon.png" id="3_jp722"]
+[ext_resource type="Shader" path="res://Shaders/DebugWorkspaceArea.gdshader" id="4_ewd3p"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qq2bb"]
+shader = ExtResource("4_ewd3p")
+
+[sub_resource type="LabelSettings" id="LabelSettings_xivnt"]
+font_size = 46
+
+[node name="DebugWorkspaceArea" type="Panel"]
+clip_children = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_7of37")
+script = ExtResource("1_wan1w")
+workspaceAreaIcon = ExtResource("3_jp722")
+addControlPanelAndContentSeparator = false
+metadata/_edit_use_anchors_ = true
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_qq2bb")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="ColorRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Workspace Area meant for debug purpouses of WorkspaceArea API"
+label_settings = SubResource("LabelSettings_xivnt")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
