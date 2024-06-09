@@ -96,7 +96,7 @@ stretch = true
 handle_input_locally = false
 msaa_3d = 3
 mesh_lod_threshold = 0.0
-size = Vector2i(1920, 1056)
+size = Vector2i(2, 2)
 render_target_update_mode = 4
 script = ExtResource("2_dx4lb")
 

@@ -59,6 +59,7 @@ layout_mode = 2
 
 [node name="AreaSwitchButton" type="Button" parent="VBoxContainer/AreaControlPanel/MarginContainer/HBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 4
 icon = ExtResource("4_w6bac")
 script = ExtResource("5_yd2h0")
 
@@ -184,94 +185,6 @@ anchor_bottom = 0.447
 offset_right = -0.0840454
 offset_bottom = -0.185181
 grow_horizontal = 1
-
-[node name="AreaControlPanel2" type="Panel" parent="."]
-visible = false
-custom_minimum_size = Vector2(27, 24)
-layout_mode = 2
-anchor_top = 0.0280702
-anchor_right = 0.350121
-anchor_bottom = 0.0561403
-theme_override_styles/panel = SubResource("StyleBoxFlat_5yhvv")
-metadata/_edit_use_anchors_ = true
-
-[node name="MarginContainer" type="MarginContainer" parent="AreaControlPanel2"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 16
-theme_override_constants/margin_right = 10
-
-[node name="HBoxContainer" type="HBoxContainer" parent="AreaControlPanel2/MarginContainer"]
-layout_mode = 2
-
-[node name="AreaSwitchButton" type="Button" parent="AreaControlPanel2/MarginContainer/HBoxContainer"]
-visible = false
-layout_mode = 2
-size_flags_horizontal = 4
-icon = ExtResource("4_w6bac")
-icon_alignment = 1
-script = ExtResource("5_yd2h0")
-
-[node name="ScrollContainer" type="ScrollContainer" parent="AreaControlPanel2/MarginContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 4
-horizontal_scroll_mode = 3
-vertical_scroll_mode = 0
-
-[node name="HBoxContainer" type="HBoxContainer" parent="AreaControlPanel2/MarginContainer/HBoxContainer/ScrollContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 6
-
-[node name="Button" type="Button" parent="AreaControlPanel2/MarginContainer/HBoxContainer/ScrollContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "text1"
-
-[node name="Button2" type="Button" parent="AreaControlPanel2/MarginContainer/HBoxContainer/ScrollContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "text2"
-
-[node name="Button3" type="Button" parent="AreaControlPanel2/MarginContainer/HBoxContainer/ScrollContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "text3"
-
-[node name="Button4" type="Button" parent="AreaControlPanel2/MarginContainer/HBoxContainer/ScrollContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "text4"
-
-[node name="Button5" type="Button" parent="AreaControlPanel2/MarginContainer/HBoxContainer/ScrollContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "text5"
-
-[node name="Button6" type="Button" parent="AreaControlPanel2/MarginContainer/HBoxContainer/ScrollContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "text6"
-
-[node name="Button7" type="Button" parent="AreaControlPanel2/MarginContainer/HBoxContainer/ScrollContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "text7"
-
-[node name="Button8" type="Button" parent="AreaControlPanel2/MarginContainer/HBoxContainer/ScrollContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "text8"
-
-[node name="Button9" type="Button" parent="AreaControlPanel2/MarginContainer/HBoxContainer/ScrollContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "text9"
 
 [connection signal="sort_children" from="VBoxContainer/list scroll/List" to="VBoxContainer/list scroll/List" method="_on_sort_children"]
 [connection signal="pressed" from="VBoxContainer/list edit/MarginContainer/buttons list/addNewLayer_button" to="VBoxContainer" method="add_new_fill_layer"]
