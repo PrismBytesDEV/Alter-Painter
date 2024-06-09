@@ -29,7 +29,7 @@ var debug : bool = false
 
 func _init()->void:
 	if !workspacesDataLoaded:
-		loadAreasData()
+		WorkspaceArea.loadAreasData()
 	mouse_entered.connect(_mouse_entered)
 	mouse_exited.connect(_mouse_exited)
 
@@ -109,7 +109,7 @@ func setupWorkspaceArea()->void:
 	#areaSwitchButton.set_script("res://Scripts/WorkspaceArea/WorkspaceChangeButton.gd")
 	areaSwitchButton.icon = workspaceAreaIcon
 	areaSwitchButton.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	areaSwitchButton.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	areaSwitchButton.size_flags_horizontal = SIZE_SHRINK_CENTER
 	areaSwitchButton.size_flags_vertical = SIZE_FILL
 	areaSwitchButton.mouse_filter = MOUSE_FILTER_STOP
 	areaSwitchButton.pressed.connect(_showAreaSelectorPanel)

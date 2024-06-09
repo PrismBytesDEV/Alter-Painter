@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://bj8wub3fyrhw5"]
+[gd_scene load_steps=10 format=3 uid="uid://bj8wub3fyrhw5"]
 
 [ext_resource type="Theme" uid="uid://cxi7ihqtqqtu6" path="res://Themes/darkTheme.tres" id="1_5idw1"]
 [ext_resource type="Script" path="res://Scripts/WorkspaceArea/CustomWorkspaceScripts/Preview3DArea/Preview3DWorkspaceArea.gd" id="1_xfym4"]
 [ext_resource type="Script" path="res://Scripts/WorkspaceArea/CustomWorkspaceScripts/Preview3DArea/Preview3DViewport.gd" id="2_dx4lb"]
 [ext_resource type="Script" path="res://Scripts/WorkspaceArea/CustomWorkspaceScripts/Preview3DArea/CameraTrackball.gd" id="3_0w77e"]
+[ext_resource type="Texture2D" uid="uid://fepfnfguoexp" path="res://icon.png" id="3_u2rty"]
 [ext_resource type="Texture2D" uid="uid://bjbxfl5efns4p" path="res://textures/icons/VerticalAreaSplitIcon.png" id="3_v3qqu"]
 [ext_resource type="Script" path="res://Scripts/WorkspaceArea/WorkspaceChangeButton.gd" id="4_3xyj2"]
 [ext_resource type="PackedScene" uid="uid://cweb4elgguvow" path="res://Scenes/workspaceAreaSelectorPanel.tscn" id="7_d45lb"]
@@ -37,33 +38,50 @@ custom_minimum_size = Vector2(27, 24)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_ld5qm")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/AreaControlPanel"]
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/AreaControlPanel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_right = 10
 
-[node name="Control" type="Control" parent="VBoxContainer/AreaControlPanel/HBoxContainer"]
-custom_minimum_size = Vector2(8, 0)
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/AreaControlPanel/MarginContainer"]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="VBoxContainer/AreaControlPanel/MarginContainer/HBoxContainer"]
+layout_mode = 2
+icon = ExtResource("3_u2rty")
+
+[node name="AreaSwitchButton" type="Button" parent="VBoxContainer/AreaControlPanel/MarginContainer/HBoxContainer"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 0
-
-[node name="AreaSwitchButton" type="Button" parent="VBoxContainer/AreaControlPanel/HBoxContainer"]
-clip_contents = true
-layout_mode = 2
 icon = ExtResource("3_v3qqu")
-alignment = 0
 script = ExtResource("4_3xyj2")
 
-[node name="Control3" type="Control" parent="VBoxContainer/AreaControlPanel/HBoxContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/AreaControlPanel/MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_vertical = 4
+horizontal_scroll_mode = 3
+vertical_scroll_mode = 0
 
-[node name="RenderModePickButton" type="OptionButton" parent="VBoxContainer/AreaControlPanel/HBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/AreaControlPanel/MarginContainer/HBoxContainer/ScrollContainer"]
 layout_mode = 2
-size_flags_horizontal = 4
+size_flags_horizontal = 3
+size_flags_vertical = 6
+
+[node name="Button" type="Button" parent="VBoxContainer/AreaControlPanel/MarginContainer/HBoxContainer/ScrollContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "text1"
+
+[node name="RenderModePickButton" type="OptionButton" parent="VBoxContainer/AreaControlPanel/MarginContainer/HBoxContainer/ScrollContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 10
 size_flags_vertical = 4
 mouse_filter = 1
 item_count = 6
@@ -82,10 +100,10 @@ popup/item_5/text = "heightmap"
 popup/item_5/id = 5
 metadata/_edit_use_anchors_ = true
 
-[node name="Control2" type="Control" parent="VBoxContainer/AreaControlPanel/HBoxContainer"]
+[node name="Control" type="Control" parent="VBoxContainer/AreaControlPanel/MarginContainer/HBoxContainer/ScrollContainer/HBoxContainer"]
 custom_minimum_size = Vector2(10, 0)
 layout_mode = 2
-size_flags_horizontal = 8
+mouse_filter = 2
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="VBoxContainer"]
 layout_mode = 2
@@ -96,7 +114,7 @@ stretch = true
 handle_input_locally = false
 msaa_3d = 3
 mesh_lod_threshold = 0.0
-size = Vector2i(2, 2)
+size = Vector2i(1920, 1056)
 render_target_update_mode = 4
 script = ExtResource("2_dx4lb")
 
@@ -116,5 +134,4 @@ anchor_bottom = 0.354
 offset_bottom = -0.320007
 grow_vertical = 2
 
-[connection signal="item_selected" from="VBoxContainer/AreaControlPanel/HBoxContainer/RenderModePickButton" to="VBoxContainer/SubViewportContainer/SubViewport" method="selectRenderMode"]
-[connection signal="ready" from="workspaceAreaSelectorPanel" to="VBoxContainer/AreaControlPanel/HBoxContainer/AreaSwitchButton" method="_READY"]
+[connection signal="item_selected" from="VBoxContainer/AreaControlPanel/MarginContainer/HBoxContainer/ScrollContainer/HBoxContainer/RenderModePickButton" to="VBoxContainer/SubViewportContainer/SubViewport" method="selectRenderMode"]
