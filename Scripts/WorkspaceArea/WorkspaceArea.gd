@@ -61,11 +61,14 @@ func setupWorkspaceArea()->void:
 	areaVbox = VBoxContainer.new()
 	areaVbox.name = "areaVbox"
 	add_child(areaVbox)
+	areaVbox.set_owner(self)
 	move_child(areaVbox,0)
 	areaVbox.set_anchor_and_offset(SIDE_LEFT,0,0)
 	areaVbox.set_anchor_and_offset(SIDE_TOP,0,0)
 	areaVbox.set_anchor_and_offset(SIDE_RIGHT,1,0)
 	areaVbox.set_anchor_and_offset(SIDE_BOTTOM,1,0)
+	areaVbox.grow_horizontal = GROW_DIRECTION_BOTH
+	areaVbox.grow_vertical = GROW_DIRECTION_BOTH
 	areaVbox.mouse_filter = MOUSE_FILTER_PASS
 	areaVbox.add_theme_constant_override("separation",0)
 	
@@ -74,6 +77,7 @@ func setupWorkspaceArea()->void:
 	var areaControlPanel := Panel.new()
 	areaControlPanel.name = "areaControlPanel"
 	areaVbox.add_child(areaControlPanel)
+	areaControlPanel.set_owner(areaVbox)
 	areaControlPanel.custom_minimum_size = self.custom_minimum_size
 	areaControlPanel.size_flags_horizontal = SIZE_FILL
 	areaControlPanel.size_flags_vertical = SIZE_FILL
@@ -86,6 +90,7 @@ func setupWorkspaceArea()->void:
 	var areaPanelMargin := MarginContainer.new()
 	areaPanelMargin.name = "areaPanelMargin"
 	areaControlPanel.add_child(areaPanelMargin)
+	areaPanelMargin.set_owner(areaControlPanel)
 	areaPanelMargin.size = areaControlPanel.size
 	areaPanelMargin.size_flags_horizontal = SIZE_EXPAND_FILL
 	areaPanelMargin.size_flags_vertical = SIZE_EXPAND_FILL
@@ -93,20 +98,24 @@ func setupWorkspaceArea()->void:
 	areaPanelMargin.set_anchor_and_offset(SIDE_TOP,0,0)
 	areaPanelMargin.set_anchor_and_offset(SIDE_RIGHT,1,0)
 	areaPanelMargin.set_anchor_and_offset(SIDE_BOTTOM,1,0)
+	areaPanelMargin.grow_horizontal = GROW_DIRECTION_BOTH
+	areaPanelMargin.grow_vertical = GROW_DIRECTION_BOTH
 	areaPanelMargin.add_theme_constant_override("margin_left",16)
 	areaPanelMargin.add_theme_constant_override("margin_right",10)
 	areaPanelMargin.mouse_filter = MOUSE_FILTER_PASS
 	
 	var areaHbox := HBoxContainer.new()
 	areaHbox.name = "Hbox"
+	areaHbox.alignment = BoxContainer.ALIGNMENT_BEGIN
 	areaPanelMargin.add_child(areaHbox)
+	areaHbox.set_owner(areaPanelMargin)
 	areaHbox.size_flags_horizontal = SIZE_EXPAND_FILL
 	areaHbox.size_flags_vertical = SIZE_FILL
 	areaHbox.mouse_filter = MOUSE_FILTER_PASS
 	
 	var areaSwitchButton := Button.new()
 	areaHbox.add_child(areaSwitchButton)
-	#areaSwitchButton.set_script("res://Scripts/WorkspaceArea/WorkspaceChangeButton.gd")
+	areaSwitchButton.set_owner(areaHbox)
 	areaSwitchButton.icon = workspaceAreaIcon
 	areaSwitchButton.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	areaSwitchButton.size_flags_horizontal = SIZE_SHRINK_CENTER
@@ -116,6 +125,7 @@ func setupWorkspaceArea()->void:
 	
 	var areaOptionsScroll := ScrollContainer.new()
 	areaHbox.add_child(areaOptionsScroll)
+	areaOptionsScroll.set_owner(areaHbox)
 	areaOptionsScroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_SHOW_NEVER
 	areaOptionsScroll.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	areaOptionsScroll.size_flags_horizontal = SIZE_EXPAND_FILL
@@ -124,6 +134,7 @@ func setupWorkspaceArea()->void:
 	
 	areaOptionsContainer = HBoxContainer.new()
 	areaOptionsScroll.add_child(areaOptionsContainer)
+	areaOptionsContainer.set_owner(areaOptionsScroll)
 	areaOptionsContainer.size_flags_horizontal = SIZE_EXPAND_FILL
 	areaOptionsContainer.size_flags_vertical = SIZE_SHRINK_CENTER + SIZE_EXPAND
 	areaOptionsContainer.mouse_filter = MOUSE_FILTER_PASS
@@ -131,12 +142,14 @@ func setupWorkspaceArea()->void:
 	if addControlPanelAndContentSeparator:
 		var VboxSeparator := Control.new()
 		areaVbox.add_child(VboxSeparator)
+		VboxSeparator.set_owner(areaVbox)
 		VboxSeparator.custom_minimum_size = Vector2i(0,controlPanelAndContentSeperatorHeight)
 		VboxSeparator.size_flags_horizontal = SIZE_FILL
 		VboxSeparator.mouse_filter = MOUSE_FILTER_STOP
 	
 	if areaContent != null:
 		areaContent.reparent(areaVbox)
+		areaContent.set_owner(areaVbox)
 		areaContent.size_flags_vertical = SIZE_EXPAND_FILL
 		areaContent.mouse_filter = MOUSE_FILTER_PASS
 
@@ -144,6 +157,7 @@ func refreshWorkspaceAreaSelectorPanel()->void:
 	workspaceAreaSelectorPanel = Panel.new()
 	workspaceAreaSelectorPanel.name = "workspaceSelectorPanel"
 	add_child(workspaceAreaSelectorPanel)
+	workspaceAreaSelectorPanel.set_owner(self)
 	workspaceAreaSelectorPanel.offset_top = 24
 	workspaceAreaSelectorPanel.offset_bottom = 0
 	workspaceAreaSelectorPanel.position = Vector2i(0,24)
@@ -152,11 +166,14 @@ func refreshWorkspaceAreaSelectorPanel()->void:
 	workspaceAreaSelectorPanel.set_anchor_and_offset(SIDE_TOP,0,custom_minimum_size.y)
 	workspaceAreaSelectorPanel.set_anchor_and_offset(SIDE_RIGHT,1,0)
 	workspaceAreaSelectorPanel.set_anchor_and_offset(SIDE_BOTTOM,0,areaSelectorPanelHeight)
+	workspaceAreaSelectorPanel.grow_horizontal = GROW_DIRECTION_BOTH
+	workspaceAreaSelectorPanel.grow_vertical = GROW_DIRECTION_BOTH
 	workspaceAreaSelectorPanel.mouse_exited.connect(_hideAreaSelectorPanel)
 	self.mouse_entered.connect(_hideAreaSelectorPanel)
 	
 	var selectorMargin := MarginContainer.new()
 	workspaceAreaSelectorPanel.add_child(selectorMargin)
+	selectorMargin.set_owner(workspaceAreaSelectorPanel)
 	selectorMargin.add_theme_constant_override("margin_left",10)
 	selectorMargin.add_theme_constant_override("margin_top",5)
 	selectorMargin.add_theme_constant_override("margin_right",10)
@@ -165,19 +182,25 @@ func refreshWorkspaceAreaSelectorPanel()->void:
 	selectorMargin.set_anchor_and_offset(SIDE_TOP,0,0)
 	selectorMargin.set_anchor_and_offset(SIDE_RIGHT,1,0)
 	selectorMargin.set_anchor_and_offset(SIDE_BOTTOM,1,0)
+	selectorMargin.grow_horizontal = GROW_DIRECTION_BOTH
+	selectorMargin.grow_vertical = GROW_DIRECTION_BOTH
 	
 	var hBox := HBoxContainer.new()
 	selectorMargin.add_child(hBox)
+	hBox.set_owner(selectorMargin)
 	hBox.set_anchor_and_offset(SIDE_LEFT,0,0)
 	hBox.set_anchor_and_offset(SIDE_TOP,0,0)
 	hBox.set_anchor_and_offset(SIDE_RIGHT,1,0)
 	hBox.set_anchor_and_offset(SIDE_BOTTOM,1,0)
+	hBox.grow_horizontal = GROW_DIRECTION_BOTH
+	hBox.grow_vertical = GROW_DIRECTION_BOTH
 	
 	for columnIndex in workspaceCategories.size():
 		var vBox := VBoxContainer.new()
 		vBox.size_flags_horizontal = SIZE_EXPAND_FILL
 		vBox.size_flags_vertical = SIZE_FILL
 		hBox.add_child(vBox)
+		vBox.set_owner(hBox)
 		
 		var columnLabel := Label.new()
 		columnLabel.text = workspaceCategories[columnIndex]
@@ -187,15 +210,19 @@ func refreshWorkspaceAreaSelectorPanel()->void:
 		columnLabel.size_flags_vertical = SIZE_SHRINK_CENTER
 		columnLabel.mouse_filter = MOUSE_FILTER_PASS
 		vBox.add_child(columnLabel)
+		columnLabel.set_owner(vBox)
 		
 		var separator := HSeparator.new()
 		separator.mouse_filter = MOUSE_FILTER_PASS
 		vBox.add_child(separator)
+		separator.set_owner(vBox)
+		
 		for selectorButtonIndex in workspacesNames[columnIndex].size():
 			var areaSelectButton := Button.new()
 			areaSelectButton.text = workspacesNames[columnIndex][selectorButtonIndex]
 			areaSelectButton.mouse_filter = MOUSE_FILTER_PASS
 			vBox.add_child(areaSelectButton)
+			areaSelectButton.set_owner(vBox)
 
 static func loadAreasData()->void:
 	var workspacesDirectiory : DirAccess = DirAccess.open(workspacesPath)

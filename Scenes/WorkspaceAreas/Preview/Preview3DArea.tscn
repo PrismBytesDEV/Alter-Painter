@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bj8wub3fyrhw5"]
+[gd_scene load_steps=9 format=3 uid="uid://bj8wub3fyrhw5"]
 
 [ext_resource type="Theme" uid="uid://cxi7ihqtqqtu6" path="res://Themes/darkTheme.tres" id="1_5idw1"]
 [ext_resource type="Script" path="res://Scripts/WorkspaceArea/CustomWorkspaceScripts/Preview3DArea/Preview3DWorkspaceArea.gd" id="1_xfym4"]
@@ -6,7 +6,6 @@
 [ext_resource type="Script" path="res://Scripts/WorkspaceArea/CustomWorkspaceScripts/Preview3DArea/CameraTrackball.gd" id="3_0w77e"]
 [ext_resource type="Texture2D" uid="uid://fepfnfguoexp" path="res://icon.png" id="3_u2rty"]
 [ext_resource type="Texture2D" uid="uid://bjbxfl5efns4p" path="res://textures/icons/VerticalAreaSplitIcon.png" id="3_v3qqu"]
-[ext_resource type="Script" path="res://Scripts/WorkspaceArea/WorkspaceChangeButton.gd" id="4_3xyj2"]
 [ext_resource type="PackedScene" uid="uid://cweb4elgguvow" path="res://Scenes/workspaceAreaSelectorPanel.tscn" id="7_d45lb"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ld5qm"]
@@ -40,7 +39,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_ld5qm")
 
 [node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/AreaControlPanel"]
 layout_mode = 1
-anchors_preset = 15
+anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
@@ -60,7 +59,6 @@ visible = false
 layout_mode = 2
 size_flags_horizontal = 0
 icon = ExtResource("3_v3qqu")
-script = ExtResource("4_3xyj2")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/AreaControlPanel/MarginContainer/HBoxContainer"]
 layout_mode = 2
