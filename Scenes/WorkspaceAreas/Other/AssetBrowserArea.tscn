@@ -1,13 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://kaf52hnylxhg"]
+[gd_scene load_steps=5 format=3 uid="uid://kaf52hnylxhg"]
 
-[ext_resource type="Script" path="res://Scripts/WorkspaceArea/WorkspaceArea.gd" id="1_uyd45"]
 [ext_resource type="Theme" uid="uid://cxi7ihqtqqtu6" path="res://Themes/darkTheme.tres" id="1_wo72a"]
+[ext_resource type="Script" path="res://Scripts/WorkspaceArea/CustomWorkspaceScripts/AssetBrowserArea/AssetBrowserWorkspaceArea.gd" id="2_3migm"]
 [ext_resource type="Texture2D" uid="uid://ih4vsvjnohjr" path="res://textures/icons/FolderIcons/FolderBigThumb.svg" id="2_spitt"]
-[ext_resource type="Texture2D" uid="uid://bjbxfl5efns4p" path="res://textures/icons/VerticalAreaSplitIcon.png" id="3_pm428"]
-[ext_resource type="PackedScene" uid="uid://cweb4elgguvow" path="res://Scenes/workspaceAreaSelectorPanel.tscn" id="6_un5i3"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_py80l"]
-bg_color = Color(0.151276, 0.151276, 0.151276, 1)
+[ext_resource type="Texture2D" uid="uid://dy25danh2am23" path="res://addons/dockable_container/icon.svg" id="3_54w03"]
 
 [node name="AssetBrowser" type="Panel"]
 clip_children = 1
@@ -19,9 +15,19 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_vertical = 3
 theme = ExtResource("1_wo72a")
-script = ExtResource("1_uyd45")
+script = ExtResource("2_3migm")
+workspaceAreaIcon = ExtResource("3_54w03")
+addControlPanelAndContentSeparator = false
 
-[node name="background" type="Panel" parent="."]
+[node name="AreaContent" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="background" type="Panel" parent="AreaContent"]
 self_modulate = Color(0.501407, 0.501406, 0.501406, 1)
 layout_mode = 1
 anchors_preset = 15
@@ -31,83 +37,23 @@ grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="H_Split" type="HSplitContainer" parent="AreaContent"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 0
-metadata/_edit_use_anchors_ = true
-
-[node name="AreaControlPanel" type="Panel" parent="VBoxContainer"]
-custom_minimum_size = Vector2(27, 24)
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_py80l")
-
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/AreaControlPanel"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Control" type="Control" parent="VBoxContainer/AreaControlPanel/HBoxContainer"]
-custom_minimum_size = Vector2(8, 0)
-layout_mode = 2
-size_flags_horizontal = 0
-
-[node name="AreaSwitchButton" type="Button" parent="VBoxContainer/AreaControlPanel/HBoxContainer"]
-layout_mode = 2
-icon = ExtResource("3_pm428")
-
-[node name="Control3" type="Control" parent="VBoxContainer/AreaControlPanel/HBoxContainer"]
-visible = false
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="RenderModePickButton" type="OptionButton" parent="VBoxContainer/AreaControlPanel/HBoxContainer"]
-visible = false
-layout_mode = 2
-size_flags_horizontal = 10
-size_flags_vertical = 4
-mouse_filter = 1
-item_count = 6
-selected = 0
-popup/item_0/text = "default"
-popup/item_0/id = 0
-popup/item_1/text = "albedo"
-popup/item_1/id = 1
-popup/item_2/text = "normal_map"
-popup/item_2/id = 2
-popup/item_3/text = "roughness"
-popup/item_3/id = 3
-popup/item_4/text = "metalness"
-popup/item_4/id = 4
-popup/item_5/text = "heightmap"
-popup/item_5/id = 5
-metadata/_edit_use_anchors_ = true
-
-[node name="Control2" type="Control" parent="VBoxContainer/AreaControlPanel/HBoxContainer"]
-visible = false
-custom_minimum_size = Vector2(10, 0)
-layout_mode = 2
-size_flags_horizontal = 8
-
-[node name="H_Split" type="HSplitContainer" parent="VBoxContainer"]
-layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 2
 theme_override_constants/minimum_grab_thickness = 5
 split_offset = 200
 
-[node name="Tree" type="Tree" parent="VBoxContainer/H_Split"]
+[node name="Tree" type="Tree" parent="AreaContent/H_Split"]
 layout_mode = 2
 mouse_filter = 1
 
-[node name="ItemList" type="ItemList" parent="VBoxContainer/H_Split"]
+[node name="ItemList" type="ItemList" parent="AreaContent/H_Split"]
 layout_mode = 2
 mouse_filter = 1
 item_count = 2
@@ -118,13 +64,3 @@ item_0/text = ""
 item_0/icon = ExtResource("2_spitt")
 item_1/text = ""
 item_1/icon = ExtResource("2_spitt")
-
-[node name="workspaceAreaSelectorPanel" parent="." instance=ExtResource("6_un5i3")]
-unique_name_in_owner = true
-visible = false
-layout_mode = 1
-anchor_bottom = 0.354
-offset_bottom = -0.320007
-grow_vertical = 2
-
-[connection signal="ready" from="workspaceAreaSelectorPanel" to="VBoxContainer/AreaControlPanel/HBoxContainer/AreaSwitchButton" method="_READY"]

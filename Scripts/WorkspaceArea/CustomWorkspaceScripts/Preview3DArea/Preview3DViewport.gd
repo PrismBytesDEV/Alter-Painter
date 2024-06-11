@@ -1,4 +1,5 @@
 extends SubViewport
+class_name Preview3DViewport
 
 func _ready()->void:
 	pass

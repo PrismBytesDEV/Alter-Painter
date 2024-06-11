@@ -1,18 +1,12 @@
-[gd_scene load_steps=37 format=3 uid="uid://2a2kb6vkospx"]
+[gd_scene load_steps=26 format=3 uid="uid://2a2kb6vkospx"]
 
 [ext_resource type="Theme" uid="uid://cxi7ihqtqqtu6" path="res://Themes/darkTheme.tres" id="1_50egg"]
-[ext_resource type="Script" path="res://addons/dockable_container/dockable_container.gd" id="1_jbcfn"]
 [ext_resource type="Script" path="res://Scripts/App.gd" id="2_3s3tk"]
-[ext_resource type="Script" path="res://addons/dockable_container/layout_panel.gd" id="2_uu0la"]
 [ext_resource type="Script" path="res://Scripts/WorkspaceArea/AreaSplitContainer.gd" id="3_iy3mc"]
-[ext_resource type="Script" path="res://addons/dockable_container/layout.gd" id="3_jkhko"]
 [ext_resource type="PackedScene" uid="uid://bj8wub3fyrhw5" path="res://Scenes/WorkspaceAreas/Preview/Preview3DArea.tscn" id="4_1mgvo"]
-[ext_resource type="Script" path="res://addons/dockable_container/layout_split.gd" id="4_cmp6u"]
 [ext_resource type="PackedScene" uid="uid://ddurw3r8x0l8r" path="res://Scenes/WorkspaceAreas/Layers/LayersArea.tscn" id="5_4kxwm"]
 [ext_resource type="Environment" uid="uid://cgwugn0gdgmsl" path="res://Environment.tres" id="5_p58yj"]
-[ext_resource type="PackedScene" uid="uid://es2dkh6ab5np" path="res://Scenes/WorkspaceAreas/Other/DebugWorkspaceArea.tscn" id="6_5r8ne"]
 [ext_resource type="PackedScene" uid="uid://kaf52hnylxhg" path="res://Scenes/WorkspaceAreas/Other/AssetBrowserArea.tscn" id="6_lkjph"]
-[ext_resource type="Texture2D" uid="uid://b4wwpfijfexfa" path="res://HDRIs/empty_workshop_4k.exr" id="8_7hkbj"]
 [ext_resource type="Texture2D" uid="uid://bjbxfl5efns4p" path="res://textures/icons/VerticalAreaSplitIcon.png" id="15_1vikl"]
 [ext_resource type="Texture2D" uid="uid://dtunlx2s2kyqk" path="res://textures/icons/HorizontalAreaSplitIcon.png" id="16_uorpf"]
 [ext_resource type="Script" path="res://Scripts/WorkspaceArea/CustomWorkspaceScripts/Preview3DArea/Alter3DScene.gd" id="17_3v5pm"]
@@ -28,36 +22,6 @@ bg_color = Color(0.054902, 0.054902, 0.054902, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s6qsb"]
 bg_color = Color(0.10748, 0.10748, 0.10748, 1)
-
-[sub_resource type="Resource" id="Resource_wodr5"]
-resource_name = "Tabs"
-script = ExtResource("2_uu0la")
-names = PackedStringArray("2D preview")
-current_tab = 0
-
-[sub_resource type="Resource" id="Resource_sp562"]
-resource_name = "Tabs"
-script = ExtResource("2_uu0la")
-names = PackedStringArray("Layer settings", "Brush settings")
-current_tab = 0
-
-[sub_resource type="Resource" id="Resource_ujdoo"]
-resource_name = "Split"
-script = ExtResource("4_cmp6u")
-direction = 0
-percent = 0.780656
-first = SubResource("Resource_wodr5")
-second = SubResource("Resource_sp562")
-
-[sub_resource type="Resource" id="Resource_oyvfb"]
-resource_name = "Layout"
-script = ExtResource("3_jkhko")
-root = SubResource("Resource_ujdoo")
-hidden_tabs = {}
-
-[sub_resource type="StyleBoxLine" id="StyleBoxLine_drb8g"]
-color = Color(0.129412, 0.52549, 0.898039, 1)
-thickness = 8
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tvkum"]
 resource_name = "GlowMat"
@@ -368,15 +332,7 @@ script = ExtResource("3_iy3mc")
 [node name="Preview3DArea" parent="VBoxContainer/V_AreaSplit/H_AreaSplit/AreaSplitContainer" instance=ExtResource("4_1mgvo")]
 layout_mode = 2
 
-[node name="AreaSplitContainer2" type="SplitContainer" parent="VBoxContainer/V_AreaSplit/H_AreaSplit"]
-layout_mode = 2
-split_offset = 435
-script = ExtResource("3_iy3mc")
-
-[node name="LayersArea" parent="VBoxContainer/V_AreaSplit/H_AreaSplit/AreaSplitContainer2" instance=ExtResource("5_4kxwm")]
-layout_mode = 2
-
-[node name="DebugWorkspaceArea" parent="VBoxContainer/V_AreaSplit/H_AreaSplit/AreaSplitContainer2" instance=ExtResource("6_5r8ne")]
+[node name="LayersArea" parent="VBoxContainer/V_AreaSplit/H_AreaSplit" instance=ExtResource("5_4kxwm")]
 layout_mode = 2
 
 [node name="AssetBrowser" parent="VBoxContainer/V_AreaSplit" instance=ExtResource("6_lkjph")]
@@ -415,101 +371,6 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 8
 text = "0.0.0"
-
-[node name="DockableContainer" type="Container" parent="VBoxContainer"]
-process_mode = 4
-visible = false
-layout_mode = 2
-size_flags_vertical = 3
-script = ExtResource("1_jbcfn")
-tab_alignment = 0
-use_hidden_tabs_for_min_size = true
-layout = SubResource("Resource_oyvfb")
-
-[node name="2D preview" type="TextureRect" parent="VBoxContainer/DockableContainer"]
-custom_minimum_size = Vector2(512, 512)
-layout_mode = 2
-texture = ExtResource("8_7hkbj")
-expand_mode = 1
-
-[node name="Brush settings" type="ScrollContainer" parent="VBoxContainer/DockableContainer"]
-visible = false
-custom_minimum_size = Vector2(512, 128)
-layout_mode = 2
-theme = ExtResource("1_50egg")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/DockableContainer/Brush settings"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme = ExtResource("1_50egg")
-
-[node name="size_setting" type="MarginContainer" parent="VBoxContainer/DockableContainer/Brush settings/VBoxContainer"]
-layout_mode = 2
-theme = ExtResource("1_50egg")
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 5
-
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/DockableContainer/Brush settings/VBoxContainer/size_setting"]
-layout_mode = 2
-size_flags_vertical = 4
-theme = ExtResource("1_50egg")
-theme_override_constants/separation = 20
-
-[node name="Label" type="Label" parent="VBoxContainer/DockableContainer/Brush settings/VBoxContainer/size_setting/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 0
-theme = ExtResource("1_50egg")
-text = "size"
-
-[node name="HSlider" type="HSlider" parent="VBoxContainer/DockableContainer/Brush settings/VBoxContainer/size_setting/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 4
-theme = ExtResource("1_50egg")
-theme_override_styles/grabber_area = SubResource("StyleBoxLine_drb8g")
-value = 34.0
-scrollable = false
-
-[node name="opacity_setting" type="MarginContainer" parent="VBoxContainer/DockableContainer/Brush settings/VBoxContainer"]
-layout_mode = 2
-theme = ExtResource("1_50egg")
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 5
-
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/DockableContainer/Brush settings/VBoxContainer/opacity_setting"]
-layout_mode = 2
-size_flags_vertical = 4
-theme = ExtResource("1_50egg")
-theme_override_constants/separation = 20
-
-[node name="Label" type="Label" parent="VBoxContainer/DockableContainer/Brush settings/VBoxContainer/opacity_setting/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 0
-theme = ExtResource("1_50egg")
-text = "opacity"
-
-[node name="HSlider" type="HSlider" parent="VBoxContainer/DockableContainer/Brush settings/VBoxContainer/opacity_setting/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 4
-theme = ExtResource("1_50egg")
-theme_override_styles/grabber_area = SubResource("StyleBoxLine_drb8g")
-value = 34.0
-scrollable = false
-
-[node name="Layer settings" type="ScrollContainer" parent="VBoxContainer/DockableContainer"]
-custom_minimum_size = Vector2(512, 128)
-layout_mode = 2
-theme = ExtResource("1_50egg")
-
-[node name="Panel" type="Panel" parent="VBoxContainer/DockableContainer/Layer settings"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 
 [node name="DockOptionsPopup" type="PopupMenu" parent="."]
 unique_name_in_owner = true

@@ -3,13 +3,18 @@ class_name Preview3DWorkspaceArea
 
 var workspaceCameraController : cameraController 
 var renderModePickButton : OptionButton
+var renderViewport : Preview3DViewport
 
 func _init()->void:
+	name = "Preview3DWorkspaceArea"
 	mouse_entered.connect(_mouse_entered_3DPreview)
 	mouse_exited.connect(_mouse_exited_3DPreview)
 
 func _ready() -> void:
 	setupWorkspaceArea()
+	
+	renderViewport = areaContent.get_child(0)
+	workspaceCameraController = renderViewport.get_child(0)
 	
 	renderModePickButton = OptionButton.new()
 	renderModePickButton.size_flags_horizontal = SIZE_SHRINK_END + SIZE_EXPAND
@@ -21,6 +26,7 @@ func _ready() -> void:
 	renderModePickButton.add_item("heightmap")
 	renderModePickButton.selected = 0
 	areaOptionsContainer.add_child(renderModePickButton)
+	renderModePickButton.item_selected.connect(renderViewport.selectRenderMode)
 	
 	var separator := Control.new()
 	areaOptionsContainer.add_child(separator)

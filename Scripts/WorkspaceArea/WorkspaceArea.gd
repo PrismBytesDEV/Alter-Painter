@@ -8,6 +8,7 @@ static var CurrentMouseHoverArea : WorkspaceArea
 static var debugCurrentHoverArea : bool = false
 
 var areaVbox : VBoxContainer
+var areaContent : Control
 var areaOptionsContainer : HBoxContainer
 var workspaceAreaSelectorPanel : Panel
 
@@ -54,7 +55,6 @@ func setupWorkspaceArea()->void:
 		get_child(-1).queue_free()
 		return
 	
-	var areaContent : Control
 	if get_child_count() > 0:
 		areaContent = get_child(0)
 	

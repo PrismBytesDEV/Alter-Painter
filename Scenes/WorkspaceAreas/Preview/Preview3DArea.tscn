@@ -42,27 +42,3 @@ script = ExtResource("3_0w77e")
 
 [node name="Camera" type="Camera3D" parent="SubViewportContainer/SubViewport/CameraController"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4)
-
-[node name="RenderModePickButton" type="OptionButton" parent="SubViewportContainer"]
-visible = false
-layout_mode = 2
-size_flags_horizontal = 10
-size_flags_vertical = 4
-mouse_filter = 1
-item_count = 6
-selected = 0
-popup/item_0/text = "default"
-popup/item_0/id = 0
-popup/item_1/text = "albedo"
-popup/item_1/id = 1
-popup/item_2/text = "normal_map"
-popup/item_2/id = 2
-popup/item_3/text = "roughness"
-popup/item_3/id = 3
-popup/item_4/text = "metalness"
-popup/item_4/id = 4
-popup/item_5/text = "heightmap"
-popup/item_5/id = 5
-metadata/_edit_use_anchors_ = true
-
-[connection signal="item_selected" from="SubViewportContainer/RenderModePickButton" to="SubViewportContainer/SubViewport" method="selectRenderMode"]
