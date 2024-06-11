@@ -195,14 +195,19 @@ func refreshWorkspaceAreaSelectorPanel()->void:
 	hBox.grow_horizontal = GROW_DIRECTION_BOTH
 	hBox.grow_vertical = GROW_DIRECTION_BOTH
 	
+	var vBox : VBoxContainer
+	var columnLabel : Label
+	var separator : HSeparator
+	var areaSelectButton : Button
+	var buttonCall : Callable
 	for columnIndex in workspaceCategories.size():
-		var vBox := VBoxContainer.new()
+		vBox = VBoxContainer.new()
 		vBox.size_flags_horizontal = SIZE_EXPAND_FILL
 		vBox.size_flags_vertical = SIZE_FILL
 		hBox.add_child(vBox)
 		vBox.set_owner(hBox)
 		
-		var columnLabel := Label.new()
+		columnLabel = Label.new()
 		columnLabel.text = workspaceCategories[columnIndex]
 		columnLabel.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		columnLabel.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
@@ -212,17 +217,30 @@ func refreshWorkspaceAreaSelectorPanel()->void:
 		vBox.add_child(columnLabel)
 		columnLabel.set_owner(vBox)
 		
-		var separator := HSeparator.new()
+		separator = HSeparator.new()
 		separator.mouse_filter = MOUSE_FILTER_PASS
 		vBox.add_child(separator)
 		separator.set_owner(vBox)
 		
 		for selectorButtonIndex in workspacesNames[columnIndex].size():
-			var areaSelectButton := Button.new()
+			areaSelectButton = Button.new()
 			areaSelectButton.text = workspacesNames[columnIndex][selectorButtonIndex]
 			areaSelectButton.mouse_filter = MOUSE_FILTER_PASS
 			vBox.add_child(areaSelectButton)
 			areaSelectButton.set_owner(vBox)
+			buttonCall = Callable(self,"switchThisWorkspaceArea")
+			buttonCall = buttonCall.bind(columnIndex,selectorButtonIndex)
+			areaSelectButton.pressed.connect(buttonCall)
+
+func switchThisWorkspaceArea(columnIndex : int, buttonIndex : int)->void:
+	var selectedWorkspacePath : String = areaFileSystem[columnIndex][buttonIndex]
+	var packedWorkspaceArea : PackedScene = load(selectedWorkspacePath)
+	
+	var createdWorkspace := packedWorkspaceArea.instantiate()
+	var thisAreaOrder := get_index()
+	get_parent().add_child(createdWorkspace)
+	get_parent().move_child(createdWorkspace,thisAreaOrder)
+	self.queue_free()
 
 static func loadAreasData()->void:
 	var workspacesDirectiory : DirAccess = DirAccess.open(workspacesPath)
