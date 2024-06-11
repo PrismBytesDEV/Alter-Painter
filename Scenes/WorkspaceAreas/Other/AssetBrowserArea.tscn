@@ -64,13 +64,14 @@ layout_mode = 2
 icon = ExtResource("3_pm428")
 
 [node name="Control3" type="Control" parent="VBoxContainer/AreaControlPanel/HBoxContainer"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="RenderModePickButton" type="OptionButton" parent="VBoxContainer/AreaControlPanel/HBoxContainer"]
 visible = false
 layout_mode = 2
-size_flags_horizontal = 4
+size_flags_horizontal = 10
 size_flags_vertical = 4
 mouse_filter = 1
 item_count = 6
