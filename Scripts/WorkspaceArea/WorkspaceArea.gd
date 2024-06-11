@@ -12,13 +12,6 @@ var areaContent : Control
 var areaOptionsContainer : HBoxContainer
 var workspaceAreaSelectorPanel : Panel
 
-
-const workspacesPath : String = "res://Scenes/WorkspaceAreas/"
-
-static var workspacesDataLoaded : bool = false
-static var workspaceCategories : PackedStringArray
-static var workspacesNames : Array[Array]
-static var areaFileSystem : Array[Array]
 static var areaSelectorPanelHeight : int = 256
 
 @export var workspaceAreaIcon : Texture2D = PlaceholderTexture2D.new()
@@ -29,8 +22,6 @@ var controlPanelAndContentSeperatorHeight : int = 4
 var debug : bool = false
 
 func _init()->void:
-	if !workspacesDataLoaded:
-		WorkspaceArea.loadAreasData()
 	mouse_entered.connect(_mouse_entered)
 	mouse_exited.connect(_mouse_exited)
 
@@ -200,7 +191,7 @@ func refreshWorkspaceAreaSelectorPanel()->void:
 	var separator : HSeparator
 	var areaSelectButton : Button
 	var buttonCall : Callable
-	for columnIndex in workspaceCategories.size():
+	for columnIndex in AlterPainter.workspaceCategories.size():
 		vBox = VBoxContainer.new()
 		vBox.size_flags_horizontal = SIZE_EXPAND_FILL
 		vBox.size_flags_vertical = SIZE_FILL
@@ -208,7 +199,7 @@ func refreshWorkspaceAreaSelectorPanel()->void:
 		vBox.set_owner(hBox)
 		
 		columnLabel = Label.new()
-		columnLabel.text = workspaceCategories[columnIndex]
+		columnLabel.text = AlterPainter.workspaceCategories[columnIndex]
 		columnLabel.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		columnLabel.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 		columnLabel.size_flags_horizontal = SIZE_FILL
@@ -222,9 +213,9 @@ func refreshWorkspaceAreaSelectorPanel()->void:
 		vBox.add_child(separator)
 		separator.set_owner(vBox)
 		
-		for selectorButtonIndex in workspacesNames[columnIndex].size():
+		for selectorButtonIndex in AlterPainter.workspacesNames[columnIndex].size():
 			areaSelectButton = Button.new()
-			areaSelectButton.text = workspacesNames[columnIndex][selectorButtonIndex]
+			areaSelectButton.text = AlterPainter.workspacesNames[columnIndex][selectorButtonIndex]
 			areaSelectButton.mouse_filter = MOUSE_FILTER_PASS
 			vBox.add_child(areaSelectButton)
 			areaSelectButton.set_owner(vBox)
@@ -233,7 +224,7 @@ func refreshWorkspaceAreaSelectorPanel()->void:
 			areaSelectButton.pressed.connect(buttonCall)
 
 func switchThisWorkspaceArea(columnIndex : int, buttonIndex : int)->void:
-	var selectedWorkspacePath : String = areaFileSystem[columnIndex][buttonIndex]
+	var selectedWorkspacePath : String = AlterPainter.areaFileSystem[columnIndex][buttonIndex]
 	var packedWorkspaceArea : PackedScene = load(selectedWorkspacePath)
 	
 	var createdWorkspace := packedWorkspaceArea.instantiate()
@@ -241,24 +232,6 @@ func switchThisWorkspaceArea(columnIndex : int, buttonIndex : int)->void:
 	get_parent().add_child(createdWorkspace)
 	get_parent().move_child(createdWorkspace,thisAreaOrder)
 	self.queue_free()
-
-static func loadAreasData()->void:
-	var workspacesDirectiory : DirAccess = DirAccess.open(workspacesPath)
-	workspaceCategories = workspacesDirectiory.get_directories()
-	areaFileSystem.resize(workspaceCategories.size())
-	workspacesNames.resize(workspaceCategories.size())
-	
-	for i in workspaceCategories.size():
-		var category : DirAccess = DirAccess.open(workspacesPath + workspaceCategories[i])
-		for workspace in category.get_files():
-			var w = workspace.rstrip(".tscn")
-			w = w.to_snake_case()
-			w = w.capitalize()
-			w = w.replace("2d","2D")
-			w = w.replace("3d","3D")
-			workspacesNames[i].append(w)
-			areaFileSystem[i].append(workspacesPath + workspaceCategories[i] + "/" + workspace.get_basename() + "." + workspace.get_extension())
-	workspacesDataLoaded = true
 
 func _mouse_entered()->void:
 	CurrentMouseHoverArea = self

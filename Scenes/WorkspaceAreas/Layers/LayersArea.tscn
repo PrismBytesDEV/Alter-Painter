@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://ddurw3r8x0l8r"]
+[gd_scene load_steps=7 format=3 uid="uid://ddurw3r8x0l8r"]
 
 [ext_resource type="Theme" uid="uid://cxi7ihqtqqtu6" path="res://Themes/darkTheme.tres" id="1_4baco"]
 [ext_resource type="Script" path="res://Scripts/WorkspaceArea/CustomWorkspaceScripts/LayersWorkspaceArea/LayersWorkspaceArea.gd" id="2_n6ogu"]
 [ext_resource type="Script" path="res://addons/ReorderableContainer/reorderable_container.gd" id="3_fonhh"]
+[ext_resource type="Texture2D" uid="uid://bb8ag0uuxyydx" path="res://godotIcon.svg" id="3_unj3g"]
 [ext_resource type="PackedScene" uid="uid://bk6xt62j3yiba" path="res://Scenes/layer_ui_fill.tscn" id="4_pblpd"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_28k06"]
@@ -20,6 +21,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_4baco")
 script = ExtResource("2_n6ogu")
+workspaceAreaIcon = ExtResource("3_unj3g")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
