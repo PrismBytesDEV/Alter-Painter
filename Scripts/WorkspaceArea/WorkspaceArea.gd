@@ -17,7 +17,7 @@ static var areaSelectorPanelHeight : int = 256
 @export var workspaceAreaIcon : Texture2D = PlaceholderTexture2D.new()
 @export var areaOptionsPanelColor := Color("272727")
 @export var addControlPanelAndContentSeparator : bool = true
-var controlPanelAndContentSeperatorHeight : int = 4
+@export var controlPanelAndContentSeperatorHeight : int = 3
 
 var debug : bool = false
 

@@ -20,6 +20,11 @@ boot_splash/fullsize=false
 config/icon="res://icon.png"
 config/windows_native_icon="res://Alter-painter-logo.ico"
 
+[debug]
+
+file_logging/enable_file_logging=true
+file_logging/log_path="user://logs/AlterPainter/app.log"
+
 [display]
 
 window/size/viewport_width=1920

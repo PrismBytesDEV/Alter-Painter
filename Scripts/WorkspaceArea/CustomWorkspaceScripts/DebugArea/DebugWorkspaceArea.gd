@@ -13,7 +13,7 @@ func _ready()->void:
 		var optionButton := Button.new()
 		optionButton.text = "optionButton " + str(i) 
 		areaOptionsContainer.add_child(optionButton)
-		optionButton.size_flags_horizontal = SIZE_EXPAND_FILL
+		#optionButton.size_flags_horizontal = SIZE_EXPAND_FILL
 
 func _mouse_entered_debug_area()->void:
 	CurrentMouseHoverArea = self

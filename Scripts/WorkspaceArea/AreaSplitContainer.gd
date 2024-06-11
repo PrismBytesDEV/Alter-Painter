@@ -12,12 +12,14 @@ func _input(event : InputEvent)->void:
 	if event is InputEventMouseMotion:
 		_mousePos = event.position
 	if event is InputEventMouseButton:
-		if event.button_index == 2:
-			if event.pressed:
+		if event.pressed:
+			if event.button_index == 2:
 				if vertical:
-					if abs(_mousePos.y - (position.y + size.y + split_offset)) < 10:
-						_dockOptionsPopup.position = _mousePos
-						_dockOptionsPopup.show()
+					pass
+					#print(_mousePos.y, ", ",-position.y + split_offset)
+					#if abs(_mousePos.y - (-position.y + split_offset)) < 10:
+						#_dockOptionsPopup.position = _mousePos
+						#_dockOptionsPopup.show()
 				else:
 					if abs(_mousePos.x - split_offset) < 10:
 						_dockOptionsPopup.position = _mousePos
