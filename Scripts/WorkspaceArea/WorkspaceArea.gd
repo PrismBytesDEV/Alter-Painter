@@ -227,7 +227,7 @@ func switchThisWorkspaceArea(columnIndex : int, buttonIndex : int)->void:
 	var selectedWorkspacePath : String = AlterPainter.areaFileSystem[columnIndex][buttonIndex]
 	var packedWorkspaceArea : PackedScene = load(selectedWorkspacePath)
 	
-	var createdWorkspace := packedWorkspaceArea.instantiate()
+	var createdWorkspace : Control = packedWorkspaceArea.instantiate()
 	var thisAreaOrder := get_index()
 	get_parent().add_child(createdWorkspace)
 	get_parent().move_child(createdWorkspace,thisAreaOrder)

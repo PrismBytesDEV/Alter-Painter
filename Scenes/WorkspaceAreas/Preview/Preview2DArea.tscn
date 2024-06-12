@@ -1,0 +1,74 @@
+[gd_scene load_steps=7 format=3 uid="uid://dvk61rogqgvli"]
+
+[ext_resource type="Theme" uid="uid://cxi7ihqtqqtu6" path="res://Themes/darkTheme.tres" id="1_1xty8"]
+[ext_resource type="Script" path="res://Scripts/WorkspaceArea/CustomWorkspaceScripts/Preview2DArea/Preview2DWorkspaceArea.gd" id="2_16eij"]
+[ext_resource type="Texture2D" uid="uid://fepfnfguoexp" path="res://icon.png" id="3_1qew6"]
+[ext_resource type="Texture2D" uid="uid://b2qj1tr1tgcpa" path="res://textures/icons/Preview2D.svg" id="3_bl60u"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4sdpv"]
+bg_color = Color(0.14902, 0.14902, 0.14902, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_7pp5m"]
+font_size = 46
+
+[node name="Preview2DArea" type="Panel"]
+clip_children = 2
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_1xty8")
+script = ExtResource("2_16eij")
+workspaceAreaIcon = ExtResource("3_bl60u")
+addControlPanelAndContentSeparator = false
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="Panel" parent="Control"]
+self_modulate = Color(0.703808, 0.703808, 0.703808, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_4sdpv")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_scroll_mode = 3
+vertical_scroll_mode = 3
+
+[node name="TextureRect" type="TextureRect" parent="Control/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+texture = ExtResource("3_1qew6")
+stretch_mode = 4
+
+[node name="Label" type="Label" parent="Control/ScrollContainer/TextureRect"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.158203
+anchor_top = 0.867188
+anchor_right = 1.16211
+anchor_bottom = 1.08984
+offset_left = 20.5
+offset_right = -20.5
+grow_horizontal = 2
+grow_vertical = 0
+text = "Coming soon!"
+label_settings = SubResource("LabelSettings_7pp5m")
+metadata/_edit_use_anchors_ = true

@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://ddurw3r8x0l8r"]
+[gd_scene load_steps=8 format=3 uid="uid://ddurw3r8x0l8r"]
 
 [ext_resource type="Theme" uid="uid://cxi7ihqtqqtu6" path="res://Themes/darkTheme.tres" id="1_4baco"]
 [ext_resource type="Script" path="res://Scripts/WorkspaceArea/CustomWorkspaceScripts/LayersWorkspaceArea/LayersWorkspaceArea.gd" id="2_n6ogu"]
+[ext_resource type="Texture2D" uid="uid://c3bem654iib2l" path="res://textures/icons/LayersIcon.svg" id="3_cya14"]
 [ext_resource type="Script" path="res://addons/ReorderableContainer/reorderable_container.gd" id="3_fonhh"]
-[ext_resource type="Texture2D" uid="uid://bb8ag0uuxyydx" path="res://godotIcon.svg" id="3_unj3g"]
+[ext_resource type="Script" path="res://Scripts/WorkspaceArea/CustomWorkspaceScripts/LayersWorkspaceArea/LayerManager.gd" id="4_4t8ek"]
 [ext_resource type="PackedScene" uid="uid://bk6xt62j3yiba" path="res://Scenes/layer_ui_fill.tscn" id="4_pblpd"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_28k06"]
@@ -21,7 +22,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_4baco")
 script = ExtResource("2_n6ogu")
-workspaceAreaIcon = ExtResource("3_unj3g")
+workspaceAreaIcon = ExtResource("3_cya14")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -30,6 +31,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("4_4t8ek")
 
 [node name="list scroll" type="ScrollContainer" parent="VBoxContainer"]
 layout_mode = 2
@@ -54,6 +56,7 @@ layout_mode = 2
 [node name="list edit" type="Panel" parent="VBoxContainer"]
 custom_minimum_size = Vector2(0, 24)
 layout_mode = 2
+size_flags_vertical = 8
 theme_override_styles/panel = SubResource("StyleBoxFlat_28k06")
 
 [node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/list edit"]
@@ -84,3 +87,4 @@ icon_alignment = 1
 expand_icon = true
 
 [connection signal="sort_children" from="VBoxContainer/list scroll/List" to="VBoxContainer/list scroll/List" method="_on_sort_children"]
+[connection signal="pressed" from="VBoxContainer/list edit/MarginContainer/buttons list/addNewLayer_button" to="VBoxContainer" method="add_new_fill_layer"]

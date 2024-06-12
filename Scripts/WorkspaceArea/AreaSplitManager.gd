@@ -51,6 +51,7 @@ func splitArea(area : WorkspaceArea, splitDirection : SplitMode,mousePos : Vecto
 	var splitNode := AreaSplitContainer.new()
 	# != is use because I made a mistake and I thought splitting Vertically means
 	# splitting child so the split handle is Vertical... But it's the over way..
+	splitNode.mouse_filter = Control.MOUSE_FILTER_PASS
 	splitNode.vertical = splitDirection != SplitMode.VSplit
 	areaParent.add_child(splitNode)
 	var currentAreaIndex : int = area.get_index()

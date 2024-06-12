@@ -3,7 +3,7 @@
 [ext_resource type="Theme" uid="uid://cxi7ihqtqqtu6" path="res://Themes/darkTheme.tres" id="1_wo72a"]
 [ext_resource type="Script" path="res://Scripts/WorkspaceArea/CustomWorkspaceScripts/AssetBrowserArea/AssetBrowserWorkspaceArea.gd" id="2_3migm"]
 [ext_resource type="Texture2D" uid="uid://ih4vsvjnohjr" path="res://textures/icons/FolderIcons/FolderBigThumb.svg" id="2_spitt"]
-[ext_resource type="Texture2D" uid="uid://dy25danh2am23" path="res://addons/dockable_container/icon.svg" id="3_54w03"]
+[ext_resource type="Texture2D" uid="uid://baivl4fbqn050" path="res://textures/icons/FolderIcons/Folder.svg" id="3_ufd0i"]
 
 [node name="AssetBrowser" type="Panel"]
 clip_children = 1
@@ -16,7 +16,7 @@ grow_vertical = 2
 size_flags_vertical = 3
 theme = ExtResource("1_wo72a")
 script = ExtResource("2_3migm")
-workspaceAreaIcon = ExtResource("3_54w03")
+workspaceAreaIcon = ExtResource("3_ufd0i")
 addControlPanelAndContentSeparator = false
 
 [node name="AreaContent" type="Control" parent="."]
