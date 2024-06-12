@@ -2,8 +2,8 @@
 extends Marker3D
 class_name cameraController
 
-var farMaxCamDistance : float
-var closeMinCamDistance : float
+static var farMaxCamDistance : float
+static var closeMinCamDistance : float
 
 const trackballSpeed : float = 0.01
 var trackModelMode : bool = false
@@ -11,12 +11,13 @@ var canRotateLight : bool = false
 var rotateLightMode : bool = false
 var cameraDistance : float = 2
 var Camera : Camera3D
-static var mesh : MeshInstance3D
 static var currentCamera : cameraController
+
+static var meshNode : MeshInstance3D
 
 var light : DirectionalLight3D
 
-var onReadyCameraRecenter : bool = true
+static var cameraRecenter : bool = false
 
 func _ready()->void:
 	if get_child_count() > 0:
@@ -31,10 +32,13 @@ func _ready()->void:
 func _process(_delta : float)->void:
 	if Engine.is_editor_hint():
 		return
-	if mesh != null:
-		if onReadyCameraRecenter:
-			recenterCamera()
-			onReadyCameraRecenter = false
+	print(cameraDistance)
+	print("min: ", closeMinCamDistance)
+	print("max: ", farMaxCamDistance)
+	if cameraRecenter:
+		recenterCamera()
+		cameraRecenter = false
+	
 	if Alter3DScene.light != null:
 		light = Alter3DScene.light
 
@@ -75,8 +79,9 @@ func _input(event : InputEvent)->void:
 func recenterCamera()->void:
 	if Engine.is_editor_hint():
 		return
-	position = mesh.get_aabb().get_center()
-	closeMinCamDistance = mesh.get_aabb().get_longest_axis_size() * mesh.scale.x
-	farMaxCamDistance = mesh.get_aabb().get_longest_axis_size() * 4 * mesh.scale.x
+	var meshAABB := meshNode.get_aabb()
+	position = meshAABB.get_center()
+	closeMinCamDistance = (meshAABB.size.length())
+	farMaxCamDistance = closeMinCamDistance * 4
 	cameraDistance = (closeMinCamDistance + farMaxCamDistance) / 2.0
 	Camera.position = Vector3(0,0,cameraDistance)

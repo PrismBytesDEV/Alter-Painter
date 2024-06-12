@@ -45,3 +45,4 @@ script = ExtResource("3_0w77e")
 
 [node name="Camera" type="Camera3D" parent="SubViewportContainer/SubViewport/CameraController"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4)
+current = true

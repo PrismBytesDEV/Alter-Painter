@@ -408,15 +408,18 @@ width = 1.0
 [node name="Node3D" type="Node3D" parent="."]
 script = ExtResource("17_3v5pm")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Node3D"]
+[node name="MainDirectionalLight" type="DirectionalLight3D" parent="Node3D"]
+unique_name_in_owner = true
 shadow_enabled = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="Node3D"]
 environment = ExtResource("5_p58yj")
 
-[node name="Shaderball" type="MeshInstance3D" parent="Node3D"]
+[node name="SceneRoot" type="Node3D" parent="Node3D"]
+unique_name_in_owner = true
+
+[node name="Shaderball" type="MeshInstance3D" parent="Node3D/SceneRoot"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0427471, 0.0110773)
-visible = false
 layers = 31
 mesh = SubResource("ArrayMesh_dhes8")
 skeleton = NodePath("")
@@ -424,7 +427,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_uant3")
 surface_material_override/1 = SubResource("StandardMaterial3D_u1d5b")
 surface_material_override/2 = SubResource("StandardMaterial3D_xsc3u")
 
-[node name="Shaderball_001" type="MeshInstance3D" parent="Node3D/Shaderball"]
+[node name="Shaderball_001" type="MeshInstance3D" parent="Node3D/SceneRoot/Shaderball"]
 mesh = SubResource("ArrayMesh_iav7j")
 skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_uant3")
@@ -444,4 +447,4 @@ access = 2
 filters = PackedStringArray("*.glb, *.gltf", "*.fbx, *.obj, *.blend")
 use_native_dialog = true
 
-[connection signal="file_selected" from="Import3DModelWindow" to="." method="load3DAsset"]
+[connection signal="file_selected" from="Import3DModelWindow" to="Node3D" method="load3DAsset"]
