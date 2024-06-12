@@ -1,10 +1,13 @@
 extends Node3D
 class_name Alter3DScene
 
+static var sceneRootNode : Node3D
 static var mesh : MeshInstance3D
 static var light : DirectionalLight3D
 
 func _ready()->void:
+	sceneRootNode = Node3D.new()
+	add_child(sceneRootNode)
 	mesh = $Shaderball
 	light = $DirectionalLight3D
 	mesh.scale = Vector3.ONE

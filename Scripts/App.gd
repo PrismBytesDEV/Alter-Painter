@@ -51,5 +51,13 @@ func load3DAsset(path : String)->void:
 	print(path)
 	var gltfDocument := GLTFDocument.new()
 	var gltfState := GLTFState.new()
-	gltfDocument.append_from_file(path,gltfState)
+	
+	var error := gltfDocument.append_from_file(path,gltfState)
+	var gltfImportedAsset : Node
+	if error == OK:
+		gltfImportedAsset = gltfDocument.generate_scene(gltfState)
+		if Alter3DScene.sceneRootNode.get_child_count() > 0:
+			Alter3DScene.sceneRootNode.get_child(0).queue_free()
+		Alter3DScene.sceneRootNode.add_child(gltfImportedAsset)
+		cameraController.currentCamera.recenterCamera()
 	

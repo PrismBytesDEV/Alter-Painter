@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://bh7otf4eim8yd"
-path="res://.godot/imported/AlterShaderball.glb-097bcd7078b560ee446ca8e691111468.scn"
+uid="uid://umvikp33yxwm"
+path="res://.godot/imported/water_pistol.glb-5ef82a738425bc02bf81d9e2aa089aad.scn"
 
 [deps]
 
-source_file="res://exampleModels/AlterShaderball.glb"
-dest_files=["res://.godot/imported/AlterShaderball.glb-097bcd7078b560ee446ca8e691111468.scn"]
+source_file="res://exampleModels/water_pistol.glb"
+dest_files=["res://.godot/imported/water_pistol.glb-5ef82a738425bc02bf81d9e2aa089aad.scn"]
 
 [params]
 

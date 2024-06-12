@@ -416,6 +416,7 @@ environment = ExtResource("5_p58yj")
 
 [node name="Shaderball" type="MeshInstance3D" parent="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0427471, 0.0110773)
+visible = false
 layers = 31
 mesh = SubResource("ArrayMesh_dhes8")
 skeleton = NodePath("")
@@ -435,12 +436,12 @@ unique_name_in_owner = true
 disable_3d = true
 title = "Import 3D asset"
 initial_position = 1
-size = Vector2i(386, 115)
+size = Vector2i(386, 154)
 ok_button_text = "Open"
 mode_overrides_title = false
 file_mode = 0
 access = 2
-filters = PackedStringArray("*.glb, *.gltf, *.fbx, *.obj, *.blend")
+filters = PackedStringArray("*.glb, *.gltf", "*.fbx, *.obj, *.blend")
 use_native_dialog = true
 
 [connection signal="file_selected" from="Import3DModelWindow" to="." method="load3DAsset"]
