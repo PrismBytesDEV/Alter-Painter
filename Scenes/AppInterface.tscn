@@ -275,10 +275,10 @@ theme_override_constants/margin_left = 5
 theme_override_constants/margin_right = 5
 metadata/_edit_use_anchors_ = true
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/AppEditPanel"]
+[node name="AppEditButtons" type="HBoxContainer" parent="VBoxContainer/AppEditPanel"]
 layout_mode = 2
 
-[node name="project settings button" type="MenuButton" parent="VBoxContainer/AppEditPanel/HBoxContainer"]
+[node name="project settings button" type="MenuButton" parent="VBoxContainer/AppEditPanel/AppEditButtons"]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
@@ -298,7 +298,7 @@ popup/item_3/id = 3
 popup/item_4/text = "Export"
 popup/item_4/id = 4
 
-[node name="3D preview settings button" type="MenuButton" parent="VBoxContainer/AppEditPanel/HBoxContainer"]
+[node name="3D preview settings button" type="MenuButton" parent="VBoxContainer/AppEditPanel/AppEditButtons"]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
@@ -429,3 +429,18 @@ skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_uant3")
 surface_material_override/1 = SubResource("StandardMaterial3D_u1d5b")
 surface_material_override/2 = SubResource("StandardMaterial3D_xsc3u")
+
+[node name="Import3DModelWindow" type="FileDialog" parent="."]
+unique_name_in_owner = true
+disable_3d = true
+title = "Import 3D asset"
+initial_position = 1
+size = Vector2i(386, 115)
+ok_button_text = "Open"
+mode_overrides_title = false
+file_mode = 0
+access = 2
+filters = PackedStringArray("*.glb, *.gltf, *.fbx, *.obj, *.blend")
+use_native_dialog = true
+
+[connection signal="file_selected" from="Import3DModelWindow" to="." method="load3DAsset"]

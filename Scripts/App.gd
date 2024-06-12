@@ -8,12 +8,17 @@ static var workspaceCategories : PackedStringArray
 static var workspacesNames : Array[Array]
 static var areaFileSystem : Array[Array]
 
+@onready var import3DFileDialog : FileDialog = %Import3DModelWindow
+@onready var appEditButtons : HBoxContainer = $VBoxContainer/AppEditPanel/AppEditButtons
+
 func _init():
 	AlterPainter.loadAreasData()
 
 func _ready():
 	appVersion = ProjectSettings.get_setting("application/config/version")
 	%appVersionLabel.text = appVersion
+	var projectSettingsButton : MenuButton = appEditButtons.get_child(0)
+	projectSettingsButton.get_popup().id_pressed.connect(menuProjectSettingsItemSelected)
 
 static func loadAreasData()->void:
 	var workspacesDirectiory : DirAccess = DirAccess.open(workspacesPath)
@@ -36,3 +41,15 @@ static func loadAreasData()->void:
 			workspaceFilePath = workspaceFilePath.rstrip(".remap")
 			areaFileSystem[i].append(workspaceFilePath)
 			print(areaFileSystem[i])
+
+func menuProjectSettingsItemSelected(index : int)->void:
+	match index:
+		0:
+			import3DFileDialog.show()
+
+func load3DAsset(path : String)->void:
+	print(path)
+	var gltfDocument := GLTFDocument.new()
+	var gltfState := GLTFState.new()
+	gltfDocument.append_from_file(path,gltfState)
+	
