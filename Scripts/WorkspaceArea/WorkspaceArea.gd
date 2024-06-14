@@ -26,7 +26,7 @@ func _init()->void:
 	mouse_exited.connect(_mouse_exited)
 
 func _ready()->void:
-	pass
+	setupWorkspaceArea()
 	#debugCurrentHoverArea = true
 
 func _showAreaSelectorPanel()->void:
