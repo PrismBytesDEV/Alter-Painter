@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://2a2kb6vkospx"]
+[gd_scene load_steps=28 format=3 uid="uid://2a2kb6vkospx"]
 
 [ext_resource type="Theme" uid="uid://cxi7ihqtqqtu6" path="res://Themes/darkTheme.tres" id="1_50egg"]
 [ext_resource type="Script" path="res://Scripts/App.gd" id="2_3s3tk"]
@@ -221,6 +221,14 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_h43wg")
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_anvxu"]
+shading_mode = 0
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_gwbaa"]
+radius = 0.1
+height = 0.2
+
 [node name="AlterPainter" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -433,6 +441,11 @@ skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_uant3")
 surface_material_override/1 = SubResource("StandardMaterial3D_u1d5b")
 surface_material_override/2 = SubResource("StandardMaterial3D_xsc3u")
+
+[node name="worldCenterDebugSphere" type="MeshInstance3D" parent="Node3D"]
+visible = false
+material_override = SubResource("StandardMaterial3D_anvxu")
+mesh = SubResource("SphereMesh_gwbaa")
 
 [node name="Import3DModelWindow" type="FileDialog" parent="."]
 unique_name_in_owner = true

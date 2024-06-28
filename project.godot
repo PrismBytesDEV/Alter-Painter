@@ -20,10 +20,15 @@ boot_splash/fullsize=false
 config/icon="res://icon.png"
 config/windows_native_icon="res://Alter-painter-logo.ico"
 
+[autoload]
+
+Keychain="*res://addons/keychain/Keychain.gd"
+
 [debug]
 
 file_logging/enable_file_logging=true
 file_logging/log_path="user://logs/AlterPainter/app.log"
+gdscript/warnings/untyped_declaration=1
 
 [display]
 
@@ -33,8 +38,42 @@ window/size/mode=2
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/ReorderableContainer/plugin.cfg", "res://addons/dockable_container/plugin.cfg", "res://addons/zylann.editor_debugger/plugin.cfg")
+enabled=PackedStringArray("res://addons/ReorderableContainer/plugin.cfg", "res://addons/keychain/plugin.cfg", "res://addons/zylann.editor_debugger/plugin.cfg")
+
+[file_customization]
+
+folder_colors={
+"res://HDRIs/": "gray",
+"res://Scenes/": "green",
+"res://Scripts/": "teal",
+"res://Scripts/Servers/": "red",
+"res://Scripts/WorkspaceArea/": "blue",
+"res://Shaders/": "pink",
+"res://Themes/": "pink",
+"res://addons/": "red",
+"res://exampleMeshes/": "yellow",
+"res://exampleModels/": "orange",
+"res://textures/": "pink"
+}
 
 [filesystem]
 
 import/blender/enabled=false
+
+[input]
+
+RotateCamera={
+"deadzone": 0.5,
+"events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":0,"position":Vector2(0, 0),"global_position":Vector2(0, 0),"factor":1.0,"button_index":3,"canceled":false,"pressed":false,"double_click":false,"script":null)
+]
+}
+RotateLight={
+"deadzone": 0.5,
+"events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":true,"meta_pressed":false,"button_mask":0,"position":Vector2(0, 0),"global_position":Vector2(0, 0),"factor":1.0,"button_index":3,"canceled":false,"pressed":false,"double_click":false,"script":null)
+]
+}
+ShiftCameraPosition={
+"deadzone": 0.5,
+"events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":true,"ctrl_pressed":false,"meta_pressed":false,"button_mask":0,"position":Vector2(0, 0),"global_position":Vector2(0, 0),"factor":1.0,"button_index":3,"canceled":false,"pressed":false,"double_click":false,"script":null)
+]
+}

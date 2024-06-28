@@ -10,11 +10,12 @@ sky_material = SubResource("PanoramaSkyMaterial_ysreh")
 process_mode = 1
 
 [resource]
-background_mode = 1
+background_mode = 2
 background_color = Color(0.172833, 0.172833, 0.172833, 1)
 sky = SubResource("Sky_13irs")
 ambient_light_source = 3
 ambient_light_sky_contribution = 0.55
 reflected_light_source = 2
 tonemap_mode = 3
-adjustment_enabled = true
+adjustment_contrast = 0.93
+adjustment_saturation = 8.0

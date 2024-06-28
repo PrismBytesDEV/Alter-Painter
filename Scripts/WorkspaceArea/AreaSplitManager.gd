@@ -58,7 +58,7 @@ func splitArea(area : WorkspaceArea, splitDirection : SplitMode,mousePos : Vecto
 	area.hide()
 	areaParent.move_child(splitNode,currentAreaIndex)
 	area.reparent(splitNode)
-	var secondNewArea = area.duplicate()
+	var secondNewArea := area.duplicate()
 	secondNewArea.hide()
 	splitNode.add_child(secondNewArea)
 	if splitDirection == SplitMode.VSplit:
