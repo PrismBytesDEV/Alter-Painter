@@ -1,0 +1,91 @@
+[gd_scene load_steps=8 format=3 uid="uid://ddurw3r8x0l8r"]
+
+[ext_resource type="Theme" uid="uid://cxi7ihqtqqtu6" path="res://Themes/darkTheme.tres" id="1_4baco"]
+[ext_resource type="Script" path="res://Scripts/WorkspaceArea/CustomWorkspaceScripts/LayersWorkspaceArea/LayersWorkspaceArea.gd" id="2_n6ogu"]
+[ext_resource type="Texture2D" uid="uid://c3bem654iib2l" path="res://textures/icons/LayersIcon.svg" id="3_cya14"]
+[ext_resource type="Script" path="res://addons/ReorderableContainer/reorderable_container.gd" id="3_fonhh"]
+[ext_resource type="Script" path="res://Scripts/WorkspaceArea/CustomWorkspaceScripts/LayersWorkspaceArea/LayerManager.gd" id="4_4t8ek"]
+[ext_resource type="PackedScene" uid="uid://bk6xt62j3yiba" path="res://Scenes/layer_ui_fill.tscn" id="4_pblpd"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_28k06"]
+bg_color = Color(0.141176, 0.141176, 0.141176, 1)
+corner_detail = 1
+
+[node name="LayersArea" type="Panel"]
+self_modulate = Color(0.691357, 0.691357, 0.691357, 1)
+clip_children = 2
+custom_minimum_size = Vector2(27, 24)
+anchors_preset = -1
+anchor_right = 0.217187
+anchor_bottom = 0.791667
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_4baco")
+script = ExtResource("2_n6ogu")
+workspaceAreaIcon = ExtResource("3_cya14")
+addControlPanelAndContentSeparator = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("4_4t8ek")
+
+[node name="list scroll" type="ScrollContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="List" type="Container" parent="VBoxContainer/list scroll" node_paths=PackedStringArray("scroll_container")]
+process_mode = 1
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("3_fonhh")
+hold_duration = 0.1
+speed = 30.0
+separation = 5
+is_vertical = true
+scroll_container = NodePath("..")
+
+[node name="Layer_ui_fill" parent="VBoxContainer/list scroll/List" instance=ExtResource("4_pblpd")]
+layout_mode = 2
+
+[node name="list edit" type="Panel" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_styles/panel = SubResource("StyleBoxFlat_28k06")
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/list edit"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="buttons list" type="HBoxContainer" parent="VBoxContainer/list edit/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="addNewLayer_button" type="Button" parent="VBoxContainer/list edit/MarginContainer/buttons list"]
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "add new layer"
+theme_override_colors/icon_normal_color = Color(1, 1, 1, 1)
+text = "add"
+text_overrun_behavior = 2
+clip_text = true
+icon_alignment = 1
+expand_icon = true
+
+[connection signal="sort_children" from="VBoxContainer/list scroll/List" to="VBoxContainer/list scroll/List" method="_on_sort_children"]
+[connection signal="pressed" from="VBoxContainer/list edit/MarginContainer/buttons list/addNewLayer_button" to="VBoxContainer" method="add_new_fill_layer"]

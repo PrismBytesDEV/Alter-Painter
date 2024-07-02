@@ -1,8 +1,6 @@
 extends RefCounted
 class_name ServerCamera
 
-static var camServer : ServerCamera
-
 static var _cameras : Array[cameraController] 
 
 static func addCamera(camera : cameraController)->void:

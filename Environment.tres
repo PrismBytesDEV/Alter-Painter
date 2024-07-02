@@ -1,13 +1,13 @@
 [gd_resource type="Environment" load_steps=4 format=3 uid="uid://cgwugn0gdgmsl"]
 
-[ext_resource type="Texture2D" uid="uid://b4wwpfijfexfa" path="res://HDRIs/empty_workshop_4k.exr" id="1_s652f"]
+[ext_resource type="Texture2D" uid="uid://b4wwpfijfexfa" path="res://textures/enviroment/empty_workshop_4k.exr" id="1_087jm"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_ysreh"]
-panorama = ExtResource("1_s652f")
+panorama = ExtResource("1_087jm")
 
 [sub_resource type="Sky" id="Sky_13irs"]
 sky_material = SubResource("PanoramaSkyMaterial_ysreh")
-process_mode = 1
+process_mode = 2
 
 [resource]
 background_mode = 2
@@ -17,5 +17,4 @@ ambient_light_source = 3
 ambient_light_sky_contribution = 0.55
 reflected_light_source = 2
 tonemap_mode = 3
-adjustment_contrast = 0.93
-adjustment_saturation = 8.0
+adjustment_enabled = true

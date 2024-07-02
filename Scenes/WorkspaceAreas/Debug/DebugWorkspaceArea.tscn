@@ -2,7 +2,7 @@
 
 [ext_resource type="Theme" uid="uid://cxi7ihqtqqtu6" path="res://Themes/darkTheme.tres" id="1_7of37"]
 [ext_resource type="Script" path="res://Scripts/WorkspaceArea/CustomWorkspaceScripts/DebugArea/DebugWorkspaceArea.gd" id="1_wan1w"]
-[ext_resource type="Texture2D" uid="uid://bb8ag0uuxyydx" path="res://godotIcon.svg" id="3_im5r6"]
+[ext_resource type="Texture2D" uid="uid://bb8ag0uuxyydx" path="res://textures/godotIcon.svg" id="3_im5r6"]
 [ext_resource type="Shader" path="res://Shaders/DebugWorkspaceArea.gdshader" id="4_ewd3p"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qq2bb"]

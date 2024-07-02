@@ -28,10 +28,12 @@ enum motionModes
 var middleClickMotionMode : motionModes = motionModes.None
 
 func _enter_tree()->void:
-	ServerCamera.addCamera(self)
+	if !Engine.is_editor_hint():
+		ServerCamera.addCamera(self)
 
 func _exit_tree()->void:
-	ServerCamera.removeCamera(self)
+	if !Engine.is_editor_hint():
+		ServerCamera.removeCamera(self)
 
 func _ready()->void:
 	

@@ -5,6 +5,9 @@ static var sceneRootNode : Node3D
 static var assetRootNode : Node
 static var light : DirectionalLight3D
 
+static var assetMaterials : Array[Material]
+static var _unnamedMaterialCounter : int
+
 func _ready()->void:
 	sceneRootNode = %SceneRoot
 	light = %MainDirectionalLight
@@ -23,14 +26,35 @@ func load3DAsset(path : String)->void:
 			Alter3DScene.sceneRootNode.get_child(0).queue_free()
 		Alter3DScene.sceneRootNode.add_child(gltfImportedAsset)
 		Alter3DScene.sceneRootNode.global_position = Vector3.ZERO
+		
 		Alter3DScene.refreshMesh(gltfImportedAsset)
 		#cameraController.currentCamera.recenterCamera()
 
 static func refreshMesh(meshInst : Node)->void:
 	assetRootNode = meshInst
+	assetMaterials.clear()
+	_unnamedMaterialCounter = 0
+	ServerModelHierarchy.selectedMaterialName = ""
+	Alter3DScene.loadMaterials(assetRootNode)
 	Alter3DScene.addAssetColliders(assetRootNode)
 	
 	ServerCamera.recenterCameras()
+	ServerModelHierarchy.refreshDisplayData()
+
+static func loadMaterials(assetRoot : Node)->void:
+	for child in assetRoot.get_children():
+		loadMaterials(child)
+	if assetRoot is MeshInstance3D:
+		var theMat : Material
+		for surfaceID : int in assetRoot.mesh.get_surface_count():
+			if !assetMaterials.has(assetRoot.mesh.surface_get_material(surfaceID)):
+				theMat = assetRoot.mesh.surface_get_material(surfaceID)
+				if theMat.resource_name.is_empty():
+					theMat.resource_name = "<Unnamed Material> " + str(_unnamedMaterialCounter)
+					_unnamedMaterialCounter += 1
+				if ServerModelHierarchy.selectedMaterialName.is_empty():
+					ServerModelHierarchy.selectedMaterialName = theMat.resource_name
+				assetMaterials.append(theMat)
 
 static func addAssetColliders(assetRoot : Node)->void:
 	for child in assetRoot.get_children():

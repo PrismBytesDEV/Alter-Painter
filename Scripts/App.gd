@@ -12,7 +12,6 @@ static var areaFileSystem : Array[Array]
 @onready var appEditButtons : HBoxContainer = $VBoxContainer/AppEditPanel/AppEditButtons
 
 func _init()->void:
-	loadServers()
 	AlterPainter.loadAreasData()
 
 func _ready()->void:
@@ -24,6 +23,7 @@ func _ready()->void:
 static func loadAreasData()->void:
 	var workspacesDirectiory : DirAccess = DirAccess.open(workspacesPath)
 	workspaceCategories = workspacesDirectiory.get_directories()
+	
 	areaFileSystem.resize(workspaceCategories.size())
 	workspacesNames.resize(workspaceCategories.size())
 	
@@ -42,12 +42,11 @@ static func loadAreasData()->void:
 			workspaceFilePath = workspaceFilePath.rstrip(".remap")
 			areaFileSystem[i].append(workspaceFilePath)
 			#print(areaFileSystem[i])
+	
+	for categoryID : int in workspaceCategories.size():
+		workspaceCategories[categoryID] = workspaceCategories[categoryID].replace("_"," ")
 
 func menuProjectSettingsItemSelected(index : int)->void:
 	match index:
 		0:
 			import3DFileDialog.show()
-
-func loadServers()->void:
-	var serverCam := ServerCamera.new()
-	serverCam.camServer = serverCam

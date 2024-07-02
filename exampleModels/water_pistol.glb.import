@@ -3,7 +3,7 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://umvikp33yxwm"
+uid="uid://bnq22t68rbpf3"
 path="res://.godot/imported/water_pistol.glb-5ef82a738425bc02bf81d9e2aa089aad.scn"
 
 [deps]
@@ -17,14 +17,14 @@ nodes/root_type=""
 nodes/root_name=""
 nodes/apply_root_scale=true
 nodes/root_scale=1.0
-meshes/ensure_tangents=false
-meshes/generate_lods=false
+meshes/ensure_tangents=true
+meshes/generate_lods=true
 meshes/create_shadow_meshes=true
-meshes/light_baking=0
+meshes/light_baking=1
 meshes/lightmap_texel_size=0.2
-meshes/force_disable_compression=true
-skins/use_named_skins=false
-animation/import=false
+meshes/force_disable_compression=false
+skins/use_named_skins=true
+animation/import=true
 animation/fps=30
 animation/trimming=false
 animation/remove_immutable_tracks=true
