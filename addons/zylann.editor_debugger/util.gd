@@ -22,7 +22,6 @@ static func is_in_edited_scene(node: Node) -> bool:
 	#                             |+H+H+H+|
 	#                             \       /
 	#                              ^-----^
-	# TODO https://github.com/godotengine/godot/issues/17592
 	# This may break some day, don't fly planes with this bullshit.
 	# Obviously it won't work for nested viewports since that's basically what this function checks.
 	if not node.is_inside_tree():

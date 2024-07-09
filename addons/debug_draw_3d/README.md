@@ -87,17 +87,17 @@ Simple test:
 
 ```gdscript
 func _process(delta: float) -> void:
-	var _time = Time.get_ticks_msec() / 1000.0
-	var box_pos = Vector3(0, sin(_time * 4), 0)
-	var line_begin = Vector3(-1, sin(_time * 4), 0)
-	var line_end = Vector3(1, cos(_time * 4), 0)
+    var _time = Time.get_ticks_msec() / 1000.0
+    var box_pos = Vector3(0, sin(_time * 4), 0)
+    var line_begin = Vector3(-1, sin(_time * 4), 0)
+    var line_end = Vector3(1, cos(_time * 4), 0)
 
-	DebugDraw3D.draw_box(box_pos, Vector3(1, 2, 1), Color(0, 1, 0))
-	DebugDraw3D.draw_line(line_begin, line_end, Color(1, 1, 0))
-	DebugDraw2D.set_text("Time", _time)
-	DebugDraw2D.set_text("Frames drawn", Engine.get_frames_drawn())
-	DebugDraw2D.set_text("FPS", Engine.get_frames_per_second())
-	DebugDraw2D.set_text("delta", delta)
+    DebugDraw3D.draw_box(box_pos, Vector3(1, 2, 1), Color(0, 1, 0))
+    DebugDraw3D.draw_line(line_begin, line_end, Color(1, 1, 0))
+    DebugDraw2D.set_text("Time", _time)
+    DebugDraw2D.set_text("Frames drawn", Engine.get_frames_drawn())
+    DebugDraw2D.set_text("FPS", Engine.get_frames_per_second())
+    DebugDraw2D.set_text("delta", delta)
 ```
 
 ![screenshot_1](/images/screenshot_1.png)

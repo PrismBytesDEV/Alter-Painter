@@ -1,6 +1,13 @@
 extends Control
 class_name WorkspaceArea
 
+##@experimental
+##This a base class for all custom WorkspaceAreas.[br]
+##It includes all the API to make your life easier
+##in making your own custom WorkspaceArea.
+##
+##@tutorial(documentation website required!):		require.a.doc.website.com
+
 #Contains the workspace that mouse is currently hovering over
 static var CurrentMouseHoverArea : WorkspaceArea
 
@@ -9,17 +16,35 @@ static var debugCurrentHoverArea : bool = false
 
 var areaVbox : VBoxContainer
 var areaContent : Control
+##This is horizontal options container. That is displayed in the top side of the [WorkspaceArea]
+##You can add you own [Button]s and other Control nodes so you can customize your custom [WorkspaceArea]
 var areaOptionsContainer : HBoxContainer
 var workspaceAreaSelectorPanel : Panel
 
 static var areaSelectorPanelHeight : int = 256
 
-@export var workspaceAreaIcon : Texture2D = PlaceholderTexture2D.new()
+##Set's color of this WorkspaceArea's [member WorkspaceArea.areaOptionsContainer]
 @export var areaOptionsPanelColor := Color("272727")
+
+@export var workspaceAreaIcon : Texture2D = null
+##@experimental
+##When [param true] a small [Control] node is added with a height of[br]
+##[member WorkspaceArea.controlPanelAndContentSeperatorHeight]
+##It needs to be fixed since when it's added and WorkspaceArea reach it's
+##smallest possible size the switchAreaButton won't be fully visible because of this separator
+##[color=#edcb6d][b]IMPORTANT[/b][br][/color]
+##When it's set to true the separator won't be created, so don't think it always created but
+##it's visibility is set to [param false], because that's not the case.
 @export var addControlPanelAndContentSeparator : bool = false
+
 @export var controlPanelAndContentSeperatorHeight : int = 3
 
-var debug : bool = false
+##This property tells code that this workspaceArea is about to be switched
+##to different area. Useful when your custom workspace needs to perform some code
+##before before doconstructor.
+##Especially if custom workspace area include a funtion that is connected to
+##child_order_changed() signal or similar to that.
+signal isAboutSwitch
 
 func _init()->void:
 	mouse_entered.connect(_mouse_entered)
@@ -35,6 +60,14 @@ func _showAreaSelectorPanel()->void:
 func _hideAreaSelectorPanel()->void:
 	workspaceAreaSelectorPanel.hide()
 
+##Essential method that is required for WorkspaceArea
+##to load it's options pale and setup the whole thing.
+##Run it at the begging of [member Node._ready()] function:
+##[codeblock]
+##func _ready():
+##		setupWorkspaceArea()
+##		[the rest of code...]
+##[/codeblock]
 func setupWorkspaceArea()->void:
 	custom_minimum_size = Vector2i(27,24)
 	
@@ -107,7 +140,10 @@ func setupWorkspaceArea()->void:
 	var areaSwitchButton := Button.new()
 	areaHbox.add_child(areaSwitchButton)
 	areaSwitchButton.set_owner(areaHbox)
-	areaSwitchButton.icon = workspaceAreaIcon
+	if workspaceAreaIcon != null:
+		areaSwitchButton.icon = workspaceAreaIcon
+	else:
+		printerr("Custom WorkspaceArea icon not set. Cannot initialize WorkspaceArea with custom icon!")
 	areaSwitchButton.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	areaSwitchButton.size_flags_horizontal = SIZE_SHRINK_CENTER
 	areaSwitchButton.size_flags_vertical = SIZE_FILL
@@ -224,6 +260,8 @@ func refreshWorkspaceAreaSelectorPanel()->void:
 			areaSelectButton.pressed.connect(buttonCall)
 
 func switchThisWorkspaceArea(columnIndex : int, buttonIndex : int)->void:
+	isAboutSwitch.emit()
+	
 	var selectedWorkspacePath : String = AlterPainter.areaFileSystem[columnIndex][buttonIndex]
 	var packedWorkspaceArea : PackedScene = load(selectedWorkspacePath)
 	

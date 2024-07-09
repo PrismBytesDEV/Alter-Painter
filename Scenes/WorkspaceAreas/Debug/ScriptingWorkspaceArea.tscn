@@ -1,0 +1,74 @@
+[gd_scene load_steps=7 format=3 uid="uid://c8pcqw6yj4576"]
+
+[ext_resource type="Theme" uid="uid://cxi7ihqtqqtu6" path="res://Themes/darkTheme.tres" id="1_k7hvc"]
+[ext_resource type="Script" path="res://Scripts/WorkspaceArea/CustomWorkspaceScripts/ScriptingArea/ScriptingWorkspaceArea.gd" id="1_wks8i"]
+[ext_resource type="Texture2D" uid="uid://cjwme47hm5nwq" path="res://textures/icons/CodeEdit.svg" id="3_22d40"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6fd8x"]
+bg_color = Color(0.0475577, 0.0475577, 0.0475576, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f5x7m"]
+bg_color = Color(0.0846899, 0.0846899, 0.0846898, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_qq025"]
+font_color = Color(0.348792, 0.866797, 1.54018e-06, 1)
+
+[node name="ScriptingWorkspaceArea" type="Panel"]
+clip_children = 2
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_k7hvc")
+script = ExtResource("1_wks8i")
+workspaceAreaIcon = ExtResource("3_22d40")
+addControlPanelAndContentSeparator = true
+
+[node name="Control" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_6fd8x")
+
+[node name="VBoxContainer" type="VSplitContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+split_offset = 350
+
+[node name="CodeEdit" type="CodeEdit" parent="Control/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 1
+wrap_mode = 1
+
+[node name="Panel" type="Panel" parent="Control/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_f5x7m")
+
+[node name="Label_output_log" type="Label" parent="Control/VBoxContainer/Panel"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.00260417
+anchor_right = 0.997396
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+mouse_filter = 1
+text = "Output"
+label_settings = SubResource("LabelSettings_qq025")
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true

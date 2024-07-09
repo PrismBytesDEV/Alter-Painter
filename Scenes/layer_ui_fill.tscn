@@ -1,20 +1,22 @@
-[gd_scene load_steps=5 format=3 uid="uid://bk6xt62j3yiba"]
+[gd_scene load_steps=6 format=3 uid="uid://bk6xt62j3yiba"]
 
 [ext_resource type="Theme" uid="uid://cxi7ihqtqqtu6" path="res://Themes/darkTheme.tres" id="1_pdyud"]
 [ext_resource type="Texture2D" uid="uid://dveoa33onxr4b" path="res://textures/icons/GuiVisibilityVisible.svg" id="2_7ueoa"]
+[ext_resource type="Script" path="res://Scripts/WorkspaceArea/CustomWorkspaceScripts/LayersWorkspaceArea/LayerUI_node.gd" id="2_osxk8"]
 [ext_resource type="Texture2D" uid="uid://dxinwmil7wjvo" path="res://maskIconPlaceholder.png" id="2_wuknw"]
 [ext_resource type="Texture2D" uid="uid://chsf2xd6e58qi" path="res://textures/icons/GuiVisibilityHidden.svg" id="3_tryqj"]
 
-[node name="Layer_ui_fill" type="Panel"]
-custom_minimum_size = Vector2(320, 36)
+[node name="Layer_ui_fill" type="Button"]
+custom_minimum_size = Vector2(320, 45)
 anchors_preset = -1
 anchor_right = 0.277604
-anchor_bottom = 0.0333333
+anchor_bottom = 0.0416667
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 1
 mouse_filter = 1
 theme = ExtResource("1_pdyud")
+script = ExtResource("2_osxk8")
 metadata/_edit_use_anchors_ = true
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
@@ -26,14 +28,15 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 20
+theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
 layout_mode = 2
 theme_override_constants/separation = 5
 
-[node name="CheckBox" type="CheckBox" parent="MarginContainer/HBoxContainer"]
+[node name="VisibilityButton" type="CheckBox" parent="MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -48,35 +51,62 @@ theme_override_icons/radio_unchecked_disabled = ExtResource("3_tryqj")
 button_pressed = true
 flat = true
 
-[node name="ColorPickPanel" type="ColorPickerButton" parent="MarginContainer/HBoxContainer"]
-custom_minimum_size = Vector2(22, 22)
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-mouse_filter = 1
-color = Color(1, 1, 1, 1)
-
-[node name="MaskPickPanel" type="Button" parent="MarginContainer/HBoxContainer"]
+[node name="FillColorPicker" type="ColorPickerButton" parent="MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(22, 22)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
-mouse_filter = 1
+color = Color(1, 1, 1, 1)
+edit_alpha = false
+
+[node name="Spacing" type="Control" parent="MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(2, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="ColorPickPanel2" type="ColorPickerButton" parent="MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(22, 22)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+color = Color(1, 1, 1, 1)
+
+[node name="MaskPickPanel" type="Button" parent="MarginContainer/HBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(22, 22)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
 icon = ExtResource("2_wuknw")
 flat = true
 icon_alignment = 1
 
-[node name="LayerName" type="LineEdit" parent="MarginContainer/HBoxContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 4
-mouse_filter = 1
-placeholder_text = "base layer"
 
-[node name="LayerType" type="OptionButton" parent="MarginContainer/HBoxContainer"]
+[node name="LayerName" type="LineEdit" parent="MarginContainer/HBoxContainer/ScrollContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 6
+mouse_filter = 1
+text = "New Layer"
+placeholder_text = "Unnamed layer"
+expand_to_text_length = true
+context_menu_enabled = false
+virtual_keyboard_enabled = false
+flat = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+
+[node name="LayerType" type="OptionButton" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 10
-size_flags_vertical = 4
+size_flags_vertical = 3
 item_count = 3
 selected = 0
 popup/item_0/text = "add"
@@ -85,3 +115,15 @@ popup/item_1/text = "multiply"
 popup/item_1/id = 1
 popup/item_2/text = "subtract"
 popup/item_2/id = 2
+
+[node name="OpacitySlider" type="HSlider" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 8
+value = 100.0
+
+[connection signal="toggled" from="MarginContainer/HBoxContainer/VisibilityButton" to="." method="_visibilityChanged"]
+[connection signal="color_changed" from="MarginContainer/HBoxContainer/FillColorPicker" to="." method="_colorChanged"]
+[connection signal="text_changed" from="MarginContainer/HBoxContainer/ScrollContainer/LayerName" to="." method="_titleChanged"]
+[connection signal="item_selected" from="MarginContainer/HBoxContainer/VBoxContainer/LayerType" to="." method="_typeChanged"]
+[connection signal="value_changed" from="MarginContainer/HBoxContainer/VBoxContainer/OpacitySlider" to="." method="_opacityChanged"]

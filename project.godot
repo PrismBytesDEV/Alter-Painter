@@ -8,6 +8,10 @@
 
 config_version=5
 
+[addons]
+
+class_name_hider/excluded_folders=PackedStringArray("addons")
+
 [application]
 
 config/name="AlterPainter"
@@ -38,7 +42,7 @@ window/size/mode=2
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/ReorderableContainer/plugin.cfg", "res://addons/keychain/plugin.cfg", "res://addons/zylann.editor_debugger/plugin.cfg")
+enabled=PackedStringArray("res://addons/Todo_Manager/plugin.cfg", "res://addons/keychain/plugin.cfg", "res://addons/zylann.editor_debugger/plugin.cfg")
 
 [file_customization]
 
@@ -50,7 +54,6 @@ folder_colors={
 "res://Shaders/": "purple",
 "res://Themes/": "gray",
 "res://addons/": "red",
-"res://exampleMeshes/": "yellow",
 "res://exampleModels/": "orange",
 "res://textures/": "pink",
 "res://textures/enviroment/": "gray"
@@ -77,3 +80,7 @@ ShiftCameraPosition={
 "events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":true,"ctrl_pressed":false,"meta_pressed":false,"button_mask":0,"position":Vector2(0, 0),"global_position":Vector2(0, 0),"factor":1.0,"button_index":3,"canceled":false,"pressed":false,"double_click":false,"script":null)
 ]
 }
+
+[rendering]
+
+renderer/rendering_method.web="forward_plus"
