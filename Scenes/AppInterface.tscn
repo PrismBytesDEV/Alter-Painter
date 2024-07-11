@@ -270,13 +270,16 @@ popup/item_0/text = "New"
 popup/item_0/id = 0
 popup/item_1/text = "Open"
 popup/item_1/id = 1
+popup/item_1/disabled = true
 popup/item_2/text = "Save"
 popup/item_2/id = 2
 popup/item_2/disabled = true
 popup/item_3/text = "Save As"
 popup/item_3/id = 3
+popup/item_3/disabled = true
 popup/item_4/text = "Export"
 popup/item_4/id = 4
+popup/item_4/disabled = true
 
 [node name="3D preview settings button" type="MenuButton" parent="VBoxContainer/AppEditPanel/AppEditButtons"]
 layout_mode = 2
@@ -287,8 +290,10 @@ flat = false
 item_count = 2
 popup/item_0/text = "undo"
 popup/item_0/id = 0
+popup/item_0/disabled = true
 popup/item_1/text = "redo"
 popup/item_1/id = 1
+popup/item_1/disabled = true
 
 [node name="V_AreaSplit" type="SplitContainer" parent="VBoxContainer"]
 layout_mode = 2

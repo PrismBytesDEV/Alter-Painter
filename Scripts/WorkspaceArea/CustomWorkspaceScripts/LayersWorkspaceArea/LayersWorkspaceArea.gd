@@ -1,5 +1,4 @@
-extends WorkspaceArea
-class_name LayersWorkspaceArea
+class_name LayersWorkspaceArea extends WorkspaceArea
 
 var selectedLayer : LayerUI_node
 
@@ -39,8 +38,7 @@ func _exit_tree()->void:
 func _ready()->void:
 	setupWorkspaceArea()
 	#Loads all the layers from the server if any exist
-	for layerData in ServerLayersStack.layersStack:
-		_add_UI_Layer(layerData)
+	_reload_UI_Layers()
 	
 	layerTypeSwitch = OptionButton.new()
 	layerTypeSwitch.tooltip_text = "Switch layer type"
@@ -98,10 +96,14 @@ func switchLayerStackType(index : int)->void:
 func refreshLayersOrder(fromIndex : int, toIndex : int)->void:
 	var layer : LayerUI_node = layersList.get_child(fromIndex)
 	layersList.move_child(layer,toIndex)
+	
+	var matID : int = ServerModelHierarchy.selectedMaterialIndex
+	var layersStack := ServerLayersStack.materialsLayers[matID].layers
+	
 	#After fillLayerData is reindexed in the server's stack
 	#It needs to be updated to work correctly on both server side
 	#and the UI side
-	layer.layerData = ServerLayersStack.layersStack[-toIndex-1]
+	layer.layerData = layersStack[-toIndex-1]
 
 ##Adds new layer to the stack on all [LayersWorkspaceArea][br]
 ##[param id] tells whenewer you are adding a Fill Layer or a Paint Layer
@@ -142,7 +144,29 @@ func _remove_UI_Layer(atIndex : int)->void:
 	#The layer still exist somehow even though it shouldn't??!
 	#If someone will find a fix for that with that uses queue_free()
 	#I'll be thankful ;D
-	layersList.get_child(atIndex).free()
+	
+	#Outdated ^^^
+	#But I decided to leave it because maybe something will broke again ;d
+	
+	if layersList.get_child(atIndex) != null:
+		layersList.get_child(atIndex).queue_free()
+
+func _remove_all_UI_Layers()->void:
+	for layer in layersList.get_children():
+		layer.queue_free()
+
+func _reload_UI_Layers()->void:
+	if !ServerLayersStack.materialsLoaded:
+		return
+	
+	for layerID : int in layersList.get_child_count():
+		_remove_UI_Layer(layerID)
+	
+	var matID : int = ServerModelHierarchy.selectedMaterialIndex
+	var layersStack := ServerLayersStack.materialsLayers[matID].layers
+	
+	for layerData in layersStack:
+		_add_UI_Layer(layerData)
 
 func _layerSelected(layer : LayerUI_node)->void:
 	selectedLayer = layer

@@ -1,5 +1,4 @@
-extends Resource
-class_name FillLayerData
+class_name FillLayerData extends Resource
 
 func _init(Visible : bool, Colors : Array[Color], Name : String,Opacity : float, Type : int)->void:
 	self.visible = Visible

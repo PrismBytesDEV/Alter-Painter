@@ -1,5 +1,4 @@
-extends Control
-class_name AlterPainter
+class_name AlterPainter extends Control
 
 static var appVersion : String
 

@@ -2,7 +2,7 @@
 
 [ext_resource type="Theme" uid="uid://cxi7ihqtqqtu6" path="res://Themes/darkTheme.tres" id="1_pdyud"]
 [ext_resource type="Texture2D" uid="uid://dveoa33onxr4b" path="res://textures/icons/GuiVisibilityVisible.svg" id="2_7ueoa"]
-[ext_resource type="Script" path="res://Scripts/WorkspaceArea/CustomWorkspaceScripts/LayersWorkspaceArea/LayerUI_node.gd" id="2_osxk8"]
+[ext_resource type="Script" path="res://Scripts/WorkspaceArea/CustomWorkspaceScripts/LayersWorkspaceArea/LayerUI_node.gd" id="2_mvdwv"]
 [ext_resource type="Texture2D" uid="uid://dxinwmil7wjvo" path="res://maskIconPlaceholder.png" id="2_wuknw"]
 [ext_resource type="Texture2D" uid="uid://chsf2xd6e58qi" path="res://textures/icons/GuiVisibilityHidden.svg" id="3_tryqj"]
 
@@ -16,7 +16,7 @@ grow_vertical = 2
 focus_mode = 1
 mouse_filter = 1
 theme = ExtResource("1_pdyud")
-script = ExtResource("2_osxk8")
+script = ExtResource("2_mvdwv")
 metadata/_edit_use_anchors_ = true
 
 [node name="MarginContainer" type="MarginContainer" parent="."]

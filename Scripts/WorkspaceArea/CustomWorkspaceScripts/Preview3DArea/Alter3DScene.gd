@@ -1,11 +1,10 @@
-extends Node3D
-class_name Alter3DScene
+class_name Alter3DScene extends Node3D
 
 static var sceneRootNode : Node3D
 static var assetRootNode : Node
 static var light : DirectionalLight3D
 
-static var assetMaterials : Array[Material]
+static var assetMaterials : Array[StandardMaterial3D]
 static var _unnamedMaterialCounter : int
 
 func _ready()->void:
@@ -35,11 +34,15 @@ static func refreshMesh(meshInst : Node)->void:
 	assetMaterials.clear()
 	_unnamedMaterialCounter = 0
 	ServerModelHierarchy.selectedMaterialName = ""
+	ServerLayersStack.materialsLoaded = false
+	ServerLayersStack.materialsLayers.clear()
 	Alter3DScene.loadMaterials(assetRootNode)
+	ServerLayersStack.materialsLoaded = true
 	Alter3DScene.addAssetColliders(assetRootNode)
 	
 	ServerCamera.recenterCameras()
 	ServerModelHierarchy.refreshDisplayData()
+	ServerLayersStack.cleanWorkspacesLayers()
 
 static func loadMaterials(assetRoot : Node)->void:
 	for child in assetRoot.get_children():
@@ -55,6 +58,7 @@ static func loadMaterials(assetRoot : Node)->void:
 				if ServerModelHierarchy.selectedMaterialName.is_empty():
 					ServerModelHierarchy.selectedMaterialName = theMat.resource_name
 				assetMaterials.append(theMat)
+				ServerLayersStack.appendNewMaterialLayersStack()
 
 static func addAssetColliders(assetRoot : Node)->void:
 	for child in assetRoot.get_children():

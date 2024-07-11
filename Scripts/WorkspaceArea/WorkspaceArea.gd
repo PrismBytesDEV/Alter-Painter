@@ -1,5 +1,4 @@
-extends Control
-class_name WorkspaceArea
+class_name WorkspaceArea extends Control
 
 ##@experimental
 ##This a base class for all custom WorkspaceAreas.[br]

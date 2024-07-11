@@ -38,23 +38,20 @@ size_flags_vertical = 3
 follow_focus = true
 metadata/_edit_use_anchors_ = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Control/listScroll"]
+[node name="LayerContainer" type="VBoxContainer" parent="Control/listScroll"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Spacing" type="Control" parent="Control/listScroll/VBoxContainer"]
+[node name="Spacing" type="Control" parent="Control/listScroll/LayerContainer"]
 custom_minimum_size = Vector2(0, 2)
 layout_mode = 2
 
-[node name="LayerList" type="VBoxContainer" parent="Control/listScroll/VBoxContainer"]
+[node name="LayerList" type="VBoxContainer" parent="Control/listScroll/LayerContainer"]
 unique_name_in_owner = true
-clip_children = 2
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 script = ExtResource("4_teto6")
 
-[node name="Spacing2" type="Control" parent="Control/listScroll/VBoxContainer"]
+[node name="Spacing2" type="Control" parent="Control/listScroll/LayerContainer"]
 custom_minimum_size = Vector2(0, 2)
 layout_mode = 2

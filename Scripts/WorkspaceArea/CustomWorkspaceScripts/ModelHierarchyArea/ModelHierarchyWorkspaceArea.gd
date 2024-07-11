@@ -1,5 +1,4 @@
-extends WorkspaceArea
-class_name ModelHierarchyWorkspaceArea
+class_name ModelHierarchyWorkspaceArea extends WorkspaceArea
 
 @onready var treeDisplay : Tree = $Tree
 
@@ -187,8 +186,14 @@ func _loadMaterialsDisplay()->void:
 func treeDisplayItemSelected()->void:
 	var selectedItem := treeDisplay.get_selected()
 	if selectedItem.get_meta("type") == itemMeta.Mat:
-		ServerModelHierarchy.selectedMaterialName = selectedItem.get_text(0)
+		var selectedText : String = selectedItem.get_text(0)
+		for matID in Alter3DScene.assetMaterials.size():
+			if Alter3DScene.assetMaterials[matID].resource_name == selectedText:
+				ServerModelHierarchy.selectedMaterialIndex = matID
+				break
+		ServerModelHierarchy.selectedMaterialName = selectedText
 		ServerModelHierarchy.refreshSelectedMaterialItems()
+		ServerLayersStack.reloadWorkspacesLayers()
 
 func changeItemTreeColors_init()->void:
 	_changeItemTreeColors(treeDisplay.get_root())

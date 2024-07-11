@@ -1,10 +1,12 @@
-extends Control
-class_name LayersGapRenderer
+class_name LayersGapRenderer extends VBoxContainer
 
 var selfWorkspaceArea : LayersWorkspaceArea
 var layerSize : Vector2
 
-@onready var listScroll : ScrollContainer = %listScroll
+var listScroll : ScrollContainer
+
+func _ready()->void:
+	listScroll = get_parent().get_parent()
 
 func _draw()->void:
 	if WorkspaceArea.CurrentMouseHoverArea != selfWorkspaceArea:

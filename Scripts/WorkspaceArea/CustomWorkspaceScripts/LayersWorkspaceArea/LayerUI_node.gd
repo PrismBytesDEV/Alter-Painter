@@ -1,5 +1,4 @@
-extends Button
-class_name LayerUI_node
+class_name LayerUI_node extends Button
 
 signal layerSelected(layer : LayerUI_node)
 

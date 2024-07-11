@@ -1,5 +1,4 @@
-extends Control
-class_name GhostFillLayer
+class_name GhostFillLayer extends Control
 
 func _init()->void:
 	hide()
