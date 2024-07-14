@@ -2,3 +2,16 @@
 <br>Open source PBR material painting software made in <a href="https://github.com/godotengine/godot">Godot 4</a>
 > [!IMPORTANT]  
 > This tool is far from it's Minimal Viable Project version. So most of the features aren't implemented YET!
+
+# What is this tool?
+<br>This tool shoulda llow people to texture their 3D assets with ease. Making it feasable alternative to the paid softwares like Adobe's Substance 3D Painter.
+# Why made in Godot?
+<br>I'm not familiar with C++ and other programming languages to the point I could write entire application and maintain it to work on all platforms.
+<br>Godot allows me to easly prototype the UI, does not require from me any knowledge of any graphics API like Vulkan, DirectX, OpenGL etc. (Although it could be useful to know something about it..)
+<br>And also allows other people to contribute much easier to the software.
+# Goals
+<br>There are many plans for this software but at the current moment of writing this, it especially requires the most basic functionalities.
+<br>Like painting textures, masks, also brush settings.. 
+<br> to see more precise information on what needs to be done or is planned for this software you can look into <a href="I'll need to set the link here :d">Projects tab</a>
+# Want to contribute?
+<br>Read the <a href="I'll need to set the link here :d">contributing documentation</a>!
