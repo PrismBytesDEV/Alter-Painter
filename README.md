@@ -4,7 +4,7 @@ Open source PBR material painting software made in <a href="https://github.com/g
 > This tool is far from it's Minimal Viable Project version. So most of the features aren't implemented YET!
 
 # What is this tool?
-This tool shoulda llow people to texture their 3D assets with ease. Making it feasable alternative to the paid softwares like Adobe's Substance 3D Painter.
+This tool should allow people to texture their 3D assets with ease. Making it feasable alternative to the paid softwares like Adobe's Substance 3D Painter.
 # Why made in Godot?
 I'm not familiar with C++ and other programming languages to the point I could write entire application and maintain it to work on all platforms.
 <br>Godot allows me to easly prototype the UI, does not require from me any knowledge of any graphics API like Vulkan, DirectX, OpenGL etc. (Although it could be useful to know something about it..)
