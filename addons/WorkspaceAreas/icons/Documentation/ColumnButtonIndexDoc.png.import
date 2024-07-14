@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dtunlx2s2kyqk"
-path="res://.godot/imported/HorizontalAreaSplitIcon.png-6522c514c26063f251dd48724fe44d6a.ctex"
+uid="uid://bffd4sx8nrqm0"
+path="res://.godot/imported/ColumnButtonIndexDoc.png-cf165f9c2ba3fd857fca75d8242c1e9a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/icons/HorizontalAreaSplitIcon.png"
-dest_files=["res://.godot/imported/HorizontalAreaSplitIcon.png-6522c514c26063f251dd48724fe44d6a.ctex"]
+source_file="res://addons/WorkspaceAreas/icons/Documentation/ColumnButtonIndexDoc.png"
+dest_files=["res://.godot/imported/ColumnButtonIndexDoc.png-cf165f9c2ba3fd857fca75d8242c1e9a.ctex"]
 
 [params]
 

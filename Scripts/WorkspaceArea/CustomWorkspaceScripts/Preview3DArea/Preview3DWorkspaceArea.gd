@@ -1,8 +1,12 @@
-extends WorkspaceArea
-class_name Preview3DWorkspaceArea
+class_name Preview3DWorkspaceArea extends WorkspaceArea
 
+##This [WorkspaceArea] is used to preview 3D scene and allows move around the imported 3D model.
+
+##This is the camera controller that have the functionality to move around the scene.
 var workspaceCameraController : cameraController 
+##This is reference to the button that allow user to switch between different render preview modes.
 var renderModePickButton : OptionButton
+##This is reference to the viewport that includes the code to switch between different render preview modes.
 var renderViewport : Preview3DViewport
 
 func _init()->void:
@@ -13,7 +17,7 @@ func _init()->void:
 func _ready() -> void:
 	setupWorkspaceArea()
 	
-	renderViewport = areaContent.get_child(0)
+	renderViewport = _areaContent.get_child(0)
 	workspaceCameraController = renderViewport.get_child(0)
 	
 	renderModePickButton = OptionButton.new()
@@ -26,7 +30,7 @@ func _ready() -> void:
 	renderModePickButton.add_item("heightmap")
 	renderModePickButton.selected = 0
 	areaOptionsContainer.add_child(renderModePickButton)
-	renderModePickButton.item_selected.connect(renderViewport.selectRenderMode)
+	renderModePickButton.item_selected.connect(renderViewport._selectRenderMode)
 	
 	var separator := Control.new()
 	areaOptionsContainer.add_child(separator)

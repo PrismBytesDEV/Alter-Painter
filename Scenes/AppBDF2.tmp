@@ -304,6 +304,9 @@ areaOptionsPanelColor = Color(0.152941, 0.152941, 0.152941, 1)
 
 [node name="LayersArea" parent="VBoxContainer/V_AreaSplit/H_AreaSplit/H_AreaSplit2" instance=ExtResource("5_4kxwm")]
 layout_mode = 2
+areaOptionsPanelColor = null
+addControlPanelAndContentSeparator = null
+controlPanelAndContentSeperatorHeight = null
 
 [node name="AssetBrowser" parent="VBoxContainer/V_AreaSplit" instance=ExtResource("6_lkjph")]
 visible = false

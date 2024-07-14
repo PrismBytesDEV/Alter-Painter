@@ -1,5 +1,7 @@
-extends WorkspaceArea
-class_name Preview2DWorkspaceArea
+class_name Preview2DWorkspaceArea extends WorkspaceArea
+
+##This [WorkspaceArea] will be used to preview 2D textures and allow paint on them.[br]
+## Although right now it does nothing... I'll need to work on it d:
 
 func _init()->void:
 	name = "Preview2DWorkspaceArea"

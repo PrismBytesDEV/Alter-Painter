@@ -1,5 +1,8 @@
-extends WorkspaceArea
-class_name AssetBrowserWorkspaceArea
+class_name AssetBrowserWorkspaceArea extends WorkspaceArea
+
+##This is the [WorkspaceArea] that is meant to be used as asset explorer
+##of user's content libraries like procedural materials, brushes, textures etc.[br]
+##(currently it is in placeholder state, in other words needs functionalities to be implemented)
 
 func _init()->void:
 	name = "AssetBrowserWorkspaceArea"

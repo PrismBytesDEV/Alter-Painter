@@ -1,12 +1,10 @@
 extends SplitContainer
 class_name AreaSplitContainer
 
+##This is a container that splits workspaces
+
 var _mousePos : Vector2
 static var _dockOptionsPopup : PopupMenu
-
-func _ready()->void:
-	if _dockOptionsPopup == null:
-		_dockOptionsPopup = %"DockOptionsPopup"
 
 func _input(event : InputEvent)->void:
 	if event is InputEventMouseMotion:

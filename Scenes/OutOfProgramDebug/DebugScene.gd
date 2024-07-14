@@ -5,7 +5,7 @@ var aabb : AABB
 
 @export var objects : Array[MeshInstance3D]
 
-func _ready():
+func _ready()->void:
 	aabb = objects[0].get_aabb()
 	aabb.position = Vector3.ZERO
 	aabb.end = Vector3.ZERO
@@ -17,7 +17,7 @@ func rotateVector(ogVec : Vector3, node : Node3D)->Vector3:
 	
 	return ogVec
 
-func _process(_delta):
+func _process(_delta : float)->void:
 	var debugDrawSConfig : DebugDraw3DScopeConfig
 	debugDrawSConfig = DebugDraw3D.new_scoped_config()
 	debugDrawSConfig.set_thickness(0.005)

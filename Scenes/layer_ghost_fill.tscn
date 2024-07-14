@@ -8,6 +8,7 @@
 
 [node name="Layer_ghost_fill" type="Button"]
 modulate = Color(1, 1, 1, 0.4)
+show_behind_parent = true
 custom_minimum_size = Vector2(320, 45)
 anchors_preset = -1
 anchor_right = 0.277604

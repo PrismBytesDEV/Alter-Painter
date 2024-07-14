@@ -5,26 +5,28 @@ class_name WorkspaceArea extends Control
 ##It includes all the API to make your life easier
 ##in making your own custom WorkspaceArea.
 ##
-##@tutorial(documentation website required!):		require.a.doc.website.com
+##@tutorial(documentation website required!):		https://c.tenor.com/HPmen7OWY08AAAAd/tenor.gif
 
-#Contains the workspace that mouse is currently hovering over
+##Contains the workspace that mouse is currently hovering over
 static var CurrentMouseHoverArea : WorkspaceArea
 
-#Made for debug purposes to show active workspaces tha mouse is hovering over
+##Made for debug purposes to show active workspaces tha mouse is hovering over
 static var debugCurrentHoverArea : bool = false
 
-var areaVbox : VBoxContainer
-var areaContent : Control
 ##This is horizontal options container. That is displayed in the top side of the [WorkspaceArea]
 ##You can add you own [Button]s and other Control nodes so you can customize your custom [WorkspaceArea]
 var areaOptionsContainer : HBoxContainer
+##The panel that is the [Control] parent of all the columns and buttons to switch [WorkspaceArea]
 var workspaceAreaSelectorPanel : Panel
 
+##Defines the Y size of [member WorkspaceArea.workspaceAreaSelectorPanel]
 static var areaSelectorPanelHeight : int = 256
 
 ##Set's color of this WorkspaceArea's [member WorkspaceArea.areaOptionsContainer]
 @export var areaOptionsPanelColor := Color("272727")
-
+##Set's custom icon for WorkspaceArea, so you can customize your own custom Workspaces.[br]
+##[color=#edcb6d][b]IMPORTANT[/b][br][/color]
+##Changes aren't applied at runtime!
 @export var workspaceAreaIcon : Texture2D = null
 ##@experimental
 ##When [param true] a small [Control] node is added with a height of[br]
@@ -35,8 +37,11 @@ static var areaSelectorPanelHeight : int = 256
 ##When it's set to true the separator won't be created, so don't think it always created but
 ##it's visibility is set to [param false], because that's not the case.
 @export var addControlPanelAndContentSeparator : bool = false
-
+##This defines separation height between [member WorkspaceArea.areaOptionsContainer] and WorkspaceArea's main content
 @export var controlPanelAndContentSeperatorHeight : int = 3
+
+var _areaVbox : VBoxContainer
+var _areaContent : Control
 
 ##This property tells code that this workspaceArea is about to be switched
 ##to different area. Useful when your custom workspace needs to perform some code
@@ -72,35 +77,35 @@ func setupWorkspaceArea()->void:
 	
 	#This check is require for workspaceArea to be duplicated correctly
 	if get_child_count() > 1:
-		areaVbox = get_child(0)
-		areaOptionsContainer = areaVbox.get_child(0).get_child(0).get_child(0).get_child(1).get_child(0)
+		_areaVbox = get_child(0)
+		areaOptionsContainer = _areaVbox.get_child(0).get_child(0).get_child(0).get_child(1).get_child(0)
 		workspaceAreaSelectorPanel = get_child(-2)
 		get_child(-1).queue_free()
 		return
 	
 	if get_child_count() > 0:
-		areaContent = get_child(0)
+		_areaContent = get_child(0)
 	
-	areaVbox = VBoxContainer.new()
-	areaVbox.name = "areaVbox"
-	add_child(areaVbox)
-	areaVbox.set_owner(self)
-	move_child(areaVbox,0)
-	areaVbox.set_anchor_and_offset(SIDE_LEFT,0,0)
-	areaVbox.set_anchor_and_offset(SIDE_TOP,0,0)
-	areaVbox.set_anchor_and_offset(SIDE_RIGHT,1,0)
-	areaVbox.set_anchor_and_offset(SIDE_BOTTOM,1,0)
-	areaVbox.grow_horizontal = GROW_DIRECTION_BOTH
-	areaVbox.grow_vertical = GROW_DIRECTION_BOTH
-	areaVbox.mouse_filter = MOUSE_FILTER_PASS
-	areaVbox.add_theme_constant_override("separation",0)
+	_areaVbox = VBoxContainer.new()
+	_areaVbox.name = "_areaVbox"
+	add_child(_areaVbox)
+	_areaVbox.set_owner(self)
+	move_child(_areaVbox,0)
+	_areaVbox.set_anchor_and_offset(SIDE_LEFT,0,0)
+	_areaVbox.set_anchor_and_offset(SIDE_TOP,0,0)
+	_areaVbox.set_anchor_and_offset(SIDE_RIGHT,1,0)
+	_areaVbox.set_anchor_and_offset(SIDE_BOTTOM,1,0)
+	_areaVbox.grow_horizontal = GROW_DIRECTION_BOTH
+	_areaVbox.grow_vertical = GROW_DIRECTION_BOTH
+	_areaVbox.mouse_filter = MOUSE_FILTER_PASS
+	_areaVbox.add_theme_constant_override("separation",0)
 	
 	refreshWorkspaceAreaSelectorPanel()
 	
 	var areaControlPanel := Panel.new()
 	areaControlPanel.name = "areaControlPanel"
-	areaVbox.add_child(areaControlPanel)
-	areaControlPanel.set_owner(areaVbox)
+	_areaVbox.add_child(areaControlPanel)
+	areaControlPanel.set_owner(_areaVbox)
 	areaControlPanel.custom_minimum_size = self.custom_minimum_size
 	areaControlPanel.size_flags_horizontal = SIZE_FILL
 	areaControlPanel.size_flags_vertical = SIZE_FILL
@@ -167,18 +172,19 @@ func setupWorkspaceArea()->void:
 	
 	if addControlPanelAndContentSeparator:
 		var VboxSeparator := Control.new()
-		areaVbox.add_child(VboxSeparator)
-		VboxSeparator.set_owner(areaVbox)
+		_areaVbox.add_child(VboxSeparator)
+		VboxSeparator.set_owner(_areaVbox)
 		VboxSeparator.custom_minimum_size = Vector2i(0,controlPanelAndContentSeperatorHeight)
 		VboxSeparator.size_flags_horizontal = SIZE_FILL
 		VboxSeparator.mouse_filter = MOUSE_FILTER_STOP
 	
-	if areaContent != null:
-		areaContent.reparent(areaVbox)
-		areaContent.set_owner(areaVbox)
-		areaContent.size_flags_vertical = SIZE_EXPAND_FILL
-		areaContent.mouse_filter = MOUSE_FILTER_PASS
+	if _areaContent != null:
+		_areaContent.reparent(_areaVbox)
+		_areaContent.set_owner(_areaVbox)
+		_areaContent.size_flags_vertical = SIZE_EXPAND_FILL
+		_areaContent.mouse_filter = MOUSE_FILTER_PASS
 
+##Reloads WorkspaceArea selector panel to load changes from [WorkspacesAutoloader]
 func refreshWorkspaceAreaSelectorPanel()->void:
 	workspaceAreaSelectorPanel = Panel.new()
 	workspaceAreaSelectorPanel.name = "workspaceSelectorPanel"
@@ -226,7 +232,7 @@ func refreshWorkspaceAreaSelectorPanel()->void:
 	var separator : HSeparator
 	var areaSelectButton : Button
 	var buttonCall : Callable
-	for columnIndex in AlterPainter.workspaceCategories.size():
+	for columnIndex in WorkspacesAutoloader.workspaceCategories.size():
 		vBox = VBoxContainer.new()
 		vBox.size_flags_horizontal = SIZE_EXPAND_FILL
 		vBox.size_flags_vertical = SIZE_FILL
@@ -234,7 +240,7 @@ func refreshWorkspaceAreaSelectorPanel()->void:
 		vBox.set_owner(hBox)
 		
 		columnLabel = Label.new()
-		columnLabel.text = AlterPainter.workspaceCategories[columnIndex]
+		columnLabel.text = WorkspacesAutoloader.workspaceCategories[columnIndex]
 		columnLabel.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		columnLabel.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 		columnLabel.size_flags_horizontal = SIZE_FILL
@@ -248,9 +254,9 @@ func refreshWorkspaceAreaSelectorPanel()->void:
 		vBox.add_child(separator)
 		separator.set_owner(vBox)
 		
-		for selectorButtonIndex in AlterPainter.workspacesNames[columnIndex].size():
+		for selectorButtonIndex in WorkspacesAutoloader.workspacesNames[columnIndex].size():
 			areaSelectButton = Button.new()
-			areaSelectButton.text = AlterPainter.workspacesNames[columnIndex][selectorButtonIndex]
+			areaSelectButton.text = WorkspacesAutoloader.workspacesNames[columnIndex][selectorButtonIndex]
 			areaSelectButton.mouse_filter = MOUSE_FILTER_PASS
 			vBox.add_child(areaSelectButton)
 			areaSelectButton.set_owner(vBox)
@@ -258,10 +264,17 @@ func refreshWorkspaceAreaSelectorPanel()->void:
 			buttonCall = buttonCall.bind(columnIndex,selectorButtonIndex)
 			areaSelectButton.pressed.connect(buttonCall)
 
+##Switches this [WorkspaceArea] into different from the [param columnIndex] and [param buttonIndex][br]
+##[param columnIndex] is the ID starting from 0. Each index represent represent different column or folder
+##that was specified in [WorkspacesAutoloader][br]
+##[param buttonIndex] is the ID of workspace inside specific column.[br]
+##See file loacated here: res://addons/WorkspaceAreas/icons/Documentation/ColumnButtonIndexDoc.png
+##And yes I wanted to embed this image into documenation but it's just doesn't work D:[br]
+##Column also means the category essentially.. just to clear things up d:
 func switchThisWorkspaceArea(columnIndex : int, buttonIndex : int)->void:
 	isAboutSwitch.emit()
 	
-	var selectedWorkspacePath : String = AlterPainter.areaFileSystem[columnIndex][buttonIndex]
+	var selectedWorkspacePath : String = WorkspacesAutoloader.areaFileSystem[columnIndex][buttonIndex]
 	var packedWorkspaceArea : PackedScene = load(selectedWorkspacePath)
 	
 	var createdWorkspace : Control = packedWorkspaceArea.instantiate()

@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://chsf2xd6e58qi" path="res://textures/icons/GuiVisibilityHidden.svg" id="3_tryqj"]
 
 [node name="Layer_ui_fill" type="Button"]
+show_behind_parent = true
 custom_minimum_size = Vector2(320, 45)
 anchors_preset = -1
 anchor_right = 0.277604

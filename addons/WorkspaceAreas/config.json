@@ -1,0 +1,10 @@
+{
+	"Custom Category one":
+	{
+	"custom_name":"res://addons/WorkspaceAreas/example/CustomWorkspaces/Column1/ColorWorkspaceArea.tscn",
+	},
+	"Second Category custom":
+	{
+	"custom name 2":"res://addons/WorkspaceAreas/example/CustomWorkspaces/Column2/TextWorkspaceArea.tscn"
+	}
+}

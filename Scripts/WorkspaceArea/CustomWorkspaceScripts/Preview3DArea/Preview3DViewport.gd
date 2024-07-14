@@ -1,16 +1,13 @@
-extends SubViewport
-class_name Preview3DViewport
+class_name Preview3DViewport extends SubViewport
 
-func _ready()->void:
-	pass
-	#var node_3d : Node = $Node3D
-	#var renderModePickButton : OptionButton = node_3d.find_child("Control").find_child("RenderModePickButton")
-	#renderModePickButton.item_selected.connect(selectRenderMode)
+##This class should allow to switch between different render preview modes
+## like for example switching viewport to DEBUG_DRAW_UNSHADED to show only surface's color
+## But this solution is very limited and probably will require reworking.
 
-
-func selectRenderMode(mode : int)-> void:
+func _selectRenderMode(mode : int)-> void:
 	renderingMode = mode
 
+##Defines current preview render mode.
 var renderingMode : int :
 	set(value):
 		renderingMode = value

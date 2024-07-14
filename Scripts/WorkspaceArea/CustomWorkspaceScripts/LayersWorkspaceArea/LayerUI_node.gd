@@ -1,63 +1,84 @@
 class_name LayerUI_node extends Button
 
+##This is the class that previews particular layer's data
+## and allows to modify it by the user from UI.
+
+##This signal is emmited when this layer is selected by the user in the UI[br]
+##[param layer] is a reference to the selected layer,[br]
+##this signal can be used to easly know which layer UI node is currently selected
 signal layerSelected(layer : LayerUI_node)
 
-@onready var ghostLayerScene : PackedScene = preload("res://Scenes/layer_ghost_fill.tscn")
+@onready var _ghostLayerScene : PackedScene = preload("res://Scenes/layer_ghost_fill.tscn")
+##This the [LayersWorkspaceArea] that this layer belongs to
 var layersWorkspaceParent : LayersWorkspaceArea
-var createdGhost : GhostFillLayer
+##This stores reference to the layer data that is stored in the [ServerLayersStack]
 var layerData : FillLayerData
 
-@onready var visibilityButton : CheckBox = %VisibilityButton
-@onready var fillColorButton : ColorPickerButton = %FillColorPicker
-@onready var layerNameEdit : LineEdit = %LayerName
-@onready var opacitySlider : HSlider = %OpacitySlider
-@onready var typeSwitchButton : OptionButton = %LayerType
+var _createdGhost : GhostFillLayer
+
+@onready var _visibilityButton : CheckBox = %VisibilityButton
+@onready var _fillColorButton : ColorPickerButton = %FillColorPicker
+@onready var _layerNameEdit : LineEdit = %LayerName
+@onready var _opacitySlider : HSlider = %OpacitySlider
+@onready var _typeSwitchButton : OptionButton = %LayerType
+
+#Used to prevent sync loop.
+var _ingoreSyncOnReady : bool = true
 
 func _ready()->void:
+	_ingoreSyncOnReady = true
 	pressed.connect(_layerSelected)
-	visibilityButton.button_pressed = layerData.visible
-	fillColorButton.color = layerData.colors[layersWorkspaceParent.layerStackPreviewTypeMode]
-	layerNameEdit.text = layerData.name
-	opacitySlider.value = layerData.opacity * opacitySlider.max_value
-	typeSwitchButton.selected = layerData.type
+	updatePropertiesFromData()
+	_ingoreSyncOnReady = false
 
 func _layerSelected()->void:
 	layerSelected.emit(self)
 
 func _visibilityChanged(state : bool)->void:
+	if _ingoreSyncOnReady:
+		return
 	layerData.visible = state
 	ServerLayersStack.syncLayerProperties(get_index(),self)
 
 func _colorChanged(newColor : Color)->void:
+	if _ingoreSyncOnReady:
+		return
 	layerData.colors[layersWorkspaceParent.layerStackPreviewTypeMode] = newColor
 	ServerLayersStack.syncLayerProperties(get_index(),self)
 
 func _titleChanged(newTitle : String)->void:
+	if _ingoreSyncOnReady:
+		return
 	layerData.name = newTitle
 	ServerLayersStack.syncLayerProperties(get_index(),self)
 
 func _opacityChanged(sliderValue : float)->void:
-	layerData.opacity = sliderValue / opacitySlider.max_value
+	if _ingoreSyncOnReady:
+		return
+	layerData.opacity = sliderValue / _opacitySlider.max_value
 	ServerLayersStack.syncLayerProperties(get_index(),self)
 
 func _typeChanged(index : int)->void:
+	if _ingoreSyncOnReady:
+		return
 	layerData.type = index
 	ServerLayersStack.syncLayerProperties(get_index(),self)
 
 func _get_drag_data(_at_position : Vector2)->Variant:
 	#Called when layer started to be dragged by cursor
-	createdGhost = ghostLayerScene.instantiate()
-	get_tree().root.add_child(createdGhost)
-	_copySize(self,createdGhost)
+	_createdGhost = _ghostLayerScene.instantiate()
+	get_tree().root.add_child(_createdGhost)
+	_copySize(self,_createdGhost)
 	LayersWorkspaceArea.draggingAnyLayer = true
 	return self
 
+##Syncs layer's properties from the server
 func updatePropertiesFromData()->void:
-	self.visibilityButton.button_pressed = layerData.visible
-	self.fillColorButton.color = layerData.colors[layersWorkspaceParent.layerStackPreviewTypeMode]
-	self.layerNameEdit.text = layerData.name
-	self.opacitySlider.value = layerData.opacity * opacitySlider.max_value
-	self.typeSwitchButton.selected = layerData.type
+	self._visibilityButton.button_pressed = layerData.visible
+	self._fillColorButton.color = layerData.colors[layersWorkspaceParent.layerStackPreviewTypeMode]
+	self._layerNameEdit.text = layerData.name
+	self._opacitySlider.value = layerData.opacity * _opacitySlider.max_value
+	self._typeSwitchButton.selected = layerData.type
 
 #Used to set size instead of to.size = from.size
 #Because this makes Godot yell with warnings to use anchors instead ;d

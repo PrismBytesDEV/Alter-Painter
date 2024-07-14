@@ -1,5 +1,7 @@
-extends WorkspaceArea
-class_name DebugWorkspaceArea
+class_name DebugWorkspaceArea extends WorkspaceArea
+
+##This [WorkspaceArea] doesn't serve any purpouse. It was used to test
+## and debug [WorkspaceArea]'s code
 
 func _init()->void:
 	name = "DebugWorkspaceArea"

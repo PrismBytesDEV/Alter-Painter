@@ -15,7 +15,7 @@ class_name_hider/excluded_folders=PackedStringArray("addons")
 [application]
 
 config/name="AlterPainter"
-config/version="0.0.4"
+config/version="0.0.5"
 run/main_scene="res://Scenes/AppInterface.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 boot_splash/bg_color=Color(0.11, 0.11, 0.11, 1)
@@ -27,6 +27,8 @@ config/windows_native_icon="res://Alter-painter-logo.ico"
 [autoload]
 
 Keychain="*res://addons/keychain/Keychain.gd"
+WorkspacesLoader="*res://addons/WorkspaceAreas/scripts/WorkspacesAutoloader.gd"
+SplitAreaDrawLayer="*res://addons/WorkspaceAreas/scripts/AreaSplitManager.gd"
 
 [debug]
 
@@ -42,7 +44,7 @@ window/size/mode=2
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/Todo_Manager/plugin.cfg", "res://addons/keychain/plugin.cfg", "res://addons/zylann.editor_debugger/plugin.cfg")
+enabled=PackedStringArray("res://addons/Todo_Manager/plugin.cfg", "res://addons/WorkspaceAreas/plugin.cfg", "res://addons/keychain/plugin.cfg", "res://addons/workspaceareas/plugin.cfg", "res://addons/zylann.editor_debugger/plugin.cfg")
 
 [file_customization]
 

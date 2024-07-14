@@ -1,5 +1,8 @@
 class_name GhostFillLayer extends Control
 
+##This class is tied to the "Ghost layer" that is visible while user
+## is draging any layer.
+
 func _init()->void:
 	hide()
 

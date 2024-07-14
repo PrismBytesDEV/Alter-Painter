@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bjbxfl5efns4p"
-path="res://.godot/imported/VerticalAreaSplitIcon.png-5547e089b1a1700fc482e19b3d2d9288.ctex"
+path="res://.godot/imported/VerticalAreaSplitIcon.png-c6bf4344f3b1682f4c8be1ba8ba4616d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/icons/VerticalAreaSplitIcon.png"
-dest_files=["res://.godot/imported/VerticalAreaSplitIcon.png-5547e089b1a1700fc482e19b3d2d9288.ctex"]
+source_file="res://addons/WorkspaceAreas/icons/VerticalAreaSplitIcon.png"
+dest_files=["res://.godot/imported/VerticalAreaSplitIcon.png-c6bf4344f3b1682f4c8be1ba8ba4616d.ctex"]
 
 [params]
 
