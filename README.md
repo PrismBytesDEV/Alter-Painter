@@ -14,4 +14,4 @@ There are many plans for this software but at the current moment of writing this
 <br>Like painting textures, masks, also brush settings.. 
 <br> to see more precise information on what needs to be done or is planned for this software you can look into <a href="https://github.com/orgs/PrismBytesDEV/projects/2">Projects tab</a>
 # Want to contribute?
-Read the <a href="I'll need to set the link here :d">contributing documentation</a>!
+Read the <a href="CONTRIBUTING.md">contributing documentation</a>!
