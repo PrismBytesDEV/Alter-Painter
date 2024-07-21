@@ -1,10 +1,59 @@
-[gd_scene load_steps=6 format=3 uid="uid://bk6xt62j3yiba"]
+[gd_scene load_steps=11 format=3 uid="uid://bk6xt62j3yiba"]
 
 [ext_resource type="Theme" uid="uid://cxi7ihqtqqtu6" path="res://Themes/darkTheme.tres" id="1_pdyud"]
 [ext_resource type="Texture2D" uid="uid://dveoa33onxr4b" path="res://textures/icons/GuiVisibilityVisible.svg" id="2_7ueoa"]
 [ext_resource type="Script" path="res://Scripts/WorkspaceArea/CustomWorkspaceScripts/LayersWorkspaceArea/LayerUI_node.gd" id="2_mvdwv"]
 [ext_resource type="Texture2D" uid="uid://dxinwmil7wjvo" path="res://maskIconPlaceholder.png" id="2_wuknw"]
 [ext_resource type="Texture2D" uid="uid://chsf2xd6e58qi" path="res://textures/icons/GuiVisibilityHidden.svg" id="3_tryqj"]
+[ext_resource type="Script" path="res://Scripts/WorkspaceArea/CustomWorkspaceScripts/LayersWorkspaceArea/FillValuePicker.gd" id="5_ouy0d"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b5i4t"]
+content_margin_left = 2.0
+content_margin_top = 2.0
+content_margin_right = 2.0
+content_margin_bottom = 2.0
+bg_color = Color(0.0941176, 0.0941176, 0.0941176, 1)
+border_color = Color(0, 0.517647, 0.866667, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xtrnj"]
+content_margin_left = 2.0
+content_margin_top = 2.0
+content_margin_right = 2.0
+content_margin_bottom = 2.0
+bg_color = Color(0.136826, 0.136826, 0.136826, 1)
+border_color = Color(0, 0.517647, 0.866667, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1a1ui"]
+content_margin_left = 2.0
+content_margin_top = 2.0
+content_margin_right = 2.0
+content_margin_bottom = 2.0
+bg_color = Color(0, 0.517647, 0.866667, 1)
+border_color = Color(0, 0.517647, 0.866667, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ln0wx"]
+content_margin_left = 2.0
+content_margin_top = 2.0
+content_margin_right = 2.0
+content_margin_bottom = 2.0
+bg_color = Color(0, 0.517647, 0.866667, 1)
+border_color = Color(0, 0.517647, 0.866667, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
 
 [node name="Layer_ui_fill" type="Button"]
 show_behind_parent = true
@@ -17,6 +66,7 @@ grow_vertical = 2
 focus_mode = 1
 mouse_filter = 1
 theme = ExtResource("1_pdyud")
+button_mask = 3
 script = ExtResource("2_mvdwv")
 metadata/_edit_use_anchors_ = true
 
@@ -60,6 +110,20 @@ size_flags_horizontal = 0
 size_flags_vertical = 4
 color = Color(1, 1, 1, 1)
 edit_alpha = false
+
+[node name="FillValuePicker" type="Button" parent="MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(28, 28)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_styles/normal = SubResource("StyleBoxFlat_b5i4t")
+theme_override_styles/hover = SubResource("StyleBoxFlat_xtrnj")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_1a1ui")
+theme_override_styles/focus = SubResource("StyleBoxFlat_ln0wx")
+icon_alignment = 1
+script = ExtResource("5_ouy0d")
 
 [node name="Spacing" type="Control" parent="MarginContainer/HBoxContainer"]
 custom_minimum_size = Vector2(2, 0)
@@ -125,6 +189,7 @@ value = 100.0
 
 [connection signal="toggled" from="MarginContainer/HBoxContainer/VisibilityButton" to="." method="_visibilityChanged"]
 [connection signal="color_changed" from="MarginContainer/HBoxContainer/FillColorPicker" to="." method="_colorChanged"]
+[connection signal="valueChanged" from="MarginContainer/HBoxContainer/FillValuePicker" to="." method="_valueChanged"]
 [connection signal="text_changed" from="MarginContainer/HBoxContainer/ScrollContainer/LayerName" to="." method="_titleChanged"]
 [connection signal="item_selected" from="MarginContainer/HBoxContainer/VBoxContainer/LayerType" to="." method="_typeChanged"]
 [connection signal="value_changed" from="MarginContainer/HBoxContainer/VBoxContainer/OpacitySlider" to="." method="_opacityChanged"]

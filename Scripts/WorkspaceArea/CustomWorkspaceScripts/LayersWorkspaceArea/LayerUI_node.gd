@@ -17,6 +17,7 @@ var layerData : FillLayerData
 var _createdGhost : GhostFillLayer
 
 @onready var _visibilityButton : CheckBox = %VisibilityButton
+@onready var _fillValueButton : FillValuePicker = %FillValuePicker
 @onready var _fillColorButton : ColorPickerButton = %FillColorPicker
 @onready var _layerNameEdit : LineEdit = %LayerName
 @onready var _opacitySlider : HSlider = %OpacitySlider
@@ -39,12 +40,24 @@ func _visibilityChanged(state : bool)->void:
 		return
 	layerData.visible = state
 	ServerLayersStack.syncLayerProperties(get_index(),self)
+	var matID : int = ServerModelHierarchy.selectedMaterialIndex
+	mixer.mixInputs(matID)
 
 func _colorChanged(newColor : Color)->void:
 	if _ingoreSyncOnReady:
 		return
 	layerData.colors[layersWorkspaceParent.layerStackPreviewTypeMode] = newColor
 	ServerLayersStack.syncLayerProperties(get_index(),self)
+	var matID : int = ServerModelHierarchy.selectedMaterialIndex
+	mixer.mixInputs(matID,layersWorkspaceParent.layerStackPreviewTypeMode)
+
+func _valueChanged(newValue : float)->void:
+	if _ingoreSyncOnReady:
+		return
+	layerData.colors[layersWorkspaceParent.layerStackPreviewTypeMode] = newValue
+	ServerLayersStack.syncLayerProperties(get_index(),self)
+	var matID : int = ServerModelHierarchy.selectedMaterialIndex
+	mixer.mixInputs(matID,layersWorkspaceParent.layerStackPreviewTypeMode)
 
 func _titleChanged(newTitle : String)->void:
 	if _ingoreSyncOnReady:
@@ -57,12 +70,16 @@ func _opacityChanged(sliderValue : float)->void:
 		return
 	layerData.opacity = sliderValue / _opacitySlider.max_value
 	ServerLayersStack.syncLayerProperties(get_index(),self)
+	var matID : int = ServerModelHierarchy.selectedMaterialIndex
+	mixer.mixInputs(matID)
 
 func _typeChanged(index : int)->void:
 	if _ingoreSyncOnReady:
 		return
 	layerData.type = index
 	ServerLayersStack.syncLayerProperties(get_index(),self)
+	var matID : int = ServerModelHierarchy.selectedMaterialIndex
+	mixer.mixInputs(matID)
 
 func _get_drag_data(_at_position : Vector2)->Variant:
 	#Called when layer started to be dragged by cursor
@@ -75,7 +92,23 @@ func _get_drag_data(_at_position : Vector2)->Variant:
 ##Syncs layer's properties from the server
 func updatePropertiesFromData()->void:
 	self._visibilityButton.button_pressed = layerData.visible
-	self._fillColorButton.color = layerData.colors[layersWorkspaceParent.layerStackPreviewTypeMode]
+	match layersWorkspaceParent.layerStackPreviewTypeMode:
+		ServerLayersStack.layerChannels.Albedo:
+			_fillValueButton.hide()
+			_fillColorButton.show()
+			self._fillColorButton.color = layerData.colors[layersWorkspaceParent.layerStackPreviewTypeMode]
+		ServerLayersStack.layerChannels.Metalness:
+			_fillValueButton.show()
+			_fillColorButton.hide()
+			self._fillValueButton.setSliderValue(layerData.colors[layersWorkspaceParent.layerStackPreviewTypeMode]) 
+		ServerLayersStack.layerChannels.Roughness:
+			_fillValueButton.show()
+			_fillColorButton.hide()
+			self._fillValueButton.setSliderValue(layerData.colors[layersWorkspaceParent.layerStackPreviewTypeMode]) 
+		ServerLayersStack.layerChannels.Normal:
+			_fillValueButton.hide()
+			_fillColorButton.show()
+			self._fillColorButton.color = layerData.colors[layersWorkspaceParent.layerStackPreviewTypeMode]
 	self._layerNameEdit.text = layerData.name
 	self._opacitySlider.value = layerData.opacity * _opacitySlider.max_value
 	self._typeSwitchButton.selected = layerData.type

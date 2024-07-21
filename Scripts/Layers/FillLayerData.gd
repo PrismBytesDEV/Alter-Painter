@@ -13,14 +13,27 @@ class_name FillLayerData extends Resource
 ##[param Opacity] - define how transparent this layer should be when being created.[br]
 ##[param Type] - type of the layer mix mode. See [member Mixer.mixTypes]
 ##to read list of all available mix modes
-func _init(Visible : bool, Colors : Array[Color], Name : String,Opacity : float, Type : int)->void:
+func _init(Visible : bool, Colors : Dictionary, Name : String,Opacity : float, Type : int)->void:
 	self.visible = Visible
-	if Colors.is_empty():
-		Colors.append(Color.WHITE)#Albedo
-		Colors.append(Color(0.5,0.5,0.5))#Roughness
-		Colors.append(Color(0.5,0.5,0.5))#Metalness
-		Colors.append(Color("#8080ff"))#NormalMap (linear)
-	self.colors = Colors
+	
+	@warning_ignore("unassigned_variable")
+	var colorsDict : Dictionary = {
+		ServerLayersStack.layerChannels.Albedo : Color.WHITE,
+		ServerLayersStack.layerChannels.Roughness : 0.5,
+		ServerLayersStack.layerChannels.Metalness : 0.0,
+		ServerLayersStack.layerChannels.Normal : Color("#8080ff")
+	}
+	
+	if Colors.has(ServerLayersStack.layerChannels.Albedo):
+		colorsDict[ServerLayersStack.layerChannels.Albedo] = Colors[ServerLayersStack.layerChannels.Albedo]
+	if Colors.has(ServerLayersStack.layerChannels.Roughness):
+		colorsDict[ServerLayersStack.layerChannels.Roughness] = Colors[ServerLayersStack.layerChannels.Roughness]
+	if Colors.has(ServerLayersStack.layerChannels.Metalness):
+		colorsDict[ServerLayersStack.layerChannels.Metalness] = Colors[ServerLayersStack.layerChannels.Metalness]
+	if Colors.has(ServerLayersStack.layerChannels.Normal):
+		colorsDict[ServerLayersStack.layerChannels.Normal] = Colors[ServerLayersStack.layerChannels.Normal]
+	
+	self.colors = colorsDict
 	self.name = Name
 	self.opacity = Opacity
 	self.type = Type
@@ -29,10 +42,7 @@ func _init(Visible : bool, Colors : Array[Color], Name : String,Opacity : float,
 var visible : bool
 ##Holds all the colors for each individual channel that layer works on. See [enum ServerLayersStack.layerChannels]
 ## to read the list of available channels that layer can work on.
-var colors : Array[Color] #<- The reason why I used array of colors instead of just one color
-						  # Is the fact that a single layer can contribute to Albedo, Normal,
-						  # Metallness, Roughness and etc at the same time
-#var mask : Mask #<- requires a special class to handle mask calculations
+var colors : Dictionary
 ##stores the name or title, of the layer.
 var name : String
 ##store how transparent the layer is

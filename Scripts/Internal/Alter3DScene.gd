@@ -23,6 +23,7 @@ func _ready()->void:
 	sceneRootNode = %SceneRoot
 	light = %MainDirectionalLight
 	Alter3DScene.refreshMesh(sceneRootNode.get_child(0))
+	Mixer.new()
 
 ##Loads a 3D model from specified [param path][br]
 ##And instantiates it as a child of [member Alter3DScene.sceneRootNode]
@@ -64,6 +65,7 @@ static func refreshMesh(meshInst : Node)->void:
 	ServerPreview3D.recenterCameras()
 	ServerModelHierarchy.refreshDisplayData()
 	ServerLayersStack.cleanWorkspacesLayers()
+	Alter3DScene._loadModelsTexturesIntoLayersStacks()
 
 ##Loads materials into [member Alter3DScene.modelMaterials] 
 ##from [member Alter3DScene.modelRootNode]
@@ -71,7 +73,7 @@ static func loadMaterials(assetRoot : Node)->void:
 	for child in assetRoot.get_children():
 		loadMaterials(child)
 	if assetRoot is MeshInstance3D:
-		var theMat : Material
+		var theMat : StandardMaterial3D
 		for surfaceID : int in assetRoot.mesh.get_surface_count():
 			if !modelMaterials.has(assetRoot.mesh.surface_get_material(surfaceID)):
 				theMat = assetRoot.mesh.surface_get_material(surfaceID)
@@ -91,3 +93,25 @@ static func _addAssetColliders(assetRoot : Node)->void:
 		_addAssetColliders(child)
 	if assetRoot is MeshInstance3D:
 		assetRoot.create_trimesh_collision()
+
+static func _loadModelsTexturesIntoLayersStacks()->void:
+	#This needs to be redone when paint layers will be added
+	for matID : int in modelMaterials.size():
+		var theMat := modelMaterials[matID]
+		
+		var colorsDict : Dictionary = {
+			ServerLayersStack.layerChannels.Albedo : theMat.albedo_color,
+			ServerLayersStack.layerChannels.Roughness : theMat.roughness,
+			ServerLayersStack.layerChannels.Metalness : theMat.metallic
+		}
+		if theMat.albedo_texture == null:
+			var albedoImage := Image.create(1,1,false,Image.FORMAT_RGBA8)
+			albedoImage.fill(theMat.albedo_color)
+			theMat.albedo_texture = ImageTexture.create_from_image(albedoImage)
+		theMat.albedo_color = Color.WHITE
+		if theMat.metallic_texture == null:
+			var metallicImage := Image.create(1,1,false,Image.FORMAT_RGBA8)
+			metallicImage.fill(Color.WHITE * theMat.metallic)
+			theMat.metallic_texture = ImageTexture.create_from_image(metallicImage)
+		theMat.metallic = 1.0
+		ServerLayersStack.addLayer(matID,true,colorsDict,"Imported layer " + theMat.resource_name,1.0,0)

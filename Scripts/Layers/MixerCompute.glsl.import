@@ -1,0 +1,14 @@
+[remap]
+
+importer="glsl"
+type="RDShaderFile"
+uid="uid://deyfyw8njuq7b"
+path="res://.godot/imported/MixerCompute.glsl-ae7658f41cc8822d160be0ce58236db7.res"
+
+[deps]
+
+source_file="res://Scripts/Layers/MixerCompute.glsl"
+dest_files=["res://.godot/imported/MixerCompute.glsl-ae7658f41cc8822d160be0ce58236db7.res"]
+
+[params]
+

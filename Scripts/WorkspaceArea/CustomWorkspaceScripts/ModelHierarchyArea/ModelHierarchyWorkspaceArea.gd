@@ -246,5 +246,9 @@ func _visibilityButtonPressed(_item: TreeItem, _column: int, id: int, _mouse_but
 	
 	var meshObject : Node = _objectsLookupTable[id]
 	meshObject.visible = buttonState
+	if buttonState:
+		meshObject.process_mode = Node.PROCESS_MODE_INHERIT
+	else:
+		meshObject.process_mode = Node.PROCESS_MODE_DISABLED
 	
 	ServerModelHierarchy.refreshDisplayData()

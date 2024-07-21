@@ -97,8 +97,9 @@ func _mouse_exited_LayersArea()->void:
 ##[param index] is used to specify to which mode you are switching the [WorkspaceArea][br]
 ##See [member ServerLayersStack.layerChannels] for list of all available [param index]es
 func switchLayerStackType(index : int)->void:
-	print("Layer stack switched to: ",ServerLayersStack.layerChannels.keys()[index])
 	layerStackPreviewTypeMode = index
+	for layer : LayerUI_node in layersList.get_children():
+		layer.updatePropertiesFromData()
 
 ##Called when [ServerLayersStack] changes order of it's stack.
 ## This function is used to change the order of the layer in UI stack.

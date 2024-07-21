@@ -30,14 +30,26 @@ static func _removeLayerWorkspace(workspace : LayersWorkspaceArea)->void:
 ##by default the material that you will add new layer to is the currently selected one in [ModelHierarchyWorkspaceArea]
 ##if you want to add new layer into very specific material you can use [param matID] to do that.[br]
 ##matID must be contained in boundries of [member Alter3DScene.modelMaterials] size
-static func addLayer(matID : int = ServerModelHierarchy.selectedMaterialIndex)->void:
+static func addLayer(matID : int = ServerModelHierarchy.selectedMaterialIndex,
+					visibility : bool = true,
+					colors : Dictionary = {},
+					title : String = "",
+					opacity : float = 1.0,
+					type : int = 0)->void:
 	var layersStack := materialsLayers[matID].layers
-	var newLayerData := FillLayerData.new(true,[],"New Layer nr." + str(layersStack.size()+1),1.0,0)
+	if title.is_empty():
+		title = "New Layer nr." + str(layersStack.size()+1)
+	var newLayerData := FillLayerData.new(visibility,colors,title,opacity,type)
 	layersStack.append(newLayerData)
+	
+	if matID != ServerModelHierarchy.selectedMaterialIndex:
+		#To prevent adding UI layers when those shouldn't be visible
+		#since they are set to different material.
+		return
 	for workspace in _layerWorkspaces:
 		workspace._add_UI_Layer(newLayerData)
 	
-	Mixer.mixInputs(matID)
+	mixer.mixInputs(matID)
 
 ##Use this function to remove layer both from the server's stack and to all [LayersWorkspaceArea]s[br]
 ##[param UIindex] is the layer index in UI stack. so index 0 will remove layer that is on top of the stack.
@@ -52,7 +64,7 @@ static func removeLayer(UIindex : int)->void:
 	for workspace in _layerWorkspaces:
 		workspace._remove_UI_Layer(UIindex)
 	
-	Mixer.mixInputs(matID)
+	mixer.mixInputs(matID)
 
 ##Use this function to change layer that is in index [param fromIndex] to [param toIndex]
 ## both in server's layers stack and all [LayersWorkspaceArea]s[br]
@@ -75,7 +87,7 @@ static func reorderLayer(fromIndex : int, toIndex : int,)->void:
 	for workspace in _layerWorkspaces:
 		workspace.refreshLayersOrder(fromIndex, toIndex)
 	
-	Mixer.mixInputs(matID)
+	mixer.mixInputs(matID)
 
 ##Used to sync layer properties when change is made in the [LayerUI_node][br]
 ##[param layerID] is the UI layer index of the stack[br]
@@ -89,8 +101,6 @@ static func syncLayerProperties(layerID : int, exclude : LayerUI_node = null)->v
 			if layerNode == exclude:
 				continue
 		layerNode.updatePropertiesFromData()
-	var matID : int = ServerModelHierarchy.selectedMaterialIndex
-	Mixer.mixInputs(matID)
 
 ##Cleans all the [LayerUI_node]s from all [LayersWorkspaceArea]s[br]
 ##[br][color=#edcb6d][b]IMPORTANT[/b][br][/color]

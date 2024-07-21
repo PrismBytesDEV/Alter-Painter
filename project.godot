@@ -29,12 +29,13 @@ config/windows_native_icon="res://Alter-painter-logo.ico"
 Keychain="*res://addons/keychain/Keychain.gd"
 WorkspacesLoader="*res://addons/WorkspaceAreas/scripts/WorkspacesAutoloader.gd"
 SplitAreaDrawLayer="*res://addons/WorkspaceAreas/scripts/AreaSplitManager.gd"
+mixer="*res://Scripts/Layers/Mixer.gd"
 
 [debug]
 
-file_logging/enable_file_logging=true
-file_logging/log_path="user://logs/AlterPainter/app.log"
+file_logging/enable_file_logging.pc=false
 gdscript/warnings/untyped_declaration=2
+gdscript/warnings/integer_division=0
 
 [display]
 
