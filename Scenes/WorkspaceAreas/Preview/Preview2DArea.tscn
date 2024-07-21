@@ -2,8 +2,8 @@
 
 [ext_resource type="Theme" uid="uid://cxi7ihqtqqtu6" path="res://Themes/darkTheme.tres" id="1_1xty8"]
 [ext_resource type="Script" path="res://Scripts/WorkspaceArea/CustomWorkspaceScripts/Preview2DArea/Preview2DWorkspaceArea.gd" id="2_16eij"]
-[ext_resource type="Texture2D" uid="uid://fepfnfguoexp" path="res://icon.png" id="3_1qew6"]
-[ext_resource type="Texture2D" uid="uid://b2qj1tr1tgcpa" path="res://textures/icons/Preview2D.svg" id="3_bl60u"]
+[ext_resource type="Texture2D" uid="uid://c5kwlo3e6v7hf" path="res://textures/icons/Preview2D.svg" id="3_bl60u"]
+[ext_resource type="Texture2D" uid="uid://by28thxw3ww0c" path="res://icon.svg" id="4_ytgwp"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4sdpv"]
 bg_color = Color(0.14902, 0.14902, 0.14902, 1)
@@ -21,7 +21,6 @@ grow_vertical = 2
 theme = ExtResource("1_1xty8")
 script = ExtResource("2_16eij")
 workspaceAreaIcon = ExtResource("3_bl60u")
-addControlPanelAndContentSeparator = false
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 1
@@ -51,24 +50,34 @@ grow_vertical = 2
 horizontal_scroll_mode = 3
 vertical_scroll_mode = 3
 
-[node name="TextureRect" type="TextureRect" parent="Control/ScrollContainer"]
+[node name="Control" type="Control" parent="Control/ScrollContainer"]
 layout_mode = 2
-size_flags_horizontal = 6
-size_flags_vertical = 6
-texture = ExtResource("3_1qew6")
-stretch_mode = 4
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
-[node name="Label" type="Label" parent="Control/ScrollContainer/TextureRect"]
+[node name="Control2" type="VBoxContainer" parent="Control/ScrollContainer/Control"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = -0.158203
-anchor_top = 0.867188
-anchor_right = 1.16211
-anchor_bottom = 1.08984
-offset_left = 20.5
-offset_right = -20.5
+anchor_left = 0.365365
+anchor_top = 0.23287
+anchor_right = 0.634635
+anchor_bottom = 0.76713
+offset_bottom = 6.10352e-05
 grow_horizontal = 2
-grow_vertical = 0
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+metadata/_edit_use_anchors_ = true
+
+[node name="TextureRect" type="TextureRect" parent="Control/ScrollContainer/Control/Control2"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("4_ytgwp")
+
+[node name="Label" type="Label" parent="Control/ScrollContainer/Control/Control2"]
+layout_mode = 2
 text = "Coming soon!"
 label_settings = SubResource("LabelSettings_7pp5m")
+horizontal_alignment = 1
 metadata/_edit_use_anchors_ = true

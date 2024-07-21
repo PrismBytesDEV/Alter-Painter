@@ -21,7 +21,7 @@ config/features=PackedStringArray("4.2", "Forward Plus")
 boot_splash/bg_color=Color(0.11, 0.11, 0.11, 1)
 boot_splash/image="res://AlterPainterSplashScreen.png"
 boot_splash/fullsize=false
-config/icon="res://icon.png"
+config/icon="res://icon.svg"
 config/windows_native_icon="res://Alter-painter-logo.ico"
 
 [autoload]
