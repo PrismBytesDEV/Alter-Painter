@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://by7s2ltf5hkus"
-path="res://.godot/imported/GodotDoodleMask.jpg-225acb03e1b34f30e85883ae985e2e5c.ctex"
+uid="uid://c63a58a5rov6"
+path="res://.godot/imported/FaceWithAlpha.png-d3200733c2b8593dc5dd36e11a12c9c4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/GodotDoodleMask.jpg"
-dest_files=["res://.godot/imported/GodotDoodleMask.jpg-225acb03e1b34f30e85883ae985e2e5c.ctex"]
+source_file="res://textures/FaceWithAlpha.png"
+dest_files=["res://.godot/imported/FaceWithAlpha.png-d3200733c2b8593dc5dd36e11a12c9c4.ctex"]
 
 [params]
 

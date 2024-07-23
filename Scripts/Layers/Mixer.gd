@@ -13,12 +13,14 @@ enum mixTypes
 }
 
 @export var textureResolution : Vector2i = Vector2i(512, 512)
-@export var textureMask : Texture2D
+@export var textureMask : Image
+var debugImage : Image
 
 var _outputAlbedoTexture : Texture2D
 
 func _ready()->void:
-	textureMask = load("res://textures/GodotDoodleMask.jpg")
+	textureMask = load("res://textures/GodotDoodleMask.jpg").get_image()
+	debugImage = load("res://textures/FaceWithAlpha.png").get_image()
 	#Mixer is running all the preparations for compute shader on separate thread.
 	#or at least it could that's why I used call_on_render_thread,
 	#but Godot prevents program from crashing because of issue that I don't understand.
@@ -38,12 +40,8 @@ func mixInputs(matID : int, recalculateMode : int = -1)->void:
 	
 	var layersStack := ServerLayersStack.materialsLayers[matID].layers
 	RenderingServer.call_on_render_thread(_computeUpdate.bind(layersStack,textureResolution,matID,recalculateMode)) 
-	
 
-#########################################################################################################
-
-#Compute shader managment part of this script
-
+#region Compute Shader Managment
 var _RD : RenderingDevice
 var _shader : RID
 var _pipeline : RID
@@ -53,6 +51,8 @@ var _texture_sets : Array[RID] = [ RID(), RID(), RID()]
 
 var _textureFormat : RDTextureFormat
 var _maskFormat : RDTextureFormat
+
+var _debugFormat : RDTextureFormat
 
 func _computeInit(textureSize : Vector2i)->void:
 	
@@ -71,7 +71,12 @@ func _computeInit(textureSize : Vector2i)->void:
 	_textureFormat.depth = 1
 	_textureFormat.array_layers = 1
 	_textureFormat.mipmaps = 1
-	_textureFormat.usage_bits = RenderingDevice.TEXTURE_USAGE_SAMPLING_BIT + RenderingDevice.TEXTURE_USAGE_COLOR_ATTACHMENT_BIT + RenderingDevice.TEXTURE_USAGE_STORAGE_BIT + RenderingDevice.TEXTURE_USAGE_CAN_UPDATE_BIT + RenderingDevice.TEXTURE_USAGE_CAN_COPY_TO_BIT + RenderingDevice.TEXTURE_USAGE_CAN_COPY_FROM_BIT
+	_textureFormat.usage_bits = (RenderingDevice.TEXTURE_USAGE_SAMPLING_BIT
+	 + RenderingDevice.TEXTURE_USAGE_COLOR_ATTACHMENT_BIT
+	 + RenderingDevice.TEXTURE_USAGE_STORAGE_BIT
+	 + RenderingDevice.TEXTURE_USAGE_CAN_UPDATE_BIT
+	 + RenderingDevice.TEXTURE_USAGE_CAN_COPY_TO_BIT
+	 + RenderingDevice.TEXTURE_USAGE_CAN_COPY_FROM_BIT)
 	
 	_maskFormat = RDTextureFormat.new()
 	_maskFormat.format = RenderingDevice.DATA_FORMAT_R8_UNORM
@@ -81,7 +86,22 @@ func _computeInit(textureSize : Vector2i)->void:
 	_maskFormat.depth = 1
 	_maskFormat.array_layers = 1
 	_maskFormat.mipmaps = 1
-	_maskFormat.usage_bits = RenderingDevice.TEXTURE_USAGE_SAMPLING_BIT + RenderingDevice.TEXTURE_USAGE_COLOR_ATTACHMENT_BIT + RenderingDevice.TEXTURE_USAGE_STORAGE_BIT + RenderingDevice.TEXTURE_USAGE_CAN_UPDATE_BIT + RenderingDevice.TEXTURE_USAGE_CAN_COPY_TO_BIT
+	_maskFormat.usage_bits = (RenderingDevice.TEXTURE_USAGE_SAMPLING_BIT
+	 + RenderingDevice.TEXTURE_USAGE_COLOR_ATTACHMENT_BIT
+	 + RenderingDevice.TEXTURE_USAGE_STORAGE_BIT
+	 + RenderingDevice.TEXTURE_USAGE_CAN_UPDATE_BIT
+	 + RenderingDevice.TEXTURE_USAGE_CAN_COPY_TO_BIT)
+	
+	_debugFormat = RDTextureFormat.new()
+	_debugFormat.format = RenderingDevice.DATA_FORMAT_R8G8B8A8_UNORM
+	_debugFormat.width = debugImage.get_width()
+	_debugFormat.height = debugImage.get_height()
+	_debugFormat.usage_bits = (RenderingDevice.TEXTURE_USAGE_SAMPLING_BIT
+	 + RenderingDevice.TEXTURE_USAGE_COLOR_ATTACHMENT_BIT
+	 + RenderingDevice.TEXTURE_USAGE_STORAGE_BIT
+	 + RenderingDevice.TEXTURE_USAGE_CAN_UPDATE_BIT
+	 + RenderingDevice.TEXTURE_USAGE_CAN_COPY_TO_BIT
+	 + RenderingDevice.TEXTURE_USAGE_CAN_COPY_FROM_BIT)
 
 func _computeUpdate(layersStack : Array[FillLayerData],textureSize : Vector2i,matID : int,recalculateMode : int = -1)->void:
 	
@@ -95,8 +115,8 @@ func _computeUpdate(layersStack : Array[FillLayerData],textureSize : Vector2i,ma
 			if !layer.visible:
 				continue
 			
-			_texture_rds[1] = _RD.texture_create(_textureFormat, RDTextureView.new(), [])
-			_RD.texture_clear(_texture_rds[1], layer.colors[ServerLayersStack.layerChannels.Albedo], 0, 1, 0, 1)
+			_texture_rds[1] = _RD.texture_create(_debugFormat, RDTextureView.new(), [debugImage.get_data()])
+			#_RD.texture_clear(_texture_rds[1], layer.colors[ServerLayersStack.layerChannels.Albedo], 0, 1, 0, 1)
 			_texture_sets[1] = _create_uniform_set(_texture_rds[1])
 			
 			_texture_rds[2] = _RD.texture_create(_maskFormat, RDTextureView.new(), [])
@@ -237,7 +257,6 @@ func _computeCleanup()->void:
 	if _shader:
 		_RD.free_rid(_shader)
 
-
 func _create_uniform_set(texture_rd : RID) -> RID:
 	var uniform := RDUniform.new()
 	uniform.uniform_type = RenderingDevice.UNIFORM_TYPE_IMAGE
@@ -245,3 +264,5 @@ func _create_uniform_set(texture_rd : RID) -> RID:
 	uniform.add_id(texture_rd)
 	# Even though we're using 3 sets, they are identical, so we're kinda cheating.
 	return _RD.uniform_set_create([uniform], _shader, 0)
+
+#endregion

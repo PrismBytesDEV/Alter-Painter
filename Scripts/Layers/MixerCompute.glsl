@@ -26,6 +26,7 @@ void main() {
 // with mask as a parameter.
 
     //mixMode == overlay
+    //currently no other mixModes are implemented
     vec4 operationMix = mix(outputColor,inputColor,mask);
 
     vec4 resultRGBA = mix(outputColor,operationMix,layerParams.opacity);
