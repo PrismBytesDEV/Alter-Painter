@@ -19,7 +19,7 @@ var debugImage : Image
 var _outputAlbedoTexture : Texture2D
 
 func _ready()->void:
-	textureMask = load("res://textures/GodotDoodleMask.jpg").get_image()
+	textureMask = load("res://textures/godotIcon.svg").get_image()
 	debugImage = load("res://textures/FaceWithAlpha.png").get_image()
 	#Mixer is running all the preparations for compute shader on separate thread.
 	#or at least it could that's why I used call_on_render_thread,
@@ -94,8 +94,8 @@ func _computeInit(textureSize : Vector2i)->void:
 	
 	_debugFormat = RDTextureFormat.new()
 	_debugFormat.format = RenderingDevice.DATA_FORMAT_R8G8B8A8_UNORM
-	_debugFormat.width = debugImage.get_width()
-	_debugFormat.height = debugImage.get_height()
+	_debugFormat.width = textureMask.get_width()
+	_debugFormat.height = textureMask.get_height()
 	_debugFormat.usage_bits = (RenderingDevice.TEXTURE_USAGE_SAMPLING_BIT
 	 + RenderingDevice.TEXTURE_USAGE_COLOR_ATTACHMENT_BIT
 	 + RenderingDevice.TEXTURE_USAGE_STORAGE_BIT
@@ -115,7 +115,10 @@ func _computeUpdate(layersStack : Array[FillLayerData],textureSize : Vector2i,ma
 			if !layer.visible:
 				continue
 			
-			_texture_rds[1] = _RD.texture_create(_debugFormat, RDTextureView.new(), [debugImage.get_data()])
+			textureMask.convert(Image.FORMAT_RGBA8)
+			textureMask.clear_mipmaps()
+			
+			_texture_rds[1] = _RD.texture_create(_debugFormat, RDTextureView.new(), [textureMask.get_data()])
 			#_RD.texture_clear(_texture_rds[1], layer.colors[ServerLayersStack.layerChannels.Albedo], 0, 1, 0, 1)
 			_texture_sets[1] = _create_uniform_set(_texture_rds[1])
 			
