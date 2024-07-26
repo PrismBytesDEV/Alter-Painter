@@ -14,8 +14,8 @@ static var appVersion : String
 func _ready()->void:
 	appVersion = ProjectSettings.get_setting("application/config/version")
 	%appVersionLabel.text = appVersion
-	var projectSettingsButton : MenuButton = appEditButtons.get_child(0)
-	projectSettingsButton.get_popup().id_pressed.connect(_menuProjectSettingsItemSelected)
+	var newProjectButton : MenuButton = appEditButtons.get_child(0)
+	newProjectButton.get_popup().id_pressed.connect(_menuProjectSettingsItemSelected)
 
 #This is a function that is connected to the popup menu
 #of the "File" button in left top corner

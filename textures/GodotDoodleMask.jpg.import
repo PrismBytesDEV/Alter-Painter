@@ -3,26 +3,25 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://by7s2ltf5hkus"
-path.s3tc="res://.godot/imported/GodotDoodleMask.jpg-225acb03e1b34f30e85883ae985e2e5c.s3tc.ctex"
+path="res://.godot/imported/GodotDoodleMask.jpg-225acb03e1b34f30e85883ae985e2e5c.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
-"vram_texture": true
+"vram_texture": false
 }
 
 [deps]
 
 source_file="res://textures/GodotDoodleMask.jpg"
-dest_files=["res://.godot/imported/GodotDoodleMask.jpg-225acb03e1b34f30e85883ae985e2e5c.s3tc.ctex"]
+dest_files=["res://.godot/imported/GodotDoodleMask.jpg-225acb03e1b34f30e85883ae985e2e5c.ctex"]
 
 [params]
 
-compress/mode=2
+compress/mode=0
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0
-mipmaps/generate=true
+mipmaps/generate=false
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""

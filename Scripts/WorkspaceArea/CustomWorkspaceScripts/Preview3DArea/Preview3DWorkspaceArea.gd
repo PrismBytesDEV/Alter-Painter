@@ -32,6 +32,7 @@ func _ready() -> void:
 	renderModePickButton.selected = 0
 	areaOptionsContainer.add_child(renderModePickButton)
 	renderModePickButton.item_selected.connect(renderViewport._selectRenderMode)
+	renderModePickButton.disabled = true
 	
 	var separator := Control.new()
 	areaOptionsContainer.add_child(separator)

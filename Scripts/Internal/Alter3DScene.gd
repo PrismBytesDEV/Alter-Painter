@@ -114,4 +114,4 @@ static func _loadModelsTexturesIntoLayersStacks()->void:
 			metallicImage.fill(Color.WHITE * theMat.metallic)
 			theMat.metallic_texture = ImageTexture.create_from_image(metallicImage)
 		theMat.metallic = 1.0
-		ServerLayersStack.addLayer(matID,true,colorsDict,"Imported layer " + theMat.resource_name,1.0,0)
+		ServerLayersStack.addLayer(LayerData.layerTypes.fill,matID,true,colorsDict,"Imported layer " + theMat.resource_name,1.0,0)

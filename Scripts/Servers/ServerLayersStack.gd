@@ -30,23 +30,24 @@ static func _removeLayerWorkspace(workspace : LayersWorkspaceArea)->void:
 ##by default the material that you will add new layer to is the currently selected one in [ModelHierarchyWorkspaceArea]
 ##if you want to add new layer into very specific material you can use [param matID] to do that.[br]
 ##matID must be contained in boundries of [member Alter3DScene.modelMaterials] size
-static func addLayer(matID : int = ServerModelHierarchy.selectedMaterialIndex,
+static func addLayer(layerType : LayerData.layerTypes,
+					matID : int = ServerModelHierarchy.selectedMaterialIndex,
 					visibility : bool = true,
 					colors : Dictionary = {},
 					title : String = "",
 					opacity : float = 1.0,
-					type : int = 0)->void:
+					mixType : int = 0)->void:
 	var layersStack := materialsLayers[matID].layers
 	if title.is_empty():
 		title = "New Layer nr." + str(layersStack.size()+1)
-	var newLayerData := FillLayerData.new(visibility,colors,title,opacity,type)
+	var newLayerData := LayerData.new(visibility,colors,title,opacity,mixType,layerType)
 	layersStack.append(newLayerData)
 	
 	if matID != ServerModelHierarchy.selectedMaterialIndex:
 		#To prevent adding UI layers when those shouldn't be visible
 		#since they are set to different material.
 		return
-	for workspace in _layerWorkspaces:
+	for workspace : LayersWorkspaceArea in _layerWorkspaces:
 		workspace._add_UI_Layer(newLayerData)
 	
 	mixer.mixInputs(matID)
@@ -80,7 +81,7 @@ static func reorderLayer(fromIndex : int, toIndex : int,)->void:
 	var stackFromIndex : int = layersStack.size() - fromIndex - 1
 	var stackToIndex : int = layersStack.size() - toIndex - 1
 	
-	var storedLayer : FillLayerData = layersStack[stackFromIndex]
+	var storedLayer : LayerData = layersStack[stackFromIndex]
 	layersStack.remove_at(stackFromIndex)
 	layersStack.insert(stackToIndex,storedLayer)
 	
@@ -123,8 +124,8 @@ enum layerChannels {
 	Roughness,
 	##Shows how layers contribute to metallnes of the material
 	Metalness,
-	##Shows how layers contribute to normal map of the material
-	Normal
+	##Shows how layers contribute to normal of the material
+	Normal,
 }
 
 ##Class that stores all the layer datas for single material
@@ -134,4 +135,4 @@ class LayersStack:
 	##order of this variable. So if you want to get access layer that is at the top
 	##of the stack you should use index [param -1] second from top [param -2] and so on.
 	##Layer at the bottom of the "Visual" stack is at index 0
-	var layers : Array[FillLayerData]
+	var layers : Array[LayerData]

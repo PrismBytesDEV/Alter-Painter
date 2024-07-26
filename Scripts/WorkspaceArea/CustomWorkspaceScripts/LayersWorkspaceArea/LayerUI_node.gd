@@ -12,12 +12,13 @@ signal layerSelected(layer : LayerUI_node)
 ##This the [LayersWorkspaceArea] that this layer belongs to
 var layersWorkspaceParent : LayersWorkspaceArea
 ##This stores reference to the layer data that is stored in the [ServerLayersStack]
-var layerData : FillLayerData
+var layerData : LayerData
 
 var _createdGhost : GhostFillLayer
 
 @onready var _visibilityButton : CheckBox = %VisibilityButton
 @onready var _fillValueButton : FillValuePicker = %FillValuePicker
+@onready var _texturePreview : PaintTexturePreview = %PaintTexturePreview
 @onready var _fillColorButton : ColorPickerButton = %FillColorPicker
 @onready var _layerNameEdit : LineEdit = %LayerName
 @onready var _opacitySlider : HSlider = %OpacitySlider
@@ -95,23 +96,51 @@ func updatePropertiesFromData()->void:
 	match layersWorkspaceParent.layerStackPreviewTypeMode:
 		ServerLayersStack.layerChannels.Albedo:
 			_fillValueButton.hide()
-			_fillColorButton.show()
-			self._fillColorButton.color = layerData.colors[layersWorkspaceParent.layerStackPreviewTypeMode]
+			match layerData.layerType:
+				LayerData.layerTypes.fill:
+					_fillColorButton.show()
+					_texturePreview.hide()
+					self._fillColorButton.color = layerData.colors[layersWorkspaceParent.layerStackPreviewTypeMode]
+				LayerData.layerTypes.paint:
+					_fillColorButton.hide()
+					_texturePreview.show()
+					self._texturePreview.texture = layerData.colors[layersWorkspaceParent.layerStackPreviewTypeMode]
 		ServerLayersStack.layerChannels.Metalness:
-			_fillValueButton.show()
 			_fillColorButton.hide()
-			self._fillValueButton.setSliderValue(layerData.colors[layersWorkspaceParent.layerStackPreviewTypeMode]) 
+			match layerData.layerType:
+				LayerData.layerTypes.fill:
+					_fillValueButton.show()
+					_texturePreview.hide()
+					self._fillValueButton.setSliderValue(layerData.colors[layersWorkspaceParent.layerStackPreviewTypeMode])
+				LayerData.layerTypes.paint:
+					_fillValueButton.hide()
+					_texturePreview.show()
+					self._texturePreview.texture = layerData.colors[layersWorkspaceParent.layerStackPreviewTypeMode]
 		ServerLayersStack.layerChannels.Roughness:
-			_fillValueButton.show()
 			_fillColorButton.hide()
-			self._fillValueButton.setSliderValue(layerData.colors[layersWorkspaceParent.layerStackPreviewTypeMode]) 
+			match layerData.layerType:
+				LayerData.layerTypes.fill:
+					_fillValueButton.show()
+					_texturePreview.hide()
+					self._fillValueButton.setSliderValue(layerData.colors[layersWorkspaceParent.layerStackPreviewTypeMode])
+				LayerData.layerTypes.paint:
+					_fillValueButton.hide()
+					_texturePreview.show()
+					self._texturePreview.texture = layerData.colors[layersWorkspaceParent.layerStackPreviewTypeMode]
 		ServerLayersStack.layerChannels.Normal:
 			_fillValueButton.hide()
-			_fillColorButton.show()
-			self._fillColorButton.color = layerData.colors[layersWorkspaceParent.layerStackPreviewTypeMode]
+			match layerData.layerType:
+				LayerData.layerTypes.fill:
+					_fillColorButton.show()
+					_texturePreview.hide()
+					self._fillColorButton.color = layerData.colors[layersWorkspaceParent.layerStackPreviewTypeMode]
+				LayerData.layerTypes.paint:
+					_fillColorButton.hide()
+					_texturePreview.show()
+					self._texturePreview.texture = layerData.colors[layersWorkspaceParent.layerStackPreviewTypeMode]
 	self._layerNameEdit.text = layerData.name
 	self._opacitySlider.value = layerData.opacity * _opacitySlider.max_value
-	self._typeSwitchButton.selected = layerData.type
+	self._typeSwitchButton.selected = layerData.mixType
 
 #Used to set size instead of to.size = from.size
 #Because this makes Godot yell with warnings to use anchors instead ;d

@@ -12,7 +12,7 @@ var _removeLayerButton : Button
 @onready var _newLayerButtonIcon : Texture2D = preload("res://textures/icons/ToolAddNode.svg")
 @onready var _RemoveLayerButtonIcon : Texture2D = preload("res://textures/icons/Remove.svg")
 
-@onready var _fillLayerUI : PackedScene = preload("res://Scenes/layer_ui_fill.tscn")
+@onready var _fillLayerUI : PackedScene = preload("res://Scenes/layer_ui.tscn")
  
 ##Holds reference to the parent node of all layer UI nodes
 ## it also [LayersGapRenderer] that draws drop line when user is dragging any layer
@@ -64,8 +64,8 @@ func _ready()->void:
 	
 	var addLayerButtonPopup := _addNewLayerButton.get_popup()
 	addLayerButtonPopup.index_pressed.connect(addNewLayer)
-	addLayerButtonPopup.add_item("new Fill Layer")
-	addLayerButtonPopup.add_item("new Paint Layer")
+	for type : int in LayerData.layerTypes.size():
+		addLayerButtonPopup.add_item("New " + str(LayerData.layerTypes.keys()[type]) + " layer")
 	
 	_removeLayerButton = Button.new()
 	_removeLayerButton.tooltip_text = "Removes last selected layer"
@@ -120,14 +120,14 @@ func refreshLayersOrder(fromIndex : int, toIndex : int)->void:
 	layer.layerData = layersStack[-toIndex-1]
 
 ##Adds new layer to the stack on all [LayersWorkspaceArea][br]
-##[param id] tells whenewer you are adding a Fill Layer or a Paint Layer
-## 0 = Fill Layer
-## 1 = Paint Layer
-func addNewLayer(id : int)->void:
-	if id == 1:
-		printerr("Paint layers aren't implemented yet!")
-		return
-	ServerLayersStack.addLayer()
+##[param id] tells whenewer you are adding a Fill Layer or a Paint Layer or different type of layer.
+##See [enum LayerData.layerTypes] for all available layer types.
+func addNewLayer(id : LayerData.layerTypes)->void:
+	match id:
+		LayerData.layerTypes.fill:
+			ServerLayersStack.addLayer(LayerData.layerTypes.fill)
+		LayerData.layerTypes.paint:
+			ServerLayersStack.addLayer(LayerData.layerTypes.paint)
 
 #DO NOT USE THIS TO ADD LAYER TO THE STACK
 #Instead use method _addNewLayer(id : int) from this class
@@ -135,7 +135,7 @@ func addNewLayer(id : int)->void:
 #This method's only purpouse is to add physical Control node that
 #represent new added layer. So if you call this method it will only
 #add layer to stack visually on the LayersWorkspaceArea it was used, but not on others.
-func _add_UI_Layer(data : FillLayerData)->void:
+func _add_UI_Layer(data : LayerData)->void:
 	var newLayer : LayerUI_node = _fillLayerUI.instantiate()
 	newLayer.layerSelected.connect(_layerSelected)
 	newLayer.layerData = data
