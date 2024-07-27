@@ -8,13 +8,12 @@ class_name LayerUI_node extends Button
 ##this signal can be used to easly know which layer UI node is currently selected
 signal layerSelected(layer : LayerUI_node)
 
-@onready var _ghostLayerScene : PackedScene = preload("res://Scenes/layer_ghost_fill.tscn")
 ##This the [LayersWorkspaceArea] that this layer belongs to
 var layersWorkspaceParent : LayersWorkspaceArea
 ##This stores reference to the layer data that is stored in the [ServerLayersStack]
 var layerData : LayerData
 
-var _createdGhost : GhostFillLayer
+static var _createdGhost : GhostFillLayer
 
 @onready var _visibilityButton : CheckBox = %VisibilityButton
 @onready var _fillValueButton : FillValuePicker = %FillValuePicker
@@ -84,8 +83,15 @@ func _typeChanged(index : int)->void:
 
 func _get_drag_data(_at_position : Vector2)->Variant:
 	#Called when layer started to be dragged by cursor
-	_createdGhost = _ghostLayerScene.instantiate()
-	get_tree().root.add_child(_createdGhost)
+	if _createdGhost == null:
+		var duplLayer : Control = self.duplicate(DUPLICATE_USE_INSTANTIATION)
+		duplLayer.hide()
+		duplLayer.set_script(load("res://Scripts/WorkspaceArea/CustomWorkspaceScripts/LayersWorkspaceArea/GhostLayer.gd"))
+		_recursionSetMouseFilter(duplLayer,Control.MOUSE_FILTER_IGNORE)
+		duplLayer.modulate = Color(1.0,1.0,1.0,0.4)
+		_createdGhost = duplLayer
+		get_tree().root.add_child(_createdGhost)
+	_createdGhost._ghostWaitShow()
 	_copySize(self,_createdGhost)
 	LayersWorkspaceArea.draggingAnyLayer = true
 	return self
@@ -141,6 +147,12 @@ func updatePropertiesFromData()->void:
 	self._layerNameEdit.text = layerData.name
 	self._opacitySlider.value = layerData.opacity * _opacitySlider.max_value
 	self._typeSwitchButton.selected = layerData.mixType
+
+func _recursionSetMouseFilter(control : Control, filter : Control.MouseFilter)->void:
+	control.mouse_filter = filter
+	for child in control.get_children():
+		if child is Control:
+			_recursionSetMouseFilter(child,filter)
 
 #Used to set size instead of to.size = from.size
 #Because this makes Godot yell with warnings to use anchors instead ;d
