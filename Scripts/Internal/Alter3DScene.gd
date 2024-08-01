@@ -19,6 +19,8 @@ static var modelMaterials : Array[StandardMaterial3D]
 
 static var _unnamedMaterialCounter : int
 
+static var convert3DUVscript : GDScript = load("res://Scripts/Internal/MeshUVInstance.gd")
+
 func _ready()->void:
 	sceneRootNode = %SceneRoot
 	light = %MainDirectionalLight
@@ -61,6 +63,7 @@ static func refreshMesh(meshInst : Node)->void:
 	Alter3DScene.loadMaterials(modelRootNode)
 	ServerLayersStack._materialsLoaded = true
 	Alter3DScene._addAssetColliders(modelRootNode)
+	Alter3DScene._loadAllMeshForUVConverter(modelRootNode)
 	
 	ServerPreview3D.recenterCameras()
 	ServerModelHierarchy.refreshDisplayData()
@@ -115,3 +118,10 @@ static func _loadModelsTexturesIntoLayersStacks()->void:
 			theMat.metallic_texture = ImageTexture.create_from_image(metallicImage)
 		theMat.metallic = 1.0
 		ServerLayersStack.addLayer(LayerData.layerTypes.fill,matID,true,colorsDict,"Imported layer " + theMat.resource_name,1.0,0)
+
+#used to add 3DtoUV.gd script to all meshInstances so further user can paint on those meshes.
+static func _loadAllMeshForUVConverter(assetRoot : Node)->void:
+	for child in assetRoot.get_children():
+		Alter3DScene._loadAllMeshForUVConverter(child)
+	if assetRoot is MeshInstance3D:
+		assetRoot.set_script(convert3DUVscript)

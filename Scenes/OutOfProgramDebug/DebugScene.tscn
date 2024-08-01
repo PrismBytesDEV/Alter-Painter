@@ -1,6 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://c1ujj0cwyceou"]
+[gd_scene load_steps=6 format=3 uid="uid://c1ujj0cwyceou"]
 
-[ext_resource type="Script" path="res://Scenes/OutOfProgramDebug/ComputeGDtest.gd" id="1_l2bq3"]
+[ext_resource type="Script" path="res://Scenes/OutOfProgramDebug/debugDrawing.gd" id="1_11ffp"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_xrnkf"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -15,11 +15,8 @@ sky = SubResource("Sky_4pclf")
 tonemap_mode = 2
 glow_enabled = true
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_gi4b2"]
-seed = 1
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_kmq6f"]
-noise = SubResource("FastNoiseLite_gi4b2")
+[sub_resource type="Texture2DRD" id="Texture2DRD_olv7r"]
+resource_local_to_scene = true
 
 [node name="DebugScene" type="Node3D"]
 
@@ -40,63 +37,16 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_l2bq3")
-theTexture = SubResource("NoiseTexture2D_kmq6f")
-
-[node name="ColorPickerButton" type="ColorPickerButton" parent="Control"]
-layout_mode = 0
-anchor_left = 0.0692708
-anchor_top = 0.12037
-anchor_right = 0.135937
-anchor_bottom = 0.238889
-metadata/_edit_use_anchors_ = true
-
-[node name="ColorPickerButton2" type="ColorPickerButton" parent="Control"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.151562
-anchor_top = 0.12037
-anchor_right = 0.218229
-anchor_bottom = 0.238889
-metadata/_edit_use_anchors_ = true
-
-[node name="TexturePanel2" type="Panel" parent="Control"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.0692708
-anchor_top = 0.282407
-anchor_right = 0.218229
-anchor_bottom = 0.547222
-grow_horizontal = 2
-grow_vertical = 2
-metadata/_edit_use_anchors_ = true
-
-[node name="TextureBackground" type="ColorRect" parent="Control/TexturePanel2"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.0675676
-anchor_top = 0.0675676
-anchor_right = 0.932432
-anchor_bottom = 0.932432
-metadata/_edit_use_anchors_ = true
-
-[node name="TextureRect3" type="TextureRect" parent="Control/TexturePanel2"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.0675676
-anchor_top = 0.0675676
-anchor_right = 0.932432
-anchor_bottom = 0.932432
-expand_mode = 1
-metadata/_edit_use_anchors_ = true
 
 [node name="TexturePanel" type="Panel" parent="Control"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.391667
-anchor_top = 0.0833333
-anchor_right = 0.7
-anchor_bottom = 0.631481
+anchor_left = 0.233333
+anchor_top = 0.0259259
+anchor_right = 0.766667
+anchor_bottom = 0.974074
+grow_horizontal = 2
+grow_vertical = 2
 metadata/_edit_use_anchors_ = true
 
 [node name="TextureBackground" type="ColorRect" parent="Control/TexturePanel"]
@@ -115,24 +65,39 @@ anchor_left = 0.0675676
 anchor_top = 0.0675676
 anchor_right = 0.932432
 anchor_bottom = 0.932432
+texture = SubResource("Texture2DRD_olv7r")
 expand_mode = 1
+script = ExtResource("1_11ffp")
 metadata/_edit_use_anchors_ = true
 
-[node name="Button" type="Button" parent="Control"]
-layout_mode = 0
-anchor_left = 0.0692708
-anchor_top = 0.572222
-anchor_right = 0.218229
-anchor_bottom = 0.623148
-text = "Generate"
+[node name="Label" type="Label" parent="Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0453125
+anchor_top = 0.311111
+anchor_right = 0.190104
+anchor_bottom = 0.325926
+text = "Brush size"
 metadata/_edit_use_anchors_ = true
 
-[node name="SpinBox" type="SpinBox" parent="Control"]
+[node name="HSlider" type="HSlider" parent="Control"]
 layout_mode = 0
-offset_left = 152.0
-offset_top = 708.0
-offset_right = 235.063
-offset_bottom = 739.0
-value = 2.0
+anchor_left = 0.0453125
+anchor_top = 0.327778
+anchor_right = 0.190104
+anchor_bottom = 0.342593
+min_value = 5.0
+value = 10.0
+metadata/_edit_use_anchors_ = true
 
-[connection signal="pressed" from="Control/Button" to="Control" method="_updateCompute"]
+[node name="ColorPickerButton" type="ColorPickerButton" parent="Control"]
+layout_mode = 0
+anchor_left = 0.0567708
+anchor_top = 0.356481
+anchor_right = 0.0979167
+anchor_bottom = 0.425926
+offset_bottom = -3.05176e-05
+metadata/_edit_use_anchors_ = true
+
+[connection signal="value_changed" from="Control/HSlider" to="Control/TexturePanel/TextureRect3" method="_brushSizeChanged"]
+[connection signal="color_changed" from="Control/ColorPickerButton" to="Control/TexturePanel/TextureRect3" method="_brushColorChanged"]

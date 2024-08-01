@@ -84,7 +84,7 @@ func _typeChanged(index : int)->void:
 func _get_drag_data(_at_position : Vector2)->Variant:
 	#Called when layer started to be dragged by cursor
 	if _createdGhost == null:
-		var duplLayer : Control = self.duplicate(DUPLICATE_USE_INSTANTIATION)
+		var duplLayer : Control = self.duplicate()
 		duplLayer.hide()
 		duplLayer.set_script(load("res://Scripts/WorkspaceArea/CustomWorkspaceScripts/LayersWorkspaceArea/GhostLayer.gd"))
 		_recursionSetMouseFilter(duplLayer,Control.MOUSE_FILTER_IGNORE)

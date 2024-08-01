@@ -12,6 +12,9 @@ static var _materialsLoaded : bool = false
 ##This is a list of layer stacks, each corresponding to each individual imported material.
 static var materialsLayers : Array[LayersStack]
 
+##Stores index of currently selected layer in the server stack
+static var selectedLayerIndex : int = -5
+
 #used by [Alter3DScene] when loading materials from imported 3D model
 static func _appendNewMaterialLayersStack()->void:
 	materialsLayers.append(LayersStack.new())

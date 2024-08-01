@@ -70,6 +70,8 @@ func _process(_delta : float)->void:
 		_light = Alter3DScene.light
 
 func _physics_process(_delta : float)->void:
+	if !Engine.is_editor_hint():
+		Preview3DWorkspaceArea.debugTextureRect.texture = painter.texture
 	var mousePos := get_viewport().get_mouse_position()
 	var rayFrom := camera.project_ray_origin(mousePos)
 	var rayTo := rayFrom + camera.project_ray_normal(mousePos) * _rayLength
@@ -80,6 +82,21 @@ func _physics_process(_delta : float)->void:
 	var rayCollisionInfo := space.intersect_ray(rayParams)
 	if rayCollisionInfo.size() > 0:
 		mouseRayHitPosition = rayCollisionInfo.get("position")
+		var mouseRayHitNormal : Vector3 = rayCollisionInfo.get("normal")
+		
+		var matID : int = ServerModelHierarchy.selectedMaterialIndex
+		var layersStack := ServerLayersStack.materialsLayers[matID].layers
+		var selectedLayerData : LayerData = layersStack[ServerLayersStack.selectedLayerIndex]
+		if selectedLayerData != null:
+			if selectedLayerData.layerType == LayerData.layerTypes.paint:
+				if Input.is_action_pressed("paint"):
+					var meshInstance : MeshUVInstance = rayCollisionInfo.get("collider").get_parent()
+					if meshInstance.get_uv_coords(mouseRayHitPosition,mouseRayHitNormal) != null:
+						var uvPos : Vector2 = meshInstance.get_uv_coords(mouseRayHitPosition,mouseRayHitNormal)
+						painter.paint(uvPos)
+						selectedLayerData.colors[0] = painter.texture
+						#Preview3DWorkspaceArea.debugTextureRect.texture = painter.texture
+						mixer.mixInputs(matID)
 		if OS.is_debug_build():
 			var config := DebugDraw3D.scoped_config()
 			config.set_viewport(get_parent().get_viewport())

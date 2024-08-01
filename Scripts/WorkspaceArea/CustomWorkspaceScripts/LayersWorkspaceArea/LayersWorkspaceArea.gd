@@ -3,7 +3,12 @@ class_name LayersWorkspaceArea extends WorkspaceArea
 ##This [WorkspaceArea] allows user to easly add, remove, edit layers.
 
 ##Holds reference to the currently selected Layer UI node
-var selectedLayer : LayerUI_node
+var selectedLayer : LayerUI_node:
+	set(newLayer):
+		var matID : int = ServerModelHierarchy.selectedMaterialIndex
+		var layersStack := ServerLayersStack.materialsLayers[matID].layers
+		ServerLayersStack.selectedLayerIndex = - 1 - newLayer.get_index()
+		selectedLayer = newLayer
 
 var _layerTypeSwitch : OptionButton
 var _addNewLayerButton : MenuButton
@@ -139,6 +144,7 @@ func _add_UI_Layer(data : LayerData)->void:
 	var newLayer : LayerUI_node = _fillLayerUI.instantiate()
 	newLayer.layerSelected.connect(_layerSelected)
 	newLayer.layerData = data
+	selectedLayer = newLayer
 	newLayer.layersWorkspaceParent = self
 	layersList.add_child(newLayer)
 	layerSize = layersList.get_child(0).size
@@ -184,6 +190,7 @@ func _reload_UI_Layers()->void:
 
 func _layerSelected(layer : LayerUI_node)->void:
 	selectedLayer = layer
+	
 
 func _handleAutoScrollWhenDragging(delta : float)->void:
 	var mousePos : Vector2 = get_global_mouse_position()
