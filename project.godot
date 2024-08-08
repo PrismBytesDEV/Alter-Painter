@@ -16,6 +16,7 @@ class_name_hider/excluded_folders=PackedStringArray("addons")
 
 config/name="AlterPainter"
 config/version="0.0.5"
+config/tags=PackedStringArray("tool")
 run/main_scene="res://Scenes/AppInterface.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 boot_splash/bg_color=Color(0.11, 0.11, 0.11, 1)

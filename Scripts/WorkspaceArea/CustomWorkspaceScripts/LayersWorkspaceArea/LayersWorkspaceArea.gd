@@ -5,9 +5,10 @@ class_name LayersWorkspaceArea extends WorkspaceArea
 ##Holds reference to the currently selected Layer UI node
 var selectedLayer : LayerUI_node:
 	set(newLayer):
-		var matID : int = ServerModelHierarchy.selectedMaterialIndex
-		var layersStack := ServerLayersStack.materialsLayers[matID].layers
+		#var matID : int = ServerModelHierarchy.selectedMaterialIndex
+		#var layersStack := ServerLayersStack.materialsLayers[matID].layers
 		ServerLayersStack.selectedLayerIndex = - 1 - newLayer.get_index()
+		painter.currentlyEditedLayerData = newLayer.layerData
 		selectedLayer = newLayer
 
 var _layerTypeSwitch : OptionButton

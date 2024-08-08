@@ -91,12 +91,14 @@ func _physics_process(_delta : float)->void:
 			if selectedLayerData.layerType == LayerData.layerTypes.paint:
 				if Input.is_action_pressed("paint"):
 					var meshInstance : MeshUVInstance = rayCollisionInfo.get("collider").get_parent()
-					if meshInstance.get_uv_coords(mouseRayHitPosition,mouseRayHitNormal) != null:
-						var uvPos : Vector2 = meshInstance.get_uv_coords(mouseRayHitPosition,mouseRayHitNormal)
-						painter.paint(uvPos)
-						selectedLayerData.colors[0] = painter.texture
-						#Preview3DWorkspaceArea.debugTextureRect.texture = painter.texture
-						mixer.mixInputs(matID)
+					if meshInstance.materialIndexesHashTable.has(ServerModelHierarchy.selectedMaterialIndex):
+						var surfIndx : int = meshInstance.materialIndexesHashTable.get(ServerModelHierarchy.selectedMaterialIndex)
+						if meshInstance.get_uv_coords(surfIndx,mouseRayHitPosition,mouseRayHitNormal) != null:
+							var uvPos : Vector2 = meshInstance.get_uv_coords(surfIndx,mouseRayHitPosition,mouseRayHitNormal)
+							painter.paint(uvPos)
+							selectedLayerData.colors[0] = painter.texture
+							Preview3DWorkspaceArea.debugTextureRect.texture = painter.texture
+							
 		if OS.is_debug_build():
 			var config := DebugDraw3D.scoped_config()
 			config.set_viewport(get_parent().get_viewport())

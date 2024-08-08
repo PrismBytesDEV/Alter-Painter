@@ -1,6 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://c1ujj0cwyceou"]
+[gd_scene load_steps=9 format=3 uid="uid://c1ujj0cwyceou"]
 
 [ext_resource type="Script" path="res://Scenes/OutOfProgramDebug/debugDrawing.gd" id="1_11ffp"]
+[ext_resource type="Theme" uid="uid://cxi7ihqtqqtu6" path="res://Themes/darkTheme.tres" id="2_gs4dw"]
+[ext_resource type="Script" path="res://Scripts/Internal/SettingsControl.gd" id="2_s8q1f"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_xrnkf"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -18,6 +20,9 @@ glow_enabled = true
 [sub_resource type="Texture2DRD" id="Texture2DRD_olv7r"]
 resource_local_to_scene = true
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_84noi"]
+bg_color = Color(0.0846899, 0.0846899, 0.0846899, 1)
+
 [node name="DebugScene" type="Node3D"]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
@@ -30,7 +35,9 @@ environment = SubResource("Environment_06pgy")
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(-1, 0, -8.74228e-08, -2.26267e-08, 0.965926, 0.258819, 8.44439e-08, 0.258819, -0.965926, 0, 3, -8)
 
-[node name="Control" type="Control" parent="."]
+[node name="debugDrawing" type="Control" parent="."]
+process_mode = 4
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -38,7 +45,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="TexturePanel" type="Panel" parent="Control"]
+[node name="TexturePanel" type="Panel" parent="debugDrawing"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.233333
@@ -49,7 +56,7 @@ grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="TextureBackground" type="ColorRect" parent="Control/TexturePanel"]
+[node name="TextureBackground" type="ColorRect" parent="debugDrawing/TexturePanel"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.0675676
@@ -58,7 +65,7 @@ anchor_right = 0.932432
 anchor_bottom = 0.932432
 metadata/_edit_use_anchors_ = true
 
-[node name="TextureRect3" type="TextureRect" parent="Control/TexturePanel"]
+[node name="TextureRect3" type="TextureRect" parent="debugDrawing/TexturePanel"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.0675676
@@ -70,7 +77,7 @@ expand_mode = 1
 script = ExtResource("1_11ffp")
 metadata/_edit_use_anchors_ = true
 
-[node name="Label" type="Label" parent="Control"]
+[node name="Label" type="Label" parent="debugDrawing"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.0453125
@@ -80,7 +87,7 @@ anchor_bottom = 0.325926
 text = "Brush size"
 metadata/_edit_use_anchors_ = true
 
-[node name="HSlider" type="HSlider" parent="Control"]
+[node name="HSlider" type="HSlider" parent="debugDrawing"]
 layout_mode = 0
 anchor_left = 0.0453125
 anchor_top = 0.327778
@@ -90,7 +97,7 @@ min_value = 5.0
 value = 10.0
 metadata/_edit_use_anchors_ = true
 
-[node name="ColorPickerButton" type="ColorPickerButton" parent="Control"]
+[node name="ColorPickerButton" type="ColorPickerButton" parent="debugDrawing"]
 layout_mode = 0
 anchor_left = 0.0567708
 anchor_top = 0.356481
@@ -99,5 +106,26 @@ anchor_bottom = 0.425926
 offset_bottom = -3.05176e-05
 metadata/_edit_use_anchors_ = true
 
-[connection signal="value_changed" from="Control/HSlider" to="Control/TexturePanel/TextureRect3" method="_brushSizeChanged"]
-[connection signal="color_changed" from="Control/ColorPickerButton" to="Control/TexturePanel/TextureRect3" method="_brushColorChanged"]
+[node name="Panel" type="Panel" parent="."]
+anchors_preset = -1
+anchor_left = 0.389583
+anchor_top = 0.0842593
+anchor_right = 0.610417
+anchor_bottom = 0.915741
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_gs4dw")
+theme_override_styles/panel = SubResource("StyleBoxFlat_84noi")
+metadata/_edit_use_anchors_ = true
+
+[node name="SettingsControl" type="ScrollContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_s8q1f")
+
+[connection signal="value_changed" from="debugDrawing/HSlider" to="debugDrawing/TexturePanel/TextureRect3" method="_brushSizeChanged"]
+[connection signal="color_changed" from="debugDrawing/ColorPickerButton" to="debugDrawing/TexturePanel/TextureRect3" method="_brushColorChanged"]

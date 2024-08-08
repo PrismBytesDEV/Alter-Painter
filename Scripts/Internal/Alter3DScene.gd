@@ -125,3 +125,8 @@ static func _loadAllMeshForUVConverter(assetRoot : Node)->void:
 		Alter3DScene._loadAllMeshForUVConverter(child)
 	if assetRoot is MeshInstance3D:
 		assetRoot.set_script(convert3DUVscript)
+		var meshUVInstace : MeshUVInstance = assetRoot
+		for surfIndx : int in assetRoot.mesh.get_surface_count():
+			var surfLocalMat : Material = assetRoot.mesh.surface_get_material(surfIndx)
+			var matGlobalInd : int = modelMaterials.find(surfLocalMat)
+			meshUVInstace.materialIndexesHashTable.merge({matGlobalInd:surfIndx})

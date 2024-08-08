@@ -3,52 +3,53 @@ class_name MeshUVInstance extends MeshInstance3D
 ##A class that inherits from normal [MeshInstance3D] but adds additional functionality
 ## to retrieve UV coordinates from 3D position of mesh's surface.
 
-var meshtool : MeshDataTool
- 
-var transform_vertex_to_global := true
- 
-var _face_count := 0
-var _world_normals :Array[Vector3] = []
-var _world_vertices := []
-var _local_face_vertices := []
- 
+##Contains all material submeshes of the main mesh
+var subMeshes : Array[subMesh]
+##Contains keys and values to easly convert global material index to mesh's local surface index
+var materialIndexesHashTable : Dictionary
+
 func _init()->void:
 	print(self)
-	meshtool = MeshDataTool.new()
-	meshtool.create_from_surface(mesh, 0)  
-	
-	_face_count = meshtool.get_face_count()
-	_world_normals.resize(_face_count)
-  
-	_load_mesh_data()
+	subMeshes.resize(mesh.get_surface_count())
+	for surfIndx : int in mesh.get_surface_count():
+		subMeshes[surfIndx] = subMesh.new()
+		var sub_mesh : subMesh = subMeshes[surfIndx]
+		
+		sub_mesh.meshtool = MeshDataTool.new()
+		sub_mesh.meshtool.create_from_surface(mesh, surfIndx)  
+		
+		sub_mesh._face_count = sub_mesh.meshtool.get_face_count()
+		sub_mesh._world_normals.resize(sub_mesh._face_count)
+		_load_mesh_data(surfIndx)
  
-func _load_mesh_data()->void:
-	for idx in range(_face_count):
-		_world_normals[idx] = self.global_transform.basis * meshtool.get_face_normal(idx)
+func _load_mesh_data(subMeshIndx : int)->void:
+	var sub_mesh : subMesh = subMeshes[subMeshIndx]
+	for idx in range(sub_mesh._face_count):
+		sub_mesh._world_normals[idx] = self.global_transform.basis * sub_mesh.meshtool.get_face_normal(idx)
 	
-		var fv1 := meshtool.get_face_vertex(idx, 0)
-		var fv2 := meshtool.get_face_vertex(idx, 1)
-		var fv3 := meshtool.get_face_vertex(idx, 2)
+		var fv1 := sub_mesh.meshtool.get_face_vertex(idx, 0)
+		var fv2 := sub_mesh.meshtool.get_face_vertex(idx, 1)
+		var fv3 := sub_mesh.meshtool.get_face_vertex(idx, 2)
 		
-		_local_face_vertices.append([fv1, fv2, fv3])    
+		sub_mesh._local_face_vertices.append([fv1, fv2, fv3])    
 		
-		_world_vertices.append([
-			self.global_transform.basis * meshtool.get_vertex(fv1),
-			self.global_transform.basis * meshtool.get_vertex(fv2),
-			self.global_transform.basis * meshtool.get_vertex(fv3),
+		sub_mesh._world_vertices.append([
+			self.global_transform.basis * sub_mesh.meshtool.get_vertex(fv1),
+			self.global_transform.basis * sub_mesh.meshtool.get_vertex(fv2),
+			self.global_transform.basis * sub_mesh.meshtool.get_vertex(fv3),
 		])
 	
-func get_face(point : Vector3, normal : Vector3, epsilon : float = 0.1) -> Array:
+func get_face(sub_mesh : subMesh,point : Vector3, normal : Vector3, epsilon : float = 0.1) -> Array:
 	var matches = []
-	for idx in range(_face_count):
-		var world_normal : Vector3 = _world_normals[idx]
+	for idx in range(sub_mesh._face_count):
+		var world_normal : Vector3 = sub_mesh._world_normals[idx]
 	
 		if !equals_with_epsilon(world_normal,self.global_transform.basis * normal, epsilon):
 			continue  
-		var vertices = _world_vertices[idx]    
+		var vertices = sub_mesh._world_vertices[idx]    
 		
 		if is_point_in_triangle(point, vertices[0], vertices[1], vertices[2]) :
-			var bc = cart2bary(point, vertices[0], vertices[1], vertices[2]) 
+			var bc := cart2bary(point, vertices[0], vertices[1], vertices[2]) 
 			matches.push_back([idx, vertices, bc])
 	
 	if matches.size() > 1:
@@ -67,20 +68,22 @@ func get_face(point : Vector3, normal : Vector3, epsilon : float = 0.1) -> Array
 	
 	return []
  
-func get_uv_coords(point : Vector3, normal : Vector3, transformVert : bool = true)->Variant:
+func get_uv_coords(surfInxd : int,point : Vector3, normal : Vector3, transformVert : bool = true)->Variant:
 	# Gets the uv coordinates on the mesh given a point on the mesh and normal
 	# these values can be obtained from a raycast
-	transform_vertex_to_global = transformVert
+	var sub_mesh : subMesh = subMeshes[surfInxd]
+	
+	sub_mesh.transform_vertex_to_global = transformVert
   
-	var face : Array = get_face(point, normal)
+	var face : Array = get_face(sub_mesh,point, normal)
 	if face.size() < 3:
 		return null
 	face = face as Array
-	var bc = face[2]
+	var bc : Vector3 = face[2]
 	
-	var uv1 : Vector2 = meshtool.get_vertex_uv(_local_face_vertices[face[0]][0])
-	var uv2 : Vector2 = meshtool.get_vertex_uv(_local_face_vertices[face[0]][1])
-	var uv3 : Vector2 = meshtool.get_vertex_uv(_local_face_vertices[face[0]][2])
+	var uv1 : Vector2 = sub_mesh.meshtool.get_vertex_uv(sub_mesh._local_face_vertices[face[0]][0])
+	var uv2 : Vector2 = sub_mesh.meshtool.get_vertex_uv(sub_mesh._local_face_vertices[face[0]][1])
+	var uv3 : Vector2 = sub_mesh.meshtool.get_vertex_uv(sub_mesh._local_face_vertices[face[0]][2])
   
 	return (uv1 * bc.x) + (uv2 * bc.y) + (uv3 * bc.z)  
  
@@ -117,3 +120,15 @@ func is_point_in_triangle(point : Vector3, v1 : Vector3, v2 : Vector3, v3 : Vect
 		return false
  
 	return true
+
+##This class stores all the necessary data for each mesh's material submesh
+class subMesh:
+	
+	var meshtool : MeshDataTool 
+	
+	var transform_vertex_to_global := true
+	
+	var _face_count := 0
+	var _world_normals := []
+	var _world_vertices := []
+	var _local_face_vertices := []

@@ -147,8 +147,6 @@ func _computeUpdate(layersStack : Array[LayerData],textureSize : Vector2i,matID 
 		var imageData : PackedByteArray = _RD.texture_get_data(_texture_rds[0],0)
 		var image := Image.create_from_data(textureSize.x,textureSize.y,false,Image.FORMAT_RGBA8,imageData)
 		var imgTexture := ImageTexture.create_from_image(image)
-		if Preview3DWorkspaceArea.debugTextureRect != null:
-			Preview3DWorkspaceArea.debugTextureRect.texture = imgTexture
 		material.albedo_texture = imgTexture
 	if recalculateMode == ServerLayersStack.layerChannels.Roughness or recalculateMode == -1:
 		_texture_rds[0] = _RD.texture_create(_textureFormat, RDTextureView.new(), [])

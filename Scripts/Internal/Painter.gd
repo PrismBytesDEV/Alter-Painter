@@ -1,10 +1,14 @@
 class_name Painter extends Node
 
 var resolution : Vector2i = Vector2i(512,512)
-var brushSize : Vector2 = Vector2(10.0,10.0)
-var brushColor := Color.BLACK
 
 var texture : Texture2DRD
+
+var currentlyEditedLayerData : LayerData:
+	set(newLayerData):
+		if currentlyEditedLayerData != null:
+			RenderingServer.call_on_render_thread(reloadTextureFromSelectedLayer.bind(currentlyEditedLayerData,newLayerData)) 
+		currentlyEditedLayerData = newLayerData
 
 func _ready()->void:
 	#var emptyImage := Image.create(resolution.x,resolution.y,false,Image.FORMAT_RGBA8)
@@ -24,8 +28,33 @@ func _exit_tree()->void:
 ##Paints into the current texture with current brush's settings
 ## and at the specified [param UVPos]ition
 func paint(UVPos : Vector2)->void:
-	RenderingServer.call_on_render_thread(_computeUpdate.bind(resolution,UVPos,brushSize,brushColor))
+	var convertedToVecBrushSize : Vector2 = Vector2.ONE * ServerBrushSettings.currentBrushProfile.brushSize
+	RenderingServer.call_on_render_thread(_computeUpdate.bind(resolution,UVPos,convertedToVecBrushSize,ServerBrushSettings.currentBrushProfile.brushColor))
 
+func reloadTextureFromSelectedLayer(oldLayerData : LayerData,newLayerData : LayerData)->void:
+	print(oldLayerData,newLayerData)
+	if oldLayerData.layerType == LayerData.layerTypes.paint:
+		var imgData : PackedByteArray = _RD.texture_get_data(_texture_rds[0],0)
+		var textureSize : Vector2i = AlterProjectSettings.textureResolution
+		var image := Image.create_from_data(textureSize.x,textureSize.y,false,Image.FORMAT_RGBA8,imgData)
+		var convertedTexture := ImageTexture.create_from_image(image)
+		
+		oldLayerData.colors[0] = convertedTexture
+		#if Preview3DWorkspaceArea.debugTextureRect != null:
+			#Preview3DWorkspaceArea.debugTextureRect.texture = convertedTexture
+	if newLayerData.layerType != LayerData.layerTypes.paint:
+		return
+	
+	if newLayerData.layerType == LayerData.layerTypes.paint:
+		var data : PackedByteArray = newLayerData.colors[0].get_image().get_data()
+		_texture_rds[0] = _RD.texture_create(_textureFormat, RDTextureView.new(), [data])
+		_texture_sets[0] = _create_uniform_set(_texture_rds[0])
+		if texture:
+			texture.texture_rd_rid = _texture_rds[0]
+			#if Preview3DWorkspaceArea.debugTextureRect != null:
+				#Preview3DWorkspaceArea.debugTextureRect.texture = texture
+
+		
 #region Compute shader Managment
 var _RD : RenderingDevice
 var _shader : RID
@@ -96,6 +125,9 @@ func _computeUpdate(res : Vector2i,_mousePos : Vector2,_brushSize : Vector2,_bru
 	_RD.compute_list_set_push_constant(compute_list, pushConstant, pushConstant.size())
 	_RD.compute_list_dispatch(compute_list, (res.x) / 8, (res.y) / 8, 1)
 	_RD.compute_list_end()
+	
+	_RD.barrier(RenderingDevice.BARRIER_MASK_ALL_BARRIERS)
+	mixer.mixInputs(ServerModelHierarchy.selectedMaterialIndex)
 
 func _computeCleanup()->void:
 	
@@ -115,9 +147,3 @@ func _create_uniform_set(texture_rd : RID) -> RID:
 	return _RD.uniform_set_create([uniform], _shader, 0)
 
 #endregion
-
-
-
-
-
-
