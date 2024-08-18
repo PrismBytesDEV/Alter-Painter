@@ -5,7 +5,9 @@ class_name AlterPainter extends Control
 ##Stores text information about currently used version of the software
 static var appVersion : String
 
-@onready var _import3DFileDialog : FileDialog = %Import3DModelWindow
+@onready var _import3DFileDialog : Window = %Import3DModelWindow
+@onready var _exportTexturesWindow : Window = %ExportTexturesWindow
+
 ##It's a parent of all option buttons that are in the top left corner of the application[br]
 ##You can use this to add your own buttons for various settings and such.[br]
 ##You can also acces it by using %AppEditButtons
@@ -23,3 +25,5 @@ func _menuProjectSettingsItemSelected(index : int)->void:
 	match index:
 		0:
 			_import3DFileDialog.show()
+		4:
+			_exportTexturesWindow.show()

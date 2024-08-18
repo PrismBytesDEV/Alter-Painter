@@ -21,6 +21,8 @@ static var _unnamedMaterialCounter : int
 
 static var convert3DUVscript : GDScript = load("res://Scripts/Internal/MeshUVInstance.gd")
 
+static var _import3DModelPath : String
+
 func _ready()->void:
 	sceneRootNode = %SceneRoot
 	light = %MainDirectionalLight
@@ -31,7 +33,7 @@ func _ready()->void:
 ##And instantiates it as a child of [member Alter3DScene.sceneRootNode]
 ##[br][color=#edcb6d][b]IMPORTANT[/b][br][/color]
 ##Currently only .glb and .gltf files are supported
-func load3DAsset(path : String)->void:
+static func load3DAsset(path : String)->void:
 	print(path)
 	var gltfDocument := GLTFDocument.new()
 	var gltfState := GLTFState.new()

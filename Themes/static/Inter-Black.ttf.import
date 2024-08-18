@@ -15,6 +15,7 @@ dest_files=["res://.godot/imported/Inter-Black.ttf-fe20133911afd9ac78d8a8c646fdc
 Rendering=null
 antialiasing=1
 generate_mipmaps=false
+disable_embedded_bitmaps=true
 multichannel_signed_distance_field=false
 msdf_pixel_range=8
 msdf_size=48

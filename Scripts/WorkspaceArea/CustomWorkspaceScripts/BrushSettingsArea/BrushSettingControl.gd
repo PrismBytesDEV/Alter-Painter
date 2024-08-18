@@ -14,7 +14,8 @@ func _ready()->void:
 		filePathDialog.file_mode = FileDialog.FILE_MODE_OPEN_FILE
 		filePathDialog.access = FileDialog.ACCESS_FILESYSTEM
 		filePathDialog.use_native_dialog = true
-		filePathDialog.file_selected.connect(_filePathSelected)
+		filePathDialog.dir_selected.connect(_pathSelected)
+		filePathDialog.file_selected.connect(_pathSelected)
 		filePathDialog.hide()
 	
 	addCategory("Universal brush settings")

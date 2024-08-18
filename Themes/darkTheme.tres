@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=38 format=3 uid="uid://cxi7ihqtqqtu6"]
+[gd_resource type="Theme" load_steps=40 format=3 uid="uid://cxi7ihqtqqtu6"]
 
 [ext_resource type="Texture2D" uid="uid://taaardfk4og3" path="res://Themes/separationTexture.png" id="1_80xqo"]
 [ext_resource type="FontFile" uid="uid://0v7tiijxy53h" path="res://Themes/Inter-VariableFont_slnt,wght.ttf" id="2_37o5b"]
@@ -352,6 +352,28 @@ corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mqduk"]
+bg_color = Color(0.0605303, 0.0605304, 0.0605303, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+expand_margin_left = 16.0
+expand_margin_top = 32.0
+expand_margin_right = 16.0
+expand_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rt0ce"]
+bg_color = Color(0.0807833, 0.0807833, 0.0807833, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+expand_margin_left = 16.0
+expand_margin_top = 32.0
+expand_margin_right = 16.0
+expand_margin_bottom = 16.0
+
 [resource]
 Button/colors/font_outline_color = Color(0, 0, 0, 0.0862745)
 Button/constants/icon_max_width = 20
@@ -430,6 +452,7 @@ TextEdit/styles/focus = SubResource("StyleBoxFlat_gp8j0")
 TextEdit/styles/normal = SubResource("StyleBoxFlat_ocy4l")
 Tree/colors/font_color = Color(0.843184, 0.843184, 0.843184, 1)
 Tree/colors/font_outline_color = Color(0, 0, 0, 0.0862745)
+Tree/colors/guide_color = Color(0.0768358, 0.0768358, 0.0768358, 1)
 Tree/constants/children_hl_line_width = 0
 Tree/constants/outline_size = 10
 Tree/font_sizes/font_size = 12
@@ -441,3 +464,8 @@ VBoxContainer/constants/separation = 3
 VSeparator/constants/separation = 0
 VSlider/styles/grabber_area = SubResource("StyleBoxFlat_03mfw")
 VSlider/styles/grabber_area_highlight = SubResource("StyleBoxFlat_at1od")
+Window/constants/resize_margin = 16
+Window/font_sizes/title_font_size = 12
+Window/fonts/title_font = ExtResource("2_37o5b")
+Window/styles/embedded_border = SubResource("StyleBoxFlat_mqduk")
+Window/styles/embedded_unfocused_border = SubResource("StyleBoxFlat_rt0ce")

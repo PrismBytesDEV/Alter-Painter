@@ -12,6 +12,14 @@ enum mixTypes
 	Multiply
 }
 
+enum textureResolutions
+{
+	R512,
+	R1024,
+	R2048,
+	R4096
+}
+
 @export var textureMask : Image
 
 var _outputAlbedoTexture : Texture2D

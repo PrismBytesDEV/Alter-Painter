@@ -9,8 +9,12 @@ var _mainVbox : VBoxContainer
 enum settingsArguments {
 	##Used by default when no argument is specified
 	NONE,
-	##Use with property of type [String] so user can use this setting for setting path to something
-	ARG_PATH,
+	##Use if you want to make a setting will lists of options
+	ARG_ENUM,
+	##Use with property of type [String] so user can use this setting for setting path to a file
+	ARG_PATH_OPEN_FILE,
+	##Use with property of type [String] so user can use this setting for setting path to a directory
+	ARG_PATH_OPEN_DIR,
 	##Use with property of type [Color] so user can only user RGB channels of color
 	ARG_RGB,
 	##Use with property of type [Color] so user can also manipulate alpha channel of color.
@@ -24,6 +28,7 @@ const _pathLoadIcon : CompressedTexture2D = preload("res://textures/icons/Load.s
 
 #path setting from which FileDialog was opened, used to set path to selected file.
 static var _currentPathSetting : LineEdit
+static var _currentPathCallable : Callable
 
 func _init()->void:
 	_mainVbox = VBoxContainer.new()
@@ -41,14 +46,15 @@ func _ready()->void:
 		filePathDialog.file_mode = FileDialog.FILE_MODE_OPEN_FILE
 		filePathDialog.access = FileDialog.ACCESS_FILESYSTEM
 		filePathDialog.use_native_dialog = true
-		filePathDialog.file_selected.connect(_filePathSelected)
+		filePathDialog.dir_selected.connect(_pathSelected)
+		filePathDialog.file_selected.connect(_pathSelected)
 		filePathDialog.hide()
 	
 	for i in 20:
 		addCategory("category " + str(i + 1),false)
 		for s in 2:
 			categories[i].addSubcategory("subcategory " + str(s + 1),false)
-			_addSetting("setting","C:",categories[i].subCategories[s].vbox,emptyCalDebug,settingsArguments.ARG_PATH)
+			_addSetting("setting","C:",categories[i].subCategories[s].vbox,emptyCalDebug,settingsArguments.ARG_PATH_OPEN_FILE)
 
 func emptyCalDebug()->void:
 	pass
@@ -83,6 +89,8 @@ func addCategory(title : String,onTop : bool = true)->void:
 func _addSetting(title : String, property : Variant, categoryParent : Control, callable : Callable, argument : settingsArguments = settingsArguments.NONE)->void:
 	var propertySplit := HBoxContainer.new()
 	categoryParent.add_child(propertySplit)
+	if categoryParent is settingCategory or categoryParent is settingSubcategory:
+		categoryParent.settings.append(propertySplit)
 	propertySplit.size_flags_horizontal = SIZE_EXPAND_FILL
 	
 	var propertyName := Label.new()
@@ -92,6 +100,9 @@ func _addSetting(title : String, property : Variant, categoryParent : Control, c
 	propertyName.horizontal_alignment = HORIZONTAL_ALIGNMENT_FILL
 	propertyName.vertical_alignment = VERTICAL_ALIGNMENT_FILL
 	propertyName.text = title
+	
+	if argument != null:
+		print("typeof = ",typeof(argument))
 	
 	match typeof(property):
 		TYPE_BOOL:
@@ -112,26 +123,34 @@ func _addSetting(title : String, property : Variant, categoryParent : Control, c
 			propertyUI.value = property
 			propertyUI.value_changed.connect(callable)
 		TYPE_INT:
-			var propertyUI := SpinBox.new()
-			propertySplit.add_child(propertyUI)
-			propertyUI.step = 1
-			propertyUI.rounded = true
-			propertyUI.size_flags_horizontal = SIZE_EXPAND_FILL
-			propertyUI.size_flags_vertical = SIZE_EXPAND_FILL
-			propertyUI.value = property
-			propertyUI.value_changed.connect(callable)
+				var propertyUI := SpinBox.new()
+				propertySplit.add_child(propertyUI)
+				propertyUI.step = 1
+				propertyUI.rounded = true
+				propertyUI.size_flags_horizontal = SIZE_EXPAND_FILL
+				propertyUI.size_flags_vertical = SIZE_EXPAND_FILL
+				propertyUI.value = property
+				propertyUI.value_changed.connect(callable)
+		TYPE_DICTIONARY:
+			if argument == settingsArguments.ARG_ENUM:
+				var propertyUI := OptionButton.new()
+				propertySplit.add_child(propertyUI)
+				propertyUI.size_flags_vertical = SIZE_EXPAND_FILL
+				for key in property.keys():
+					propertyUI.add_item(str(key).trim_prefix("R"))
 		TYPE_STRING:
 			var propertyUI := LineEdit.new()
 			propertySplit.add_child(propertyUI)
 			propertyUI.size_flags_horizontal = SIZE_EXPAND_FILL
 			propertyUI.size_flags_vertical = SIZE_EXPAND_FILL
 			propertyUI.text = property
-			if argument == settingsArguments.ARG_PATH:
+			if argument == settingsArguments.ARG_PATH_OPEN_FILE or argument == settingsArguments.ARG_PATH_OPEN_DIR:
 				var pathButton := Button.new()
 				propertySplit.add_child(pathButton)
 				pathButton.size_flags_vertical = SIZE_EXPAND_FILL
 				pathButton.icon = _pathLoadIcon
-				pathButton.pressed.connect(_showPathDialog.bind(propertyUI))
+				pathButton.pressed.connect(_showPathDialog.bind(propertyUI,argument,callable))
+			propertyUI.text_changed.connect(callable)
 		TYPE_COLOR:
 			var propertyUI := ColorPickerButton.new()
 			propertySplit.add_child(propertyUI)
@@ -141,12 +160,19 @@ func _addSetting(title : String, property : Variant, categoryParent : Control, c
 			propertyUI.edit_alpha = argument != settingsArguments.ARG_RGB
 			propertyUI.color_changed.connect(callable)
 
-func _showPathDialog(pathLineEdit : LineEdit)->void:
+func _showPathDialog(pathLineEdit : LineEdit, argument : settingsArguments, callable : Callable)->void:
 	_currentPathSetting = pathLineEdit
+	_currentPathCallable = callable
+	match argument:
+		settingsArguments.ARG_PATH_OPEN_FILE:
+			filePathDialog.file_mode = FileDialog.FILE_MODE_OPEN_FILE
+		settingsArguments.ARG_PATH_OPEN_DIR:
+			filePathDialog.file_mode = FileDialog.FILE_MODE_OPEN_DIR
 	filePathDialog.show()
 
-func _filePathSelected(path : String)->void:
+func _pathSelected(path : String)->void:
 	_currentPathSetting.text = path
+	_currentPathCallable.call(path)
 
 class settingCategory extends Panel:
 	var subCategories : Array[settingSubcategory]
@@ -175,6 +201,7 @@ class settingCategory extends Panel:
 
 class settingSubcategory extends Button:
 	var vbox : VBoxContainer
+	var settings : Array[Control]
 	
 	func _pressed()->void:
 		vbox.visible = !vbox.visible

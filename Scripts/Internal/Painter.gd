@@ -126,7 +126,6 @@ func _computeUpdate(res : Vector2i,_mousePos : Vector2,_brushSize : Vector2,_bru
 	_RD.compute_list_dispatch(compute_list, (res.x) / 8, (res.y) / 8, 1)
 	_RD.compute_list_end()
 	
-	_RD.barrier(RenderingDevice.BARRIER_MASK_ALL_BARRIERS)
 	mixer.mixInputs(ServerModelHierarchy.selectedMaterialIndex)
 
 func _computeCleanup()->void:

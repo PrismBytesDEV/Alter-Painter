@@ -18,7 +18,7 @@ config/name="AlterPainter"
 config/version="0.0.5"
 config/tags=PackedStringArray("tool")
 run/main_scene="res://Scenes/AppInterface.tscn"
-config/features=PackedStringArray("4.2", "Forward Plus")
+config/features=PackedStringArray("4.3", "Forward Plus")
 boot_splash/bg_color=Color(0.11, 0.11, 0.11, 1)
 boot_splash/image="res://AlterPainterSplashScreen.png"
 boot_splash/fullsize=false
@@ -32,6 +32,7 @@ WorkspacesLoader="*res://addons/WorkspaceAreas/scripts/WorkspacesAutoloader.gd"
 SplitAreaDrawLayer="*res://addons/WorkspaceAreas/scripts/AreaSplitManager.gd"
 mixer="*res://Scripts/Layers/Mixer.gd"
 painter="*res://Scripts/Internal/Painter.gd"
+textureExporter="*res://Scripts/Layers/TextureExporter.gd"
 
 [debug]
 
@@ -47,7 +48,7 @@ window/size/mode=2
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/Todo_Manager/plugin.cfg", "res://addons/WorkspaceAreas/plugin.cfg", "res://addons/keychain/plugin.cfg", "res://addons/workspaceareas/plugin.cfg", "res://addons/zylann.editor_debugger/plugin.cfg")
+enabled=PackedStringArray("res://addons/Todo_Manager/plugin.cfg", "res://addons/WorkspaceAreas/plugin.cfg", "res://addons/keychain/plugin.cfg", "res://addons/zylann.editor_debugger/plugin.cfg")
 
 [file_customization]
 
