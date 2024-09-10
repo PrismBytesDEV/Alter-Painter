@@ -4,11 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://cevrn8b1xho2k"
-valid=false
+path="res://.godot/imported/godot-head.fbx-151d5968959d0dec6fee6c51f6cf4489.scn"
 
 [deps]
 
 source_file="res://exampleModels/godot-head.fbx"
+dest_files=["res://.godot/imported/godot-head.fbx-151d5968959d0dec6fee6c51f6cf4489.scn"]
 
 [params]
 
@@ -31,6 +32,6 @@ animation/remove_immutable_tracks=true
 animation/import_rest_as_RESET=false
 import_script/path=""
 _subresources={}
-fbx/importer=1
+fbx/importer=0
 fbx/allow_geometry_helper_nodes=false
 fbx/embedded_image_handling=1

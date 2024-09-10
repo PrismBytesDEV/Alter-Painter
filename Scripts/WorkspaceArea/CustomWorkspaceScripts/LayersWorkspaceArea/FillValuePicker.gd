@@ -20,6 +20,12 @@ func _ready()->void:
 	if Engine.is_editor_hint():
 		return
 	
+	_createSliderPopup()
+
+func _init(newValue : float = 0.5)->void:
+	value = newValue
+
+func _createSliderPopup()->void:
 	_sliderPopup = PopupValueSlider.new(true, value)
 	_sliderPopup.mouse_exited.connect(_hideSlider)
 	_sliderPopup.valueChanged.connect(_valueChanged)
@@ -27,8 +33,7 @@ func _ready()->void:
 	_sliderPopup.hide()
 
 func setSliderValue(new : float)->void:
-	if _sliderPopup != null:
-		_sliderPopup.setSliderValue(new)
+	_sliderPopup.setSliderValue(new)
 
 func _hideSlider()->void:
 	_sliderPopup.hide()

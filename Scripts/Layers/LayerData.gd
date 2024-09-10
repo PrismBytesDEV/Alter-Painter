@@ -27,15 +27,15 @@ func _init(Visible : bool, Colors : Dictionary, Name : String,Opacity : float, M
 	var textureRes := AlterProjectSettings.textureResolution
 	
 	var albedoImage := Image.create(textureRes.x,textureRes.y,false,Image.FORMAT_RGBA8)
-	albedoImage.fill(Color.WHITE)
+	albedoImage.fill(Color.TRANSPARENT)
 	var albedoTexture := ImageTexture.create_from_image(albedoImage)
 	
 	var rougnessImage := Image.create(textureRes.x,textureRes.y,false,Image.FORMAT_RGBA8)
-	rougnessImage.fill(Color(0.5,0.5,0.5,1.0))
+	rougnessImage.fill(Color(0.5,0.5,0.5,0.0))
 	var rougnessTexture := ImageTexture.create_from_image(rougnessImage)
 	
 	var metalnessImage := Image.create(textureRes.x,textureRes.y,false,Image.FORMAT_RGBA8)
-	metalnessImage.fill(Color(0.5,0.5,0.5,1.0))
+	metalnessImage.fill(Color(0.5,0.5,0.5,0.0))
 	var metalnessTexture := ImageTexture.create_from_image(metalnessImage)
 	
 	var normalImage := Image.create(textureRes.x,textureRes.y,false,Image.FORMAT_RGBA8)
@@ -55,7 +55,6 @@ func _init(Visible : bool, Colors : Dictionary, Name : String,Opacity : float, M
 			LayerData.layerTypes.fill:
 				fillDict[ServerLayersStack.layerChannels.Albedo] = Colors[ServerLayersStack.layerChannels.Albedo]
 			LayerData.layerTypes.paint:
-				print("albed text")
 				paintDict[ServerLayersStack.layerChannels.Albedo] = Colors[ServerLayersStack.layerChannels.Albedo]
 	if Colors.has(ServerLayersStack.layerChannels.Roughness):
 		match LayerType:

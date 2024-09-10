@@ -21,6 +21,8 @@ static var _unnamedMaterialCounter : int
 
 static var convert3DUVscript : GDScript = load("res://Scripts/Internal/MeshUVInstance.gd")
 
+##This variable is actually used but Godot thinks it's unused
+@warning_ignore("unused_private_class_variable")
 static var _import3DModelPath : String
 
 func _ready()->void:
@@ -114,6 +116,11 @@ static func _loadModelsTexturesIntoLayersStacks()->void:
 			albedoImage.fill(theMat.albedo_color)
 			theMat.albedo_texture = ImageTexture.create_from_image(albedoImage)
 		theMat.albedo_color = Color.WHITE
+		if theMat.roughness_texture == null:
+			var roughnessImage := Image.create(1,1,false,Image.FORMAT_RGBA8)
+			roughnessImage.fill(Color.WHITE * theMat.roughness)
+			theMat.roughness_texture = ImageTexture.create_from_image(roughnessImage)
+		theMat.roughness = 1.0
 		if theMat.metallic_texture == null:
 			var metallicImage := Image.create(1,1,false,Image.FORMAT_RGBA8)
 			metallicImage.fill(Color.WHITE * theMat.metallic)

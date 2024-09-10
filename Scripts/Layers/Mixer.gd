@@ -14,10 +14,10 @@ enum mixTypes
 
 enum textureResolutions
 {
-	R512,
-	R1024,
-	R2048,
-	R4096
+	_512,
+	_1024,
+	_2048,
+	_4096,
 }
 
 @export var textureMask : Image
@@ -57,6 +57,14 @@ var _texture_sets : Array[RID] = [ RID(), RID(), RID()]
 
 var _textureFormat : RDTextureFormat
 var _maskFormat : RDTextureFormat
+
+func updateResolutionFormat(textureRes : Vector2i)->void:
+	if _textureFormat == null or _maskFormat == null:
+		return
+	_textureFormat.width = textureRes.x
+	_textureFormat.height = textureRes.y
+	_maskFormat.width = textureRes.x
+	_maskFormat.height = textureRes.y
 
 func _computeInit(textureRes : Vector2i)->void:
 	

@@ -76,7 +76,7 @@ func _opacityChanged(sliderValue : float)->void:
 func _typeChanged(index : int)->void:
 	if _ingoreSyncOnReady:
 		return
-	layerData.type = index
+	layerData.mixType = index
 	ServerLayersStack.syncLayerProperties(get_index(),self)
 	var matID : int = ServerModelHierarchy.selectedMaterialIndex
 	mixer.mixInputs(matID)

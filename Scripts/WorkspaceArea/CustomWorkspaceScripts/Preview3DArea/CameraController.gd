@@ -71,7 +71,7 @@ func _process(_delta : float)->void:
 
 func _physics_process(_delta : float)->void:
 	if !Engine.is_editor_hint():
-		Preview3DWorkspaceArea.debugTextureRect.texture = painter.texture
+		Preview3DWorkspaceArea.debugTextureRect.texture = painter.albedoTexture
 	var mousePos := get_viewport().get_mouse_position()
 	var rayFrom := camera.project_ray_origin(mousePos)
 	var rayTo := rayFrom + camera.project_ray_normal(mousePos) * _rayLength
@@ -96,8 +96,8 @@ func _physics_process(_delta : float)->void:
 						if meshInstance.get_uv_coords(surfIndx,mouseRayHitPosition,mouseRayHitNormal) != null:
 							var uvPos : Vector2 = meshInstance.get_uv_coords(surfIndx,mouseRayHitPosition,mouseRayHitNormal)
 							painter.paint(uvPos)
-							selectedLayerData.colors[0] = painter.texture
-							Preview3DWorkspaceArea.debugTextureRect.texture = painter.texture
+							selectedLayerData.colors[0] = painter.albedoTexture
+							#Preview3DWorkspaceArea.debugTextureRect.texture = painter.texture
 							
 		if OS.is_debug_build():
 			var config := DebugDraw3D.scoped_config()

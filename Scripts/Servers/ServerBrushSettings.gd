@@ -15,6 +15,9 @@ static var currentBrushProfile : BrushProfile = allBrushesProfiles[0]
 static func _getDefaultBrushProfile()->BrushProfile:
 	var brushProf := BrushProfile.new()
 	brushProf.brushColor = Color.BLACK
+	brushProf.brushRougness = 0.5
+	brushProf.brushMetalness = 0.0
 	brushProf.brushSize = 10.0
 	brushProf.brushOpacity = 1.0
+	brushProf.brushStrength = 1.0
 	return brushProf

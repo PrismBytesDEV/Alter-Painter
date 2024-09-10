@@ -9,7 +9,6 @@ var subMeshes : Array[subMesh]
 var materialIndexesHashTable : Dictionary
 
 func _init()->void:
-	print(self)
 	subMeshes.resize(mesh.get_surface_count())
 	for surfIndx : int in mesh.get_surface_count():
 		subMeshes[surfIndx] = subMesh.new()
@@ -40,22 +39,23 @@ func _load_mesh_data(subMeshIndx : int)->void:
 		])
 	
 func get_face(sub_mesh : subMesh,point : Vector3, normal : Vector3, epsilon : float = 0.1) -> Array:
-	var matches = []
+	var matches := []
 	for idx in range(sub_mesh._face_count):
 		var world_normal : Vector3 = sub_mesh._world_normals[idx]
 	
 		if !equals_with_epsilon(world_normal,self.global_transform.basis * normal, epsilon):
 			continue  
-		var vertices = sub_mesh._world_vertices[idx]    
+		var vertices : Array = sub_mesh._world_vertices[idx]    
 		
 		if is_point_in_triangle(point, vertices[0], vertices[1], vertices[2]) :
 			var bc := cart2bary(point, vertices[0], vertices[1], vertices[2]) 
 			matches.push_back([idx, vertices, bc])
 	
 	if matches.size() > 1:
-		var closest_match
-		var smallest_distance = 99999.0
-		for m in matches:
+		#Array[Array[Variant]]
+		var closest_match : Array
+		var smallest_distance := 99999.0
+		for m : Variant in matches:
 			var plane := Plane(m[1][0], m[1][1], m[1][2])
 			var dist : float = absf(plane.distance_to(point))
 			if dist < smallest_distance:
@@ -114,7 +114,7 @@ func bary2cart(a : Vector3, b : Vector3, c: Vector3, barycentric: Vector3) -> Ve
 	return barycentric.x * a + barycentric.y * b + barycentric.z * c
   
 func is_point_in_triangle(point : Vector3, v1 : Vector3, v2 : Vector3, v3 : Vector3)->bool:
-	var bc = cart2bary(point, v1, v2, v3)  
+	var bc := cart2bary(point, v1, v2, v3)  
   
 	if (bc.x < 0 or bc.x > 1) or (bc.y < 0 or bc.y > 1) or (bc.z < 0 or bc.z > 1):
 		return false
@@ -130,5 +130,6 @@ class subMesh:
 	
 	var _face_count := 0
 	var _world_normals := []
-	var _world_vertices := []
+	#Array[Array[Vector3]]
+	var _world_vertices : Array = []
 	var _local_face_vertices := []

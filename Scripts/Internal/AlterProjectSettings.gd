@@ -4,4 +4,9 @@ class_name AlterProjectSettings extends Resource
 
 ##Global texture resolution for all textures that Alter Painter works on
 ##in current project.
-static var textureResolution : Vector2i = Vector2i(512,512)
+static var textureResolution : Vector2i = Vector2i(512,512):
+	set(value):
+		mixer.updateResolutionFormat(value)
+		textureResolution = value
+		painter.resolution = value
+		painter.updateResolutionFormat(value)

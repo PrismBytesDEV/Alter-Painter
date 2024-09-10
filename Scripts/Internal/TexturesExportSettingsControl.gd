@@ -19,6 +19,3 @@ func _ready()->void:
 
 func _setNewExportPath(new_path : String)->void:
 	textureExporter.setExportPath(new_path)
-
-func _setNewTextureRes(enumKey : int)->void:
-	pass

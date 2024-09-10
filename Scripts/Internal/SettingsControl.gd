@@ -19,7 +19,10 @@ enum settingsArguments {
 	ARG_RGB,
 	##Use with property of type [Color] so user can also manipulate alpha channel of color.
 	## By default when user asigns property of type color this argument is used
-	ARG_RGBA
+	ARG_RGBA,
+	##Use with property of type [float] so user can define value
+	## similarly to what color picker button does
+	ARG_PICKER
 }
 
 static var filePathDialog : FileDialog
@@ -101,8 +104,8 @@ func _addSetting(title : String, property : Variant, categoryParent : Control, c
 	propertyName.vertical_alignment = VERTICAL_ALIGNMENT_FILL
 	propertyName.text = title
 	
-	if argument != null:
-		print("typeof = ",typeof(argument))
+	#if argument != null:
+		#print("typeof = ",typeof(argument))
 	
 	match typeof(property):
 		TYPE_BOOL:
@@ -113,15 +116,22 @@ func _addSetting(title : String, property : Variant, categoryParent : Control, c
 			propertyUI.button_pressed = property
 			propertyUI.toggled.connect(callable)
 		TYPE_FLOAT:
-			var propertyUI := SpinBox.new()
-			propertySplit.add_child(propertyUI)
-			propertyUI.custom_arrow_step = 0.1
-			propertyUI.step = 0
-			propertyUI.rounded = false
-			propertyUI.size_flags_horizontal = SIZE_EXPAND_FILL
-			propertyUI.size_flags_vertical = SIZE_EXPAND_FILL
-			propertyUI.value = property
-			propertyUI.value_changed.connect(callable)
+			if argument != settingsArguments.ARG_PICKER:
+				var propertyUI := SpinBox.new()
+				propertySplit.add_child(propertyUI)
+				propertyUI.custom_arrow_step = 0.1
+				propertyUI.step = 0
+				propertyUI.rounded = false
+				propertyUI.size_flags_horizontal = SIZE_EXPAND_FILL
+				propertyUI.size_flags_vertical = SIZE_EXPAND_FILL
+				propertyUI.value = property
+				propertyUI.value_changed.connect(callable)
+			else:
+				var propertyUI := FillValuePicker.new(property)
+				propertySplit.add_child(propertyUI)
+				propertyUI.size_flags_horizontal = SIZE_EXPAND_FILL
+				propertyUI.size_flags_vertical = SIZE_EXPAND_FILL
+				propertyUI.valueChanged.connect(callable)
 		TYPE_INT:
 				var propertyUI := SpinBox.new()
 				propertySplit.add_child(propertyUI)
@@ -136,8 +146,12 @@ func _addSetting(title : String, property : Variant, categoryParent : Control, c
 				var propertyUI := OptionButton.new()
 				propertySplit.add_child(propertyUI)
 				propertyUI.size_flags_vertical = SIZE_EXPAND_FILL
-				for key in property.keys():
-					propertyUI.add_item(str(key).trim_prefix("R"))
+				#if enum keys starts with a number like texture resolution
+				#then dev can use "_" as a prefix in enum keys so only
+				#the desired text is visible in the option setting
+				for key : String in property.keys():
+					propertyUI.add_item(key.trim_prefix("_"))
+				propertyUI.item_selected.connect(callable)
 		TYPE_STRING:
 			var propertyUI := LineEdit.new()
 			propertySplit.add_child(propertyUI)

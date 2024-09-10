@@ -1,7 +1,19 @@
-[gd_resource type="Theme" load_steps=40 format=3 uid="uid://cxi7ihqtqqtu6"]
+[gd_resource type="Theme" load_steps=41 format=3 uid="uid://cxi7ihqtqqtu6"]
 
 [ext_resource type="Texture2D" uid="uid://taaardfk4og3" path="res://Themes/separationTexture.png" id="1_80xqo"]
 [ext_resource type="FontFile" uid="uid://0v7tiijxy53h" path="res://Themes/Inter-VariableFont_slnt,wght.ttf" id="2_37o5b"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tgaci"]
+content_margin_left = 4.0
+content_margin_top = 2.0
+content_margin_right = 4.0
+content_margin_bottom = 2.0
+bg_color = Color(0.17, 0.17, 0.17, 1)
+border_color = Color(0, 0.588235, 0.988235, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l7bx2"]
 content_margin_left = 4.0
@@ -380,6 +392,7 @@ Button/constants/icon_max_width = 20
 Button/constants/outline_size = 10
 Button/font_sizes/font_size = 12
 Button/fonts/font = ExtResource("2_37o5b")
+Button/styles/disabled = SubResource("StyleBoxFlat_tgaci")
 Button/styles/focus = SubResource("StyleBoxFlat_l7bx2")
 Button/styles/hover = SubResource("StyleBoxFlat_u3jgf")
 Button/styles/normal = SubResource("StyleBoxFlat_c57gu")

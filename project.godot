@@ -37,7 +37,7 @@ textureExporter="*res://Scripts/Layers/TextureExporter.gd"
 [debug]
 
 file_logging/enable_file_logging.pc=false
-gdscript/warnings/untyped_declaration=1
+gdscript/warnings/untyped_declaration=2
 gdscript/warnings/integer_division=0
 
 [display]
@@ -45,10 +45,11 @@ gdscript/warnings/integer_division=0
 window/size/viewport_width=1920
 window/size/viewport_height=1080
 window/size/mode=2
+display_server/driver.linuxbsd="wayland"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/Todo_Manager/plugin.cfg", "res://addons/WorkspaceAreas/plugin.cfg", "res://addons/keychain/plugin.cfg", "res://addons/zylann.editor_debugger/plugin.cfg")
+enabled=PackedStringArray("res://addons/Todo_Manager/plugin.cfg", "res://addons/WorkspaceAreas/plugin.cfg", "res://addons/keychain/plugin.cfg", "res://addons/script-ide/plugin.cfg", "res://addons/zylann.editor_debugger/plugin.cfg")
 
 [file_customization]
 

@@ -28,6 +28,10 @@ void main() {
     //mixMode == overlay
     vec4 operationMix = mix(outputColor,inputColor,mask);
 
+    //mixing the entire processed output with alpha channel of the input texture
+    operationMix = mix(outputColor,operationMix,inputColor.a);
+
+    //mixing end result to the output with layer's opacity
     vec4 resultRGBA = mix(outputColor,operationMix,layerParams.opacity);
 
     imageStore(previousLayerImage, UV, resultRGBA);

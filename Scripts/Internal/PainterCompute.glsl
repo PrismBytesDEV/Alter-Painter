@@ -10,6 +10,7 @@ layout(rgba8, set = 1, binding = 0) uniform restrict readonly image2D brushImage
 
 layout(push_constant, std430) uniform BrushParams {
 	vec4 color;
+    vec4 ORMT;
 	vec2 size;
     vec2 position;
 } brushParams;

@@ -441,6 +441,7 @@ size_flags_horizontal = 3
 [node name="importButton" type="Button" parent="Import3DModelWindow/MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+disabled = true
 text = "import"
 
 [node name="ExportTexturesWindow" type="Window" parent="."]
